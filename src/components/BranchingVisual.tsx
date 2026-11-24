@@ -53,7 +53,7 @@ export function BranchingVisual({
       <div className="branching-header">
         <div className="branching-title-group">
           <div className="branching-title-row">
-            <span className="branching-title">Sequence Branching &amp; Uncertainty Path</span>
+            <span className="branching-title">Branching Path</span>
             {isReplaying && replayStep !== null && tokens[replayStep] ? (
               <span className="replay-telemetry-pill" aria-live="polite">
                 Step {replayStep + 1}/{tokens.length} · {tokens[replayStep].displayToken} · P=
@@ -62,14 +62,14 @@ export function BranchingVisual({
             ) : null}
           </div>
           <p className="panel-desc" style={{ fontSize: "0.8125rem" }}>
-            Narrow beam = high certainty. Flaring fan = surprising transition. Press Play to step sequentially.
+            Narrow beams mean the model was confident. Wide fans mean the word was unexpected. Press Play to step through.
           </p>
         </div>
 
         <div className="branching-controls-cluster">
           <div className="branching-legend">
             <span className="legend-pill">
-              <span className="legend-indicator-dot teal" /> Predictable (P &ge; 0.15)
+              <span className="legend-indicator-dot teal" /> Expected (P &ge; 0.15)
             </span>
             <span className="legend-pill">
               <span className="legend-indicator-dot terracotta" /> Surprising (P &le; 0.05)

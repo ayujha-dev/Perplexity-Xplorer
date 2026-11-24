@@ -16,14 +16,7 @@ const WORDMARK = "PERPLEXITY".split("");
 export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) {
   const [visible, setVisible] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return false;
-    try {
-      if (sessionStorage.getItem("ppx_preloader_seen") === "1") return false;
-    } catch {
-      // ignore storage errors
-    }
-    return true;
+    return !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   });
 
   const [pct, setPct] = useState(0);
@@ -37,11 +30,6 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
   const finish = useCallback(() => {
     if (finishedRef.current) return;
     finishedRef.current = true;
-    try {
-      sessionStorage.setItem("ppx_preloader_seen", "1");
-    } catch {
-      // ignore
-    }
     setVisible(false);
     onComplete();
   }, [onComplete]);
@@ -62,10 +50,10 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
     const letters = root.querySelectorAll<HTMLElement>(".preloader-letter-inner");
     const counterEl = root.querySelector<HTMLElement>(".preloader-counter");
 
-    // Rapid data-pattern texture flash inside letterforms every 140ms
+    // Data-pattern texture cycle inside letterforms while progress counts up
     const flashTimer = window.setInterval(() => {
       setPatternStep((s) => (s + 1) % 4);
-    }, 140);
+    }, 170);
 
     const progressState = { val: 0 };
     const wipeState = { progress: 0 };
@@ -102,15 +90,15 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
       },
     });
 
-    // 0 -> 420ms: Staggered letter rise (40ms stagger, 420ms duration)
+    // 0 -> 520ms: Staggered letter rise
     tl.fromTo(
       letters,
       { yPercent: 105, opacity: 0.01 },
       {
         yPercent: 0,
         opacity: 1,
-        duration: 0.42,
-        stagger: 0.04,
+        duration: 0.46,
+        stagger: 0.045,
         ease: "expo.out",
       },
       0,
@@ -120,17 +108,17 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
       tl.fromTo(
         counterEl,
         { opacity: 0, y: 6 },
-        { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" },
-        0.04,
+        { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" },
+        0.06,
       );
     }
 
-    // 0 -> 1180ms: Snappy tabular-nums progress 0% -> 100%
+    // 100ms -> 1750ms: Tabular progress 0% -> 100%
     tl.to(
       progressState,
       {
         val: 100,
-        duration: 1.18,
+        duration: 1.65,
         ease: "power2.inOut",
         onUpdate: () => setPct(Math.round(progressState.val)),
         onComplete: () => {
@@ -138,19 +126,19 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
           setPatternSettled(true);
         },
       },
-      0.06,
+      0.1,
     );
 
-    // 1320ms -> 1800ms: Curved arch curtain wipe (480ms, cubic-bezier(0.76, 0, 0.24, 1))
+    // 1950ms -> 2550ms: Curved arch curtain wipe
     tl.to(
       wipeState,
       {
         progress: 1,
-        duration: 0.48,
+        duration: 0.6,
         ease: "power3.inOut",
         onUpdate: () => updateArchPath(wipeState.progress),
       },
-      1.32,
+      1.95,
     );
 
     // Fade wordmark cleanly into the wipe
@@ -159,10 +147,10 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
       {
         y: -28,
         opacity: 0,
-        duration: 0.36,
+        duration: 0.4,
         ease: "power3.in",
       },
-      1.34,
+      1.92,
     );
 
     const handleSkip = (e: KeyboardEvent | MouseEvent) => {
@@ -209,7 +197,7 @@ export function PreloaderCurtain({ isDark, onComplete }: PreloaderCurtainProps) 
           <span className="preloader-counter" aria-live="polite">
             {String(pct).padStart(3, "0")}%
           </span>
-          <span className="preloader-hint">IN-BROWSER CAUSAL LAB · CLICK OR ESC TO SKIP</span>
+          <span className="preloader-hint">DISTILGPT-2 · CLICK OR ESC TO SKIP</span>
         </div>
 
         <div

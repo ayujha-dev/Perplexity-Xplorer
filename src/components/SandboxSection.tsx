@@ -35,7 +35,7 @@ function createRowsFromPreset(key: PresetKey): SimRow[] {
 }
 
 const SANDBOX_INTRO_WORDS =
-  "Adjust token probabilities to observe how one low-likelihood word swings the geometric mean across the entire sequence.".split(
+  "Change any probability to see how one unlikely word raises the perplexity of the whole sequence.".split(
     " ",
   );
 
@@ -154,9 +154,9 @@ export function SandboxSection() {
         <div className="panel-title-cluster">
           <h2 className="panel-title" id="sec4-title">
             <span className="section-num">04</span>
-            Try It by Hand
+            Test Your Own Numbers
           </h2>
-          <span className="sim-tag">Interactive Sandbox · Simulated</span>
+          <span className="sim-tag">Manual Simulator</span>
         </div>
         <p ref={scrubRef} className="panel-desc sandbox-scrub-intro">
           {SANDBOX_INTRO_WORDS.map((word, idx) => (
@@ -296,13 +296,13 @@ export function SandboxSection() {
 
           <div className="sandbox-cta-row">
             <PocketQuestActionButton
-              eyebrow="MANUAL SANDBOX"
-              label="Add Token"
+              eyebrow="SIMULATOR"
+              label="Add a word"
               meta={`N=${simRows.length}`}
               onClick={handleAddToken}
             />
             <span className="sandbox-helper-note">
-              Sliders and numbers synchronize reactively in log-space.
+              Sliders and numeric boxes update together.
             </span>
           </div>
         </div>

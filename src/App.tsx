@@ -43,7 +43,6 @@ export function App() {
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
   const isDark = theme === "dark";
 
-  const [preloaderDone, setPreloaderDone] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Inference & Sample State (Preloaded with cached sample, zero empty states)
@@ -64,6 +63,7 @@ export function App() {
 
   const lenisRef = useRef<Lenis | null>(null);
   const appShellRef = useRef<HTMLDivElement>(null);
+  const workspaceRef = useRef<HTMLElement>(null);
   const bentoRef = useRef<HTMLDivElement>(null);
   const tableRowsRef = useRef<HTMLTableSectionElement>(null);
   const predListRef = useRef<HTMLDivElement>(null);
@@ -84,7 +84,12 @@ export function App() {
   }, [theme, isDark]);
 
   // Lenis + GSAP ScrollTrigger Integration + ResizeObserver
+  // Kept active at all times so browser wheel/touch scrolling never locks on reload.
   useEffect(() => {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const handleNativeScroll = () => {
@@ -101,12 +106,9 @@ export function App() {
       lerp: 0.11,
       duration: 0.95,
       smoothWheel: true,
+      autoRaf: false,
     });
     lenisRef.current = lenis;
-
-    if (!preloaderDone) {
-      lenis.stop();
-    }
 
     lenis.on("scroll", (e: { scroll: number }) => {
       setIsScrolled(e.scroll > 48);
@@ -138,10 +140,9 @@ export function App() {
     };
   }, []);
 
-  // Unlock Lenis and trigger Hero Staggered Entrance when preloader completes
+  // Trigger Hero entrance & refresh ScrollTrigger bounds when preloader curtain clears
   const handlePreloaderComplete = useCallback(() => {
-    setPreloaderDone(true);
-    lenisRef.current?.start();
+    ScrollTrigger.refresh();
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = document.querySelectorAll<HTMLElement>(".hero-enter-item");
@@ -154,16 +155,54 @@ export function App() {
 
     gsap.fromTo(
       targets,
-      { opacity: 0, y: 12 },
+      { opacity: 0, y: 14 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.28,
-        stagger: 0.055,
+        duration: 0.42,
+        stagger: 0.06,
         ease: "power3.out",
         clearProps: "transform,opacity",
       },
     );
+  }, []);
+
+  const handleScrollToWorkspace = useCallback(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo("#workspace", { offset: -64 });
+      return;
+    }
+    document.getElementById("workspace")?.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
+  // Smooth scroll-triggered reveal as user scrolls from the top intro stage into #workspace
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || !workspaceRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const items = gsap.utils.toArray<HTMLElement>(".workspace-reveal-item");
+      if (!items.length) return;
+      gsap.fromTo(
+        items,
+        { opacity: 0.35, y: 22 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          stagger: 0.08,
+          ease: "power3.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: workspaceRef.current,
+            start: "top 92%",
+            once: true,
+          },
+        },
+      );
+    }, workspaceRef);
+
+    return () => ctx.revert();
   }, []);
 
   // Subtle fluid metadata swap + GPU micro-bars when tokens or predictions update
@@ -374,7 +413,7 @@ export function App() {
         <div className="sticky-bar-inner">
           <div className="sticky-brand">
             <span className="eyebrow-dot" aria-hidden="true" />
-            <span className="sticky-eyebrow">IN-BROWSER LM LAB · DISTILGPT-2</span>
+            <span className="sticky-eyebrow">Perplexity Explorer</span>
           </div>
 
           <div className="sticky-actions">
@@ -435,27 +474,87 @@ export function App() {
 
       {/* Main Content Container */}
       <div ref={appShellRef} className="container">
-        {/* Hero / Title Lockup */}
-        <GlassCard as="header" className="hero-card hero-enter-item">
-          <div className="hero-top-meta">
-            <span className="eyebrow-label">Scientific Instrument · Causal Transformer Entropy</span>
-            <span className="hero-meta-spec">LOG-SPACE · BOS-PREFIXED · ZERO API</span>
-          </div>
-          <h1 className="hero-title">Perplexity Explorer</h1>
-          <p className="header-subtitle">
-            Autoregressive language models predict one token at a time. Perplexity measures their surprise:
-            the geometric mean branching factor across the sequence. Inspect real DistilGPT-2 conditional
-            probabilities, trace the math step by step, or simulate your own sequence.
-          </p>
-        </GlassCard>
+        {/* Introductory Stage: Full-viewport opening section that scrolls down into the workspace */}
+        <section className="hero-stage" aria-labelledby="hero-title">
+          <GlassCard as="header" className="hero-card hero-enter-item">
+            <div className="hero-grid">
+              <div className="hero-copy-col">
+                <h1 id="hero-title" className="hero-title">
+                  Perplexity Explorer
+                </h1>
+                <p className="header-subtitle">
+                  Language models predict text one token at a time by assigning a probability to each choice.
+                  Perplexity turns those probabilities into an average number of choices per step—score any sentence
+                  with DistilGPT-2 in your browser, or test your own numbers below.
+                </p>
+                <div className="hero-actions-row">
+                  <button type="button" className="hero-scroll-btn" onClick={handleScrollToWorkspace}>
+                    <span>Open workspace</span>
+                    <span className="hero-scroll-arrow" aria-hidden="true">
+                      ↓
+                    </span>
+                  </button>
+                  <span className="hero-fact-note">Runs in your browser · Sample loaded below</span>
+                </div>
+              </div>
 
-        {/* SECTION 01: Full-Width Command Card */}
-        <GlassCard id="section-input" className="hero-enter-item" ariaLabelledBy="sec1-title">
-          <div className="panel-header-row">
-            <h2 className="panel-title" id="sec1-title">
-              <span className="section-num">01</span>
-              Sentence Analysis
-            </h2>
+              <div className="hero-reference-col recessed-well">
+                <div className="hero-ref-block">
+                  <span className="hero-ref-label">How Perplexity Is Calculated</span>
+                  <div className="hero-ref-formula">PPL = (∏ 1 / Pᵢ) ^ (1 / N)</div>
+                  <p className="hero-ref-caption">
+                    Geometric mean of inverse token probabilities across a sequence of length N.
+                  </p>
+                </div>
+                <div className="hero-ref-bands">
+                  <div className="hero-band-item">
+                    <span className="hero-band-range">1 – 10</span>
+                    <span className="hero-band-name">Predictable</span>
+                  </div>
+                  <div className="hero-band-item">
+                    <span className="hero-band-range">10 – 50</span>
+                    <span className="hero-band-name">Natural</span>
+                  </div>
+                  <div className="hero-band-item">
+                    <span className="hero-band-range">50 – 200</span>
+                    <span className="hero-band-name">Odd</span>
+                  </div>
+                  <div className="hero-band-item">
+                    <span className="hero-band-range">200+</span>
+                    <span className="hero-band-name">Surprising</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </GlassCard>
+
+          <button
+            type="button"
+            className="hero-scroll-cue hero-enter-item"
+            onClick={handleScrollToWorkspace}
+            aria-label="Scroll down to workspace"
+          >
+            <span>Scroll down to workspace</span>
+            <span className="hero-cue-glyph" aria-hidden="true">
+              ↓
+            </span>
+          </button>
+        </section>
+
+        {/* Main Workspace: Smoothly revealed as user scrolls downward */}
+        <main id="workspace" ref={workspaceRef} className="workspace-stack">
+          {/* SECTION 01: Full-Width Command Card */}
+          <GlassCard id="section-input" className="workspace-reveal-item" ariaLabelledBy="sec1-title">
+            <div className="panel-header-row">
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                <h2 className="panel-title" id="sec1-title">
+                  <span className="section-num">01</span>
+                  Enter a Sentence
+                </h2>
+                <p className="panel-desc">
+                  Type text or pick an example to score each word using DistilGPT-2.
+                </p>
+              </div>
             <div className="status-pill" id="model-status" role="status" aria-live="polite">
               <span className={`status-dot ${statusState}`} id="status-dot" />
               <span id="status-text">{statusMessage}</span>
@@ -523,17 +622,17 @@ export function App() {
         </GlassCard>
 
         {/* SECTIONS 02 & 03: Asymmetric Bento Row (8 cols : 4 cols) */}
-        <div ref={bentoRef} className="bento-row hero-enter-item">
+        <div ref={bentoRef} className="bento-row workspace-reveal-item">
           {/* Section 02: 8 columns */}
           <GlassCard id="section-breakdown" ariaLabelledBy="sec2-title">
             <div className="panel-header-row">
               <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
                 <h2 className="panel-title" id="sec2-title">
                   <span className="section-num">02</span>
-                  Token Probabilities &amp; Perplexity
+                  Word-by-Word Breakdown
                 </h2>
                 <p className="panel-desc">
-                  Conditional probability P(wᵢ | w&lt;ᵢ) and geometric mean derivation.
+                  Probability P(wᵢ | w&lt;ᵢ) of each token given the words before it, and the overall perplexity.
                 </p>
               </div>
             </div>
@@ -640,7 +739,7 @@ export function App() {
                     <th scope="col" style={{ width: "2.75rem" }}>#</th>
                     <th scope="col">Token</th>
                     <th scope="col" style={{ minWidth: "150px" }}>Probability (P)</th>
-                    <th scope="col" style={{ minWidth: "105px" }}>1 / P (Branching)</th>
+                    <th scope="col" style={{ minWidth: "105px" }}>Choices (1 / P)</th>
                     <th scope="col" style={{ minWidth: "95px" }}>Surprise (−ln P)</th>
                   </tr>
                 </thead>
@@ -707,10 +806,10 @@ export function App() {
               <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
                 <h2 className="panel-title" id="sec3-title">
                   <span className="section-num">03</span>
-                  Next-Token Distribution
+                  Predicted Next Words
                 </h2>
                 <p className="panel-desc fluid-swap-target">
-                  Top 8 candidates after &ldquo;{tokens[tokens.length - 1]?.rawText.trim() || "terminus"}&rdquo;.
+                  Top 8 tokens DistilGPT-2 expects after &ldquo;{tokens[tokens.length - 1]?.rawText.trim() || "end"}&rdquo;.
                 </p>
               </div>
             </div>
@@ -748,8 +847,11 @@ export function App() {
 
         <hr className="section-divider" />
 
-        {/* SECTION 04: Interactive Sandbox ("Try It by Hand") */}
-        <SandboxSection />
+        {/* SECTION 04: Interactive Sandbox ("Test Your Own Numbers") */}
+        <div className="workspace-reveal-item">
+          <SandboxSection />
+        </div>
+        </main>
       </div>
     </>
   );

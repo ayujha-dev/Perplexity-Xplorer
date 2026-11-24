@@ -130,6 +130,7 @@ html {
   background-color: var(--bg-canvas);
   color: var(--text-body);
   font-family: var(--font-sans);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -139,7 +140,7 @@ body {
   color: var(--text-body);
   line-height: 1.55;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: color 180ms ease;
 }
 
@@ -355,7 +356,7 @@ body {
 }
 
 .sticky-bar-inner {
-  max-width: 1180px;
+  max-width: min(1400px, 94vw);
   margin: 0 auto;
   padding: 0.7rem 1.25rem;
   display: flex;
@@ -420,12 +421,12 @@ body {
 .container {
   position: relative;
   z-index: 10;
-  max-width: 1180px;
+  max-width: min(1400px, 94vw);
   margin: 0 auto;
-  padding: 1.5rem 1.25rem 4.5rem;
+  padding: 0 1.25rem 4.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.75rem;
 }
 
 .glass-instrument-card {
@@ -518,52 +519,218 @@ body {
 }
 
 /* ==========================================================================
-   Hero Card
+   Introductory Hero Stage & Main Workspace Stack
    ========================================================================== */
-.hero-card .glass-card-inner {
-  gap: 0.65rem;
-  padding: 1.5rem 1.75rem;
-}
-
-.hero-top-meta {
+.hero-stage {
+  min-height: calc(100svh - 60px);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 4vh, 3rem) 0 clamp(1rem, 2.5vh, 2rem);
+}
+
+.hero-card .glass-card-inner {
+  padding: clamp(1.5rem, 3.6vw, 2.75rem);
+  gap: 1.5rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
   align-items: center;
+}
+
+.hero-copy-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.eyebrow-label {
-  font-family: var(--font-mono);
-  font-size: 0.71875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent-certainty-text);
-}
-
-.hero-meta-spec {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  color: var(--text-stone-faint);
+  min-width: 0;
 }
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-size: clamp(2.35rem, 4.6vw, 3.85rem);
   font-weight: 500;
   letter-spacing: -0.025em;
   color: var(--text-ink);
-  line-height: 1.08;
+  line-height: 1.05;
 }
 
 .header-subtitle {
-  font-size: 0.9375rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.0625rem);
   color: var(--text-stone);
-  line-height: 1.58;
-  max-width: 780px;
+  line-height: 1.62;
+  max-width: 58ch;
+}
+
+.hero-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.hero-scroll-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-ink);
+  background: var(--bg-pill);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  padding: 0.625rem 1.25rem;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 160ms ease, background-color 160ms ease;
+}
+
+.hero-scroll-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary-accent);
+  background: var(--primary-accent-subtle);
+}
+
+.hero-scroll-btn:focus-visible,
+.hero-scroll-cue:focus-visible {
+  outline: 2px solid var(--primary-accent);
+  outline-offset: 2px;
+}
+
+.hero-scroll-arrow,
+.hero-cue-glyph {
+  display: inline-block;
+  font-family: var(--font-mono);
+  transition: transform 180ms var(--ease-out);
+}
+
+.hero-scroll-btn:hover .hero-scroll-arrow,
+.hero-scroll-cue:hover .hero-cue-glyph {
+  transform: translateY(2px);
+}
+
+.hero-fact-note {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-stone);
+}
+
+.hero-reference-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.25rem 1.35rem;
+  min-width: 0;
+}
+
+.hero-ref-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.hero-ref-label {
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-stone);
+}
+
+.hero-ref-formula {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-weight: 600;
+  color: var(--text-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-ref-caption {
+  font-size: 0.84375rem;
+  color: var(--text-stone);
+  line-height: 1.5;
+}
+
+.hero-ref-bands {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border-hairline);
+}
+
+.hero-band-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-xs);
+  background: var(--glass-bg);
+  border: 1px solid var(--border-hairline);
+}
+
+.hero-band-range {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-band-name {
+  font-size: 0.78125rem;
+  color: var(--text-stone);
+}
+
+.hero-scroll-cue {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-stone);
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+
+.hero-scroll-cue:hover {
+  color: var(--text-ink);
+}
+
+.workspace-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  scroll-margin-top: 68px;
+}
+
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-stage {
+    min-height: calc(100svh - 56px);
+    padding: 0.75rem 0 1.25rem;
+  }
+  .hero-ref-bands {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ==========================================================================
