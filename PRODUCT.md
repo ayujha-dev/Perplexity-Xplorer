@@ -7,41 +7,50 @@
 web
 
 ## Stack
-Single self-contained index.html (plain semantic HTML5, modern CSS with architectural depth and micro-grid texture, vanilla ES modules with Transformers.js v3). Zero runtime frameworks, external stylesheets, bundlers, or server dependencies.
+Single self-contained index.html (semantic HTML5, modern CSS with Beside-inspired calm soft-paper architecture, Google Fonts Inter with system fallback, and vanilla ES modules with Transformers.js v3). Zero runtime frameworks, external CSS libraries, bundlers, or server backends.
 
 ## Users
-Machine learning engineers, researchers, students, and curious software practitioners seeking to build visceral, grounded intuition for language model uncertainty, conditional token likelihoods, and the mathematical mechanics of perplexity.
+Machine learning engineers, researchers, educators, students, and software practitioners seeking an authentic, calm, and mathematically rigorous in-browser instrument to understand language model uncertainty, token likelihoods, and perplexity.
 
 ## Product Purpose
-Perplexity Explorer transforms abstract statistical formulas into a tactile, museum-grade scientific instrument. It allows visitors to examine genuine client-side neural language model inference (DistilGPT-2 via Transformers.js), inspect exact token-by-token branching factors, follow an explicit step-by-step arithmetic derivation, observe next-token probability distributions, and experiment with interactive manual simulations to see how individual unexpected words swing perplexity.
+Perplexity Explorer transforms abstract statistical formulas into an exquisite, calm, typographic interactive instrument inspired by Beside (`beside.com`). Visitors can run genuine causal neural inference (DistilGPT-2 via Transformers.js v3) directly inside their web browser, inspect exact token conditional probabilities, follow the geometric mean derivation step by step, explore next-token distributions with Beside's bright blue accent, and experiment with manual simulated scenarios.
 
 ## Positioning
-Unlike textbook equations or generic AI SaaS toys with cookie-cutter cards and purple gradients, Perplexity Explorer is designed with editorial gravity and scientific dignity. It executes genuine client-side neural weights in real time without fake probabilities, presenting raw token mechanics with architectural precision, high tabular readability, and clear separation between model-derived facts and manual sandbox simulations.
+Rejecting generic AI SaaS tropes (neon purple gradients, heavy muddy dropshadows, noisy glassmorphism, and cramped cards), Perplexity Explorer embodies a "soft paper calm, ink-black intent" aesthetic: crisp white ground (`#FFFFFF`), warm soft-paper off-white panels (`#F7F6F3`) with hairline borders (`#EBEBEB`), warm ink-black headings (`#1E1D1C`), muted stone labels (`#78756F`), and Beside's electric blue accent (`#498FFF`). Real neural model outputs are never fabricated.
 
 ## Operating Context
-Dual **Experience + Operate** interactive explainer. The interface combines the editorial polish and atmospheric poise of an architectural scientific exhibit with the dense scanability, instant reactivity, and strict numerical discipline required of an engineering analysis workbench.
+Dual **Experience + Operate** interactive explainer. The interface combines the typographic poise and calm spatial breathing room of a luxury editorial publication with the dense scanability and instant numerical reactivity required of a precision engineering tool.
 
 ## Capabilities and Constraints
-- In-browser causal language model inference using `Xenova/distilgpt2` (`dtype: "q8"`) via Transformers.js v3.
-- BOS token prefixing (`[50256, ...tokens]`) ensuring every token (including the sentence-opener) receives an authentic conditional probability from position 0.
+- In-browser causal language model inference using `Xenova/distilgpt2` (`dtype: "q8"`) via Transformers.js v3 with `env.allowLocalModels = false`.
+- Dual tensor feed (`input_ids` and `attention_mask`) with BOS token prefix (`[50256, ...tokens]`) ensuring authentic conditional probabilities across all sequence positions.
+- Shared loading promise guard preventing duplicate model downloads on rapid clicks.
 - Numerically stable max-subtracted softmax calculation over DistilGPT-2's 50,257-token vocabulary.
-- Log-space computation (`Math.exp(mean(-Math.log(P)))`) guaranteeing zero numerical overflow or underflow across arbitrary sequence lengths.
-- Explicit 3-step breakdown: (1) Multiplication of all inverse probabilities $\prod 1/P$, (2) Sequence token count $N$, (3) Prominent readout of Perplexity = $(\prod 1/P)^{1/N}$ with clear physical interpretation.
-- Next-token prediction distribution rendering top-8 candidates as GPU-composited horizontal percentage bars, highlighting #1.
-- "Try it by hand" manual sandbox (`"Simulated, not from the model"`) with editable rows, dynamic insertion/deletion, preset controls, and live mathematical reactivity.
-- Hard constraint: 100% self-contained single `index.html` file runnable anywhere.
+- Log-space computation (`Math.exp(mean(-Math.log(P)))`) preventing numerical overflow/underflow.
+- Explicit 3-step breakdown: (1) Multiplication of all inverse probabilities $\prod 1/P$, (2) Sequence token count $N$, (3) Prominent ink-black display of Perplexity = $(\prod 1/P)^{1/N}$ with intuitive physical explanation.
+- Next-token distribution with top-8 candidates rendered as GPU-composited horizontal percentage bars, highlighting #1 with Beside blue (`#498FFF`).
+- "Try it by hand" manual sandbox (`"SIMULATED · NOT FROM MODEL"`) with dynamic rows, inline validation, presets, and live reactive updates.
+- Hard constraint: 100% self-contained single `index.html` file runnable without build tools.
 
 ## Brand Commitments
 - Name: Perplexity Explorer
-- Aesthetic Direction: High-craft, anti-slop architectural light theme. Warm alabaster/linen ground (`#f8f9fa` to `#f4f5f7`) with a subtle geometric hairline micro-grid texture. Crisp pure white cards (`#ffffff`) framed with hairline borders (`#e2e5e9`) and disciplined corner radii. Deep charcoal ink typography (`#111827`), muted graphite metadata (`#4b5563`), restrained cobalt primary accent (`#2563eb` / `#1d4ed8`), with quiet secondary violet accents.
-- Zero generic AI slop: no loud purple-pink gradient fills, no oversized muddy dropshadows, no floating blur orbs, and no generic stacked cards.
+- Visual Identity: Beside-inspired aesthetic ("soft paper calm, ink-black intent").
+  - Ground: Crisp white `#FFFFFF`
+  - Primary Panels & Cards: Warm soft-paper off-white `#F7F6F3` with delicate `1px` `#EBEBEB` hairline borders
+  - Inset Cards: Crisp `#FFFFFF` surfaces nested inside `#F7F6F3` panels for dimensional restraint
+  - Primary Text: Warm ink-black `#1E1D1C`
+  - Helper & Secondary Text: Muted warm stone `#78756F` (with high-contrast variants for accessibility)
+  - Primary Accent: Bright blue `#498FFF`
+  - Semantic Accents: Coral-red `#FF7A7A` / `#D32F2F` and warm amber `#FFBC74` / `#B45309`
+- Geometry: Generous `20px` radii on cards, full pill radius (`9999px`) on buttons and status badges, `16px` grid gaps, `64px–80px` vertical section rhythm, max content width `1120px`.
+- Typography: Inter with tight negative tracking on headlines, generous body line height, `ui-monospace` uppercase eyebrows with `0.08em` tracking, and `font-variant-numeric: tabular-nums` for all numbers.
 
 ## Product Principles
-1. **Museum-Grade Scientific Rigor**: Present mathematical derivations and neural distributions as transparent, reproducible instruments.
-2. **Ground Truth Integrity**: Derive model probabilities exclusively from real logits; never fake or hallucinate neural predictions.
-3. **Restrained Editorial Typography**: Use high-contrast editorial hierarchy, tabular figures for all numeric columns, and visible monospace glyphs (`␣`) for whitespace tokens.
-4. **Instant Tactile Reactivity**: Fast response times, sub-300ms interactive transitions, subtle press physics, and smooth GPU-composited visual bars.
-5. **Universal Accessibility**: Strict WCAG 2.2 AA conformance across all contrast ratios, complete keyboard navigability, and first-class reduced-motion support.
+1. **Calm Typographic Clarity**: Let spacious layout, refined typography, and warm paper textures speak louder than decorative noise.
+2. **Mathematical Honesty**: Always derive probabilities directly from model logits; never display fake or hallucinated outputs.
+3. **Flawless In-Browser Reliability**: Guard against local file 404s, provide both `input_ids` and `attention_mask`, and surface real error messages.
+4. **Subtle Tactile Feedback**: Pill button press compression (`scale(0.98)`), sub-300ms transitions with custom cubic-bezier curves, and GPU-composited motion.
+5. **Universal Accessibility**: Strict WCAG 2.2 AA contrast compliance, complete keyboard navigation, and first-class reduced-motion support.
 
 ## Accessibility & Inclusion
-Full WCAG 2.2 AA compliance: contrast ratios exceeding 5:1 for body and 4.5:1 for metadata, semantic HTML landmarks (`<header>`, `<main>`, `<section>`), explicit form labels, ARIA live regions for calculation state, and comprehensive `@media (prefers-reduced-motion: reduce)` accommodation.
+Full WCAG 2.2 AA compliance: contrast ratios exceeding 4.5:1 for body and 3:1 for large display text, semantic HTML5 structure, accessible pill hit targets ($\ge 44\text{px}$ height), ARIA live regions for calculation state, and `@media (prefers-reduced-motion: reduce)` accommodation.
