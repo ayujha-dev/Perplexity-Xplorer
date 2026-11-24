@@ -1,6 +1,6 @@
 ---
 name: Perplexity Explorer
-description: Beside-inspired in-browser language model perplexity and next-token prediction laboratory with dark mode & branching factor visual
+description: Beside-inspired in-browser language model perplexity and next-token prediction laboratory with glass chrome accents, dark mode & branching factor visual
 colors:
   bg-canvas: "#ffffff"
   bg-panel: "#f7f6f3"
@@ -149,4 +149,9 @@ components:
     backgroundColor: "{colors.bg-card}"
     borderColor: "{colors.border-hairline}"
     rounded: "{rounded.md}"
+    padding: "1.25rem"
+  glass-card:
+    backgroundColor: "rgba(255, 255, 255, 0.75)"
+    borderColor: "{colors.border-hairline}"
+    rounded: "{rounded.card}"
     padding: "1.25rem"
