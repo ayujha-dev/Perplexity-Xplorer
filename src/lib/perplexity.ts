@@ -1,9 +1,37 @@
-type TransformersModule = typeof import("@huggingface/transformers");
+interface TransformersTensor {
+  dims: number[];
+  data: Float32Array;
+}
+
+interface TransformersModule {
+  env: { allowLocalModels: boolean };
+  Tensor: new (dtype: string, data: BigInt64Array, dims: number[]) => unknown;
+  AutoTokenizer: {
+    from_pretrained: (
+      modelId: string,
+      opts?: { progress_callback?: (data: { status?: string; file?: string; loaded?: number; total?: number }) => void },
+    ) => Promise<{
+      encode: (text: string) => Promise<number[] | Iterable<number>>;
+      decode: (ids: number[]) => string;
+    }>;
+  };
+  AutoModelForCausalLM: {
+    from_pretrained: (
+      modelId: string,
+      opts?: {
+        dtype?: string;
+        progress_callback?: (data: { status?: string; file?: string; loaded?: number; total?: number }) => void;
+      },
+    ) => Promise<(inputs: { input_ids: unknown; attention_mask: unknown }) => Promise<{ logits: TransformersTensor }>>;
+  };
+}
+
 let transformersMod: TransformersModule | null = null;
+const TRANSFORMERS_CDN_URL = "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3";
 
 async function getTransformers(): Promise<TransformersModule> {
   if (!transformersMod) {
-    transformersMod = await import("@huggingface/transformers");
+    transformersMod = (await import(/* @vite-ignore */ TRANSFORMERS_CDN_URL)) as TransformersModule;
     transformersMod.env.allowLocalModels = false;
   }
   return transformersMod;
