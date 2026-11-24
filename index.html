@@ -19,8 +19,9 @@
        #5F5C56 stone secondary, #498FFF bright blue accent.
        ------------------------------------------------------------- */
     :root {
-      /* Backgrounds & Canvas */
+      /* Backgrounds & Canvas (Light) */
       --bg-canvas: #ffffff;
+      --bg-canvas-ambient: radial-gradient(ellipse 70% 480px at 50% 0%, rgba(238, 236, 230, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
       --bg-panel: #f7f6f3;
       --bg-card: #ffffff;
       --bg-pill: #f3f3f3;
@@ -53,7 +54,12 @@
       /* Hairlines */
       --border-hairline: #ebebeb;
       --border-stone: #dedcd8;
-      --border-active: #498fff;
+      --border-hover: #ecebe7;
+
+      /* Buttons */
+      --btn-primary-bg: #1e1d1c;
+      --btn-primary-text: #f7f6f3;
+      --btn-primary-hover: #000000;
 
       /* Radii */
       --radius-xs: 4px;
@@ -65,12 +71,60 @@
 
       /* Restrained Elevation */
       --shadow-restrained: 0 1px 3px 0 rgba(30, 29, 28, 0.03), 0 1px 2px -1px rgba(30, 29, 28, 0.02);
+      --shadow-elevated: 0 4px 12px 0 rgba(30, 29, 28, 0.05);
 
       /* Motion Curves (Emil Kowalski) */
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
       --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
       --duration-fast: 140ms;
       --duration-normal: 220ms;
+    }
+
+    [data-theme="dark"] {
+      /* Backgrounds & Canvas (Dark) */
+      --bg-canvas: #121211;
+      --bg-canvas-ambient: radial-gradient(ellipse 70% 480px at 50% 0%, rgba(38, 36, 33, 0.75) 0%, rgba(18, 18, 17, 0) 100%);
+      --bg-panel: #1a1918;
+      --bg-card: #151413;
+      --bg-pill: #242321;
+      --bg-subtle: #1e1d1c;
+
+      /* Typography & Inks (Dark) */
+      --text-ink: #f5f4f0;
+      --text-body: #ddd9d0;
+      --text-stone: #9e9a91;
+      --text-stone-faint: #807d76;
+
+      /* Accents (Dark) - electric blue >= 6:1 contrast against dark ground */
+      --primary-accent: #5b9cff;
+      --primary-accent-subtle: rgba(91, 156, 255, 0.12);
+      --primary-accent-border: rgba(91, 156, 255, 0.3);
+
+      /* Semantic Accents (Dark) */
+      --accent-coral: #f87171;
+      --accent-coral-border: rgba(248, 113, 113, 0.35);
+      --accent-coral-bg: rgba(248, 113, 113, 0.1);
+
+      --accent-amber: #fbbf24;
+      --accent-amber-border: rgba(251, 191, 36, 0.35);
+      --accent-amber-bg: rgba(251, 191, 36, 0.1);
+
+      --accent-emerald: #34d399;
+      --accent-emerald-bg: rgba(52, 211, 153, 0.1);
+      --accent-emerald-border: rgba(52, 211, 153, 0.35);
+
+      /* Hairlines (Dark) */
+      --border-hairline: #2a2927;
+      --border-stone: #383633;
+      --border-hover: #32302d;
+
+      /* Buttons (Dark) */
+      --btn-primary-bg: #f5f4f0;
+      --btn-primary-text: #1a1918;
+      --btn-primary-hover: #ffffff;
+
+      --shadow-restrained: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+      --shadow-elevated: 0 4px 14px 0 rgba(0, 0, 0, 0.4);
     }
 
     /* -------------------------------------------------------------
@@ -82,15 +136,41 @@
       padding: 0;
     }
 
+    ::selection {
+      background: var(--primary-accent-subtle);
+      color: var(--text-ink);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-canvas);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-stone);
+      border-radius: var(--radius-pill);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-stone-faint);
+    }
+
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-canvas);
+      background-image: var(--bg-canvas-ambient);
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: 100% 900px;
       color: var(--text-body);
       line-height: 1.6;
       min-height: 100vh;
       padding: 3.5rem 1.25rem 5rem;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      transition: background-color var(--duration-normal) var(--ease-out),
+                  color var(--duration-normal) var(--ease-out);
     }
 
     .container {
@@ -108,8 +188,16 @@
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
-      max-width: 780px;
+      max-width: 840px;
       animation: hero-enter 320ms var(--ease-out) forwards;
+    }
+
+    .header-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
 
     @keyframes hero-enter {
@@ -135,6 +223,79 @@
       font-size: 1.0625rem;
       color: var(--text-stone);
       line-height: 1.6;
+    }
+
+    /* Theme Toggle Button */
+    .btn-theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: inherit;
+      font-size: 0.84375rem;
+      font-weight: 500;
+      height: 38px;
+      padding: 0 1rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-pill);
+      color: var(--text-ink);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color var(--duration-fast) var(--ease-out),
+                  border-color var(--duration-fast) var(--ease-out),
+                  transform var(--duration-fast) var(--ease-out),
+                  color var(--duration-fast) var(--ease-out);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn-theme-toggle:hover {
+        background: var(--border-hover);
+        border-color: var(--border-stone);
+        transform: translateY(-1px);
+      }
+    }
+
+    .btn-theme-toggle:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-theme-toggle:focus-visible {
+      outline: 2px solid var(--primary-accent);
+      outline-offset: 2px;
+    }
+
+    .theme-icon-sun, .theme-icon-moon {
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .theme-icon-moon {
+      display: none;
+    }
+    [data-theme="dark"] .theme-icon-sun {
+      display: block;
+    }
+    :root:not([data-theme="dark"]) .theme-icon-sun {
+      display: none;
+    }
+    :root:not([data-theme="dark"]) .theme-icon-moon {
+      display: block;
+    }
+
+    .section-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-stone);
+      background: var(--bg-pill);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sm);
+      padding: 0.15rem 0.45rem;
+      margin-right: 0.55rem;
+      vertical-align: middle;
     }
 
     /* -------------------------------------------------------------
@@ -241,17 +402,18 @@
       outline-offset: 2px;
     }
 
-    /* Primary CTA: Solid Ink-Black */
+    /* Primary CTA: Solid Ink-Black in Light, Solid Off-White in Dark */
     .btn-primary-ink {
-      background: var(--text-ink);
-      color: var(--bg-panel);
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
       box-shadow: 0 1px 2px rgba(30, 29, 28, 0.12);
     }
 
     @media (hover: hover) and (pointer: fine) {
       .btn-primary-ink:hover {
-        background: #000000;
-        color: #ffffff;
+        background: var(--btn-primary-hover);
+        color: var(--btn-primary-text);
+        box-shadow: var(--shadow-elevated);
       }
     }
 
@@ -274,7 +436,7 @@
 
     @media (hover: hover) and (pointer: fine) {
       .btn-secondary-pill:hover {
-        background: #ecebe7;
+        background: var(--border-hover);
         border-color: var(--border-stone);
       }
     }
@@ -303,7 +465,7 @@
       font-size: 0.875rem;
       padding: 0.75rem 1.125rem;
       border-radius: var(--radius-pill);
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-hairline);
       color: var(--text-stone);
     }
@@ -351,13 +513,13 @@
     }
 
     /* -------------------------------------------------------------
-       Tables: Crisp #FFFFFF Inset Surfaces
+       Tables: Crisp Inset Surfaces
        ------------------------------------------------------------- */
     .table-container {
       overflow-x: auto;
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-md);
-      background: #ffffff;
+      background: var(--bg-card);
       padding: 0.625rem;
     }
 
@@ -412,6 +574,121 @@
     }
 
     /* -------------------------------------------------------------
+       Branching Factor Visual (Vector Representation)
+       ------------------------------------------------------------- */
+    .branching-visual-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .visual-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .visual-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      letter-spacing: -0.015em;
+    }
+
+    .visual-subtitle {
+      font-size: 0.84375rem;
+      color: var(--text-stone);
+      line-height: 1.45;
+    }
+
+    .visual-legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-stone);
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.focused {
+      background: var(--primary-accent);
+    }
+
+    .legend-dot.surprising {
+      background: var(--accent-coral);
+    }
+
+    .visual-svg-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .branching-svg {
+      min-width: 600px;
+      display: block;
+    }
+
+    .branch-ray {
+      transition: stroke-opacity var(--duration-fast) var(--ease-out);
+    }
+
+    .svg-token-label {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .svg-prob-label {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .svg-branch-label {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Metric pulse transition */
+    @keyframes number-land {
+      0% { transform: scale(0.98); opacity: 0.85; }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .number-updated {
+      animation: number-land 240ms var(--ease-out);
+    }
+
+    /* -------------------------------------------------------------
        Three-Step Perplexity Breakdown
        ------------------------------------------------------------- */
     .breakdown-sequence {
@@ -438,7 +715,7 @@
     }
 
     .step-panel {
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-md);
       padding: 0.875rem 1.125rem;
@@ -451,7 +728,7 @@
     }
 
     .step-hero-card {
-      background: #ffffff;
+      background: var(--bg-card);
       border-radius: var(--radius-md);
       padding: 1.25rem 1.5rem;
       display: flex;
@@ -502,7 +779,7 @@
       gap: 0.75rem;
       padding: 0.6rem 0.875rem;
       border-radius: var(--radius-md);
-      background: #ffffff;
+      background: var(--bg-card);
       border: 1px solid var(--border-hairline);
       transition: background-color var(--duration-fast) var(--ease-out),
                   border-color var(--duration-fast) var(--ease-out);
@@ -531,7 +808,7 @@
     }
 
     .prediction-row.top-1 .pred-rank {
-      color: #ffffff;
+      color: #121211;
       background: var(--primary-accent);
       border-radius: 50%;
       width: 1.45rem;
@@ -559,7 +836,7 @@
     .pred-bar-fill {
       height: 100%;
       border-radius: var(--radius-pill);
-      background: #94918a;
+      background: var(--text-stone-faint);
       transform-origin: left;
       /* GPU-composited transform transition with Emil Kowalski ease-out */
       transition: transform var(--duration-normal) var(--ease-out);
@@ -602,7 +879,7 @@
       padding: 0.45rem 0.75rem;
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-sm);
-      background: #ffffff;
+      background: var(--bg-card);
       color: var(--text-ink);
       outline: none;
       width: 100%;
@@ -689,7 +966,26 @@
   <div class="container">
     <!-- Beside-Inspired Header -->
     <header>
-      <h1>Perplexity Explorer</h1>
+      <div class="header-top-row">
+        <h1>Perplexity Explorer</h1>
+        <button type="button" id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle light or dark theme">
+          <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="theme-toggle-text">Dark mode</span>
+        </button>
+      </div>
       <p class="header-subtitle">
         Autoregressive language models predict one token at a time. Perplexity measures their surprise: the geometric mean branching factor across the sequence. Explore real neural probabilities, trace the math step by step, or simulate your own.
       </p>
@@ -701,8 +997,7 @@
     <section class="panel" id="section-input" aria-labelledby="sec1-title">
       <div class="panel-header">
         <div class="panel-title-group">
-          <div class="eyebrow">Section 01 · Input</div>
-          <h2 class="panel-title" id="sec1-title">Sentence Analysis</h2>
+          <h2 class="panel-title" id="sec1-title"><span class="section-indicator">01</span>Sentence Analysis</h2>
           <p class="panel-desc">Enter any sentence to compute token probabilities and perplexity using in-browser DistilGPT-2.</p>
         </div>
       </div>
@@ -746,9 +1041,27 @@
     <section class="panel" id="section-breakdown" aria-labelledby="sec2-title">
       <div class="panel-header">
         <div class="panel-title-group">
-          <div class="eyebrow">Section 02 · Derivation</div>
-          <h2 class="panel-title" id="sec2-title">Token Probabilities &amp; Perplexity</h2>
+          <h2 class="panel-title" id="sec2-title"><span class="section-indicator">02</span>Token Probabilities &amp; Perplexity</h2>
           <p class="panel-desc">Conditional probability P(token | context) and the step-by-step geometric mean calculation.</p>
+        </div>
+      </div>
+
+      <!-- Interactive Branching Factor Visual -->
+      <div class="branching-visual-card">
+        <div class="visual-header">
+          <div class="visual-title-group">
+            <h3 class="visual-title">Sequence Branching &amp; Uncertainty Path</h3>
+            <p class="visual-subtitle">
+              Visualizing how the model branches at each transition. Narrow beam = high certainty (low surprise); wide branching fan = high uncertainty (surprising token).
+            </p>
+          </div>
+          <div class="visual-legend">
+            <span class="legend-item"><span class="legend-dot focused"></span> High Probability (P &gt; 0.1)</span>
+            <span class="legend-item"><span class="legend-dot surprising"></span> Surprising Token (P &le; 0.01)</span>
+          </div>
+        </div>
+        <div class="visual-svg-wrapper" id="branching-svg-container">
+          <!-- Dynamically generated crisp SVG tree -->
         </div>
       </div>
 
@@ -803,8 +1116,7 @@
     <section class="panel" id="section-predictions" aria-labelledby="sec3-title">
       <div class="panel-header">
         <div class="panel-title-group">
-          <div class="eyebrow">Section 03 · Predictions</div>
-          <h2 class="panel-title" id="sec3-title">Next-Token Distribution</h2>
+          <h2 class="panel-title" id="sec3-title"><span class="section-indicator">03</span>Next-Token Distribution</h2>
           <p class="panel-desc">Top 8 candidates predicted by DistilGPT-2 at the sentence terminus.</p>
         </div>
       </div>
@@ -823,10 +1135,9 @@
       <div class="panel-header">
         <div class="panel-title-group">
           <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
-            <div class="eyebrow">Section 04 · Sandbox</div>
+            <h2 class="panel-title" id="sec4-title"><span class="section-indicator">04</span>Try It by Hand</h2>
             <span class="sim-tag">Simulated · Not from model</span>
           </div>
-          <h2 class="panel-title" id="sec4-title">Try It by Hand</h2>
           <p class="panel-desc">Manually adjust token probabilities to observe how a single surprising word swings the geometric mean.</p>
         </div>
       </div>
@@ -1142,6 +1453,121 @@
     }
 
     // -------------------------------------------------------------
+    // Theme Management (Light / Dark Mode with System Detection & LocalStorage)
+    // -------------------------------------------------------------
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeToggleText = document.getElementById("theme-toggle-text");
+
+    function getInitialTheme() {
+      const saved = localStorage.getItem("ppx_theme");
+      if (saved === "dark" || saved === "light") return saved;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    function applyTheme(theme) {
+      if (theme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        if (themeToggleText) themeToggleText.textContent = "Light mode";
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+        if (themeToggleText) themeToggleText.textContent = "Dark mode";
+      }
+      localStorage.setItem("ppx_theme", theme);
+    }
+
+    const currentTheme = getInitialTheme();
+    applyTheme(currentTheme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        applyTheme(isDark ? "light" : "dark");
+      });
+    }
+
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      if (!localStorage.getItem("ppx_theme")) {
+        applyTheme(e.matches ? "dark" : "light");
+      }
+    });
+
+    // -------------------------------------------------------------
+    // Render Branching Factor Visual (Vector Representation)
+    // -------------------------------------------------------------
+    function renderBranchingVisual(items) {
+      const container = document.getElementById("branching-svg-container");
+      if (!container) return;
+
+      if (!items || items.length === 0) {
+        items = [
+          { displayToken: "I", prob: 0.5, invProb: 2.0 },
+          { displayToken: "love", prob: 0.8, invProb: 1.25 },
+          { displayToken: "Python", prob: 0.2, invProb: 5.0 }
+        ];
+      }
+
+      const stepWidth = 140;
+      const paddingX = 80;
+      const totalWidth = Math.max(680, items.length * stepWidth + paddingX * 2);
+      const height = 180;
+      const centerY = 85;
+
+      let svgHtml = `
+        <svg viewBox="0 0 ${totalWidth} ${height}" width="100%" height="${height}" preserveAspectRatio="xMidYMid meet" class="branching-svg" aria-label="Sequence branching tree">
+          <defs>
+            <linearGradient id="beam-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--primary-accent)" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="var(--primary-accent)" stop-opacity="0.9" />
+            </linearGradient>
+          </defs>
+      `;
+
+      let spinePath = `M ${paddingX} ${centerY}`;
+      for (let i = 1; i < items.length; i++) {
+        const x = paddingX + i * stepWidth;
+        spinePath += ` L ${x} ${centerY}`;
+      }
+      svgHtml += `<path d="${spinePath}" stroke="var(--border-stone)" stroke-width="2" stroke-dasharray="4 4" fill="none" />`;
+
+      items.forEach((item, i) => {
+        const x = paddingX + i * stepWidth;
+        const isSurprise = item.prob < 0.05;
+        const isHighProb = item.prob >= 0.15;
+        const branchColor = isSurprise ? "var(--accent-coral)" : (isHighProb ? "var(--primary-accent)" : "var(--accent-amber)");
+        const numRays = isSurprise ? 7 : (isHighProb ? 2 : 4);
+        const spread = isSurprise ? 48 : (isHighProb ? 14 : 28);
+
+        if (i < items.length - 1) {
+          const nextX = x + stepWidth;
+          for (let r = 0; r < numRays; r++) {
+            const offsetAngle = ((r / (numRays - 1 || 1)) - 0.5) * spread;
+            const targetY = centerY + offsetAngle;
+            const opacity = r === Math.floor(numRays / 2) ? "0.85" : "0.35";
+            const strokeW = r === Math.floor(numRays / 2) ? "2" : "1";
+            svgHtml += `
+              <line x1="${x}" y1="${centerY}" x2="${nextX}" y2="${targetY}" 
+                    stroke="${branchColor}" stroke-width="${strokeW}" stroke-opacity="${opacity}" 
+                    class="branch-ray" />
+            `;
+          }
+        }
+
+        svgHtml += `
+          <g class="node-group">
+            <circle cx="${x}" cy="${centerY}" r="7" fill="var(--bg-card)" stroke="${branchColor}" stroke-width="2.5" />
+            <circle cx="${x}" cy="${centerY}" r="3" fill="${branchColor}" />
+            <text x="${x}" y="${centerY - 20}" text-anchor="middle" class="svg-token-label" fill="var(--text-ink)">${item.displayToken}</text>
+            <text x="${x}" y="${centerY + 24}" text-anchor="middle" class="svg-prob-label" fill="var(--text-stone)">P=${(item.prob * 100).toFixed(1)}%</text>
+            <text x="${x}" y="${centerY + 38}" text-anchor="middle" class="svg-branch-label" fill="${branchColor}">1/P=${item.invProb.toFixed(1)}</text>
+          </g>
+        `;
+      });
+
+      svgHtml += `</svg>`;
+      container.innerHTML = svgHtml;
+    }
+
+    // -------------------------------------------------------------
     // Render Section 2 Table & 3-Step Breakdown
     // -------------------------------------------------------------
     function renderSection2Table(items) {
@@ -1151,11 +1577,13 @@
       const invValues = items.map((x) => x.invProb);
       const N = items.length;
 
+      // Render Dynamic Branching Factor SVG
+      renderBranchingVisual(items);
+
       // Populate Table Rows
       items.forEach((item, idx) => {
         const tr = document.createElement("tr");
 
-        // Format probability: clean decimal & percentage
         const pct = (item.prob * 100).toFixed(2);
         const probDisplay = item.prob < 0.0001 
           ? item.prob.toExponential(3) 
@@ -1170,10 +1598,8 @@
         tokenTableBody.appendChild(tr);
       });
 
-      // Step 1: Explicit multiplication of all 1/P values
       const multiplicationTerms = invValues.map((v) => v.toFixed(2)).join(" × ");
       
-      // Calculate overall product (in log-space to prevent overflow)
       let logProduct = 0;
       for (const v of invValues) {
         logProduct += Math.log(v);
@@ -1182,11 +1608,8 @@
       const productDisplay = rawProduct > 1e7 ? rawProduct.toExponential(3) : rawProduct.toFixed(2);
 
       step1Content.textContent = `${multiplicationTerms} = ${productDisplay}`;
-
-      // Step 2: N = token count
       step2Content.textContent = `N = ${N} token${N === 1 ? "" : "s"}`;
 
-      // Step 3: Perplexity = (product)^(1/N)
       const perplexity = computePerplexityLogSpace(probabilities);
       const pplDisplay = perplexity > 1e7 ? perplexity.toExponential(2) : perplexity.toFixed(2);
 
@@ -1194,6 +1617,9 @@
         Perplexity = ${pplDisplay}
         <span class="step-hero-formula">(${productDisplay}<sup>1/${N}</sup>)</span>
       `;
+      step3Perplexity.classList.remove("number-updated");
+      void step3Perplexity.offsetWidth;
+      step3Perplexity.classList.add("number-updated");
 
       step3Desc.innerHTML = `
         <strong>Interpretation:</strong> On average across each word, the model was as uncertain as choosing uniformly between <strong>${pplDisplay}</strong> equally likely words. Lower numbers indicate higher predictability and model confidence.
@@ -1416,6 +1842,9 @@
         Perplexity = ${pplDisplay}
         <span class="step-hero-formula">(${prodDisplay}<sup>1/${N}</sup>)</span>
       `;
+      simStep3Perplexity.classList.remove("number-updated");
+      void simStep3Perplexity.offsetWidth;
+      simStep3Perplexity.classList.add("number-updated");
 
       simStep3Desc.innerHTML = `
         <strong>Simulated Result:</strong> With these probabilities, the geometric mean surprise is <strong>${pplDisplay}</strong>. A single low-probability word significantly inflates perplexity.
@@ -1491,8 +1920,9 @@
       });
     });
 
-    // Initial Simulator render on page load
+    // Initial renders on page load
     renderSimulator();
+    renderBranchingVisual([]);
   </script>
 </body>
 </html>

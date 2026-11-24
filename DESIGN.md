@@ -1,6 +1,6 @@
 ---
 name: Perplexity Explorer
-description: Beside-inspired in-browser language model perplexity and next-token prediction laboratory
+description: Beside-inspired in-browser language model perplexity and next-token prediction laboratory with dark mode & branching factor visual
 colors:
   bg-canvas: "#ffffff"
   bg-panel: "#f7f6f3"
@@ -29,6 +29,19 @@ colors:
   border-hover: "#ecebe7"
   ink-pure: "#000000"
   white-pure: "#ffffff"
+  dark-canvas: "#121211"
+  dark-panel: "#1a1918"
+  dark-card: "#151413"
+  dark-pill: "#242321"
+  dark-subtle: "#1e1d1c"
+  dark-text-ink: "#f5f4f0"
+  dark-text-body: "#ddd9d0"
+  dark-text-stone: "#9e9a91"
+  dark-text-stone-faint: "#807d76"
+  dark-primary-accent: "#5b9cff"
+  dark-border-hairline: "#2a2927"
+  dark-border-stone: "#383633"
+  dark-border-hover: "#32302d"
 typography:
   display:
     fontFamily: "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
@@ -48,6 +61,12 @@ typography:
     fontWeight: 700
     lineHeight: 1.3
     letterSpacing: "-0.02em"
+  title-md:
+    fontFamily: "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 700
+    lineHeight: 1.35
+    letterSpacing: "-0.015em"
   subtitle:
     fontFamily: "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
     fontSize: "1.0625rem"
@@ -126,3 +145,8 @@ components:
     borderColor: "{colors.border-hairline}"
     textColor: "{colors.text-ink}"
     rounded: "{rounded.sm}"
+  visual-card:
+    backgroundColor: "{colors.bg-card}"
+    borderColor: "{colors.border-hairline}"
+    rounded: "{rounded.md}"
+    padding: "1.25rem"
