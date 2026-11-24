@@ -1,63 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-type="software">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perplexity Explorer: In-Browser LM Perplexity &amp; Next-Token Lab</title>
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <title>Perplexity Explorer: Interactive Language Model Perplexity &amp; Next-Token Lab</title>
   <style>
     /* -------------------------------------------------------------
-       Design Tokens & CSS Variables
-       Clean light UI: white cards, crisp borders, indigo/purple accents
+       Design Tokens: Architectural Light Palette
+       Zero AI slop: no loud neon gradients, no muddy heavy shadows.
+       Disciplined ink, cobalt accents, hairline framing, and micro-grid.
        ------------------------------------------------------------- */
     :root {
-      --bg-page: #f8fafc;
+      /* Backgrounds & Canvas */
+      --bg-canvas: #f8fafc;
       --bg-card: #ffffff;
       --bg-subtle: #f1f5f9;
       --bg-muted: #e2e8f0;
-      
-      --text-main: #0f172a;
+      --bg-inset: #f8fafc;
+
+      /* Typography */
+      --text-ink: #0f172a;
+      --text-body: #1e293b;
       --text-muted: #334155;
       --text-faint: #475569;
-      
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-active: #3730a3;
-      --primary-light: #eef2ff;
-      --primary-border: #c7d2fe;
+      --text-subtle: #64748b;
 
-      --accent-purple: #7c3aed;
-      --accent-purple-light: #f5f3ff;
-      --accent-green: #059669;
-      --accent-green-light: #ecfdf5;
+      /* Restrained Accent Palette */
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-active: #172554;
+      --primary-subtle: #eff6ff;
+      --primary-border: #bfdbfe;
+
+      --secondary-violet: #6d28d9;
+      --secondary-violet-subtle: #f5f3ff;
+      --secondary-violet-border: #ddd6fe;
+
+      /* Semantic Status Colors */
+      --accent-green: #047857;
+      --accent-green-bg: #ecfdf5;
+      --accent-green-border: #a7f3d0;
+
       --accent-amber: #92400e;
-      --accent-amber-light: #fef3c7;
+      --accent-amber-bg: #fef3c7;
       --accent-amber-border: #fde68a;
+
       --accent-red: #b91c1c;
-      --accent-red-light: #fef2f2;
+      --accent-red-bg: #fef2f2;
       --accent-red-border: #fecaca;
 
-      --border-card: #cbd5e1;
+      /* Hairline Structural Borders */
+      --border-hairline: #cbd5e1;
       --border-subtle: #e2e8f0;
-      
+      --border-strong: #94a3b8;
+
+      /* Disciplined Radii */
+      --radius-xs: 4px;
       --radius-sm: 6px;
       --radius-md: 10px;
-      --radius-lg: 14px;
-      --radius-xl: 18px;
+      --radius-lg: 12px;
       --radius-pill: 9999px;
-      
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
-      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
-      
-      /* Emil Kowalski custom easing curves */
+
+      /* Layered Architectural Shadows */
+      --shadow-hairline: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+      --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+      --shadow-elevated: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+
+      /* Emil Kowalski Motion Curves */
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
       --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-      --duration-fast: 140ms;
+      --duration-fast: 130ms;
       --duration-normal: 220ms;
     }
 
     /* -------------------------------------------------------------
-       Base Layout & Typography
+       Base Reset & Canvas Texture
        ------------------------------------------------------------- */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -67,12 +86,16 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-main);
+      background-color: var(--bg-canvas);
+      /* Subtle laboratory micro-grid background */
+      background-image: radial-gradient(circle at 1px 1px, rgba(71, 85, 105, 0.1) 1px, transparent 0);
+      background-size: 20px 20px;
+      color: var(--text-body);
       line-height: 1.5;
       min-height: 100vh;
-      padding: 2.5rem 1.25rem 4rem;
+      padding: 2.75rem 1.25rem 4.5rem;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .container {
@@ -83,51 +106,77 @@
       gap: 2rem;
     }
 
-    /* Header */
+    /* -------------------------------------------------------------
+       Hero / Editorial Header
+       ------------------------------------------------------------- */
     header {
       text-align: center;
       margin-bottom: 0.5rem;
+      animation: hero-enter 380ms var(--ease-out) forwards;
+    }
+
+    @keyframes hero-enter {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .header-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      background: var(--primary-light);
-      border: 1px solid var(--primary-border);
+      gap: 0.45rem;
+      padding: 0.3rem 0.8rem;
+      background: #ffffff;
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-pill);
       color: var(--primary);
       font-size: 0.8125rem;
       font-weight: 600;
-      margin-bottom: 0.875rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-hairline);
+      margin-bottom: 1rem;
+    }
+
+    .header-badge-dot {
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
+      background: var(--primary);
     }
 
     h1 {
       font-size: 2.25rem;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text-main);
-      margin-bottom: 0.625rem;
+      letter-spacing: -0.035em;
+      color: var(--text-ink);
+      line-height: 1.18;
+      margin-bottom: 0.75rem;
     }
 
     .header-subtitle {
       font-size: 1rem;
       color: var(--text-muted);
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto;
       line-height: 1.6;
     }
 
     /* -------------------------------------------------------------
-       Cards
+       Card Architecture
        ------------------------------------------------------------- */
     .card {
       background: var(--bg-card);
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-lg);
       padding: 1.75rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-card);
+      position: relative;
     }
 
     .card-header {
@@ -149,25 +198,27 @@
     .card-title {
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--text-main);
+      color: var(--text-ink);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      letter-spacing: -0.01em;
+      gap: 0.6rem;
+      letter-spacing: -0.015em;
     }
 
     .card-number {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1.625rem;
-      height: 1.625rem;
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 0.875rem;
+      width: 1.65rem;
+      height: 1.65rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-ink);
+      font-size: 0.8125rem;
       font-weight: 700;
-      border-radius: 50%;
+      border-radius: var(--radius-xs);
       flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
     }
 
     .card-desc {
@@ -176,7 +227,7 @@
     }
 
     /* -------------------------------------------------------------
-       Form Controls & Buttons
+       Form Controls & Tactile Buttons
        ------------------------------------------------------------- */
     .input-group {
       display: flex;
@@ -194,20 +245,21 @@
       flex: 1 1 320px;
       font-size: 1rem;
       padding: 0.8rem 1rem;
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-md);
-      background: var(--bg-card);
-      color: var(--text-main);
+      background: #ffffff;
+      color: var(--text-ink);
       outline: none;
       transition: border-color var(--duration-fast) var(--ease-out),
                   box-shadow var(--duration-fast) var(--ease-out);
     }
 
-    .text-input:focus {
+    .text-input:focus-visible {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
     }
 
+    /* Buttons */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -232,50 +284,69 @@
       transform: scale(0.97);
     }
 
+    .btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* Primary CTA */
     .btn-primary {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 1px 2px 0 rgba(79, 70, 229, 0.3);
+      border-color: #1e40af;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 2px 0 rgba(15, 23, 42, 0.12);
     }
 
     @media (hover: hover) and (pointer: fine) {
       .btn-primary:hover {
         background: var(--primary-hover);
+        border-color: var(--primary-active);
       }
     }
 
     .btn-primary:active {
       background: var(--primary-active);
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.2);
     }
 
     .btn-primary:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
+      box-shadow: none;
     }
 
+    /* Secondary Controls */
     .btn-secondary {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-card);
-      color: var(--text-main);
+      background: #ffffff;
+      border: 1px solid var(--border-hairline);
+      color: var(--text-ink);
+      box-shadow: var(--shadow-hairline);
     }
 
     @media (hover: hover) and (pointer: fine) {
       .btn-secondary:hover {
-        background: var(--bg-muted);
-        border-color: var(--border-card);
+        background: var(--bg-subtle);
+        border-color: var(--border-strong);
       }
     }
 
+    .btn-secondary:active {
+      background: var(--bg-muted);
+      transform: scale(0.97);
+    }
+
+    /* Sample Pills */
     .btn-sample {
       font-size: 0.8125rem;
-      padding: 0.4rem 0.75rem;
+      padding: 0.42rem 0.75rem;
       background: #ffffff;
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-sm);
       color: var(--text-muted);
       font-weight: 500;
       cursor: pointer;
+      box-shadow: var(--shadow-hairline);
       transition: background-color var(--duration-fast) var(--ease-out),
                   border-color var(--duration-fast) var(--ease-out),
                   color var(--duration-fast) var(--ease-out),
@@ -286,12 +357,17 @@
       .btn-sample:hover {
         border-color: var(--primary-border);
         color: var(--primary);
-        background: var(--primary-light);
+        background: var(--primary-subtle);
       }
     }
 
     .btn-sample:active {
       transform: scale(0.97);
+    }
+
+    .btn-sample:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
     }
 
     .samples-row {
@@ -316,9 +392,10 @@
       padding: 0.75rem 1rem;
       border-radius: var(--radius-md);
       background: var(--bg-subtle);
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       color: var(--text-muted);
       margin-top: 0.25rem;
+      transition: border-color var(--duration-normal) var(--ease-out);
     }
 
     .status-indicator {
@@ -327,17 +404,18 @@
       border-radius: 50%;
       background: var(--text-faint);
       flex-shrink: 0;
-      transition: background-color var(--duration-normal) var(--ease-out);
+      transition: background-color var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out);
     }
 
     .status-indicator.ready {
       background: var(--accent-green);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2);
     }
 
     .status-indicator.loading {
       background: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.2);
       animation: pulse-dot 1.2s infinite ease-in-out;
     }
 
@@ -355,7 +433,7 @@
       display: none;
       padding: 0.875rem 1rem;
       border-radius: var(--radius-md);
-      background: var(--accent-red-light);
+      background: var(--accent-red-bg);
       border: 1px solid var(--accent-red-border);
       color: var(--accent-red);
       font-size: 0.875rem;
@@ -363,12 +441,11 @@
     }
 
     /* -------------------------------------------------------------
-       Tables
-       Inset with clean padding to avoid cramped edges
+       Tables: Inset Architecture
        ------------------------------------------------------------- */
     .table-container {
       overflow-x: auto;
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-md);
       background: #ffffff;
       padding: 0.625rem;
@@ -387,14 +464,14 @@
       color: var(--text-muted);
       font-weight: 600;
       padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border-card);
+      border-bottom: 1px solid var(--border-hairline);
       white-space: nowrap;
     }
 
     td {
       padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--border-subtle);
-      color: var(--text-main);
+      color: var(--text-ink);
       font-variant-numeric: tabular-nums;
       vertical-align: middle;
       overflow-wrap: anywhere;
@@ -408,26 +485,30 @@
       display: inline-block;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
       font-size: 0.875rem;
-      padding: 0.2rem 0.5rem;
+      padding: 0.22rem 0.55rem;
       background: var(--bg-subtle);
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-sm);
       color: var(--primary);
       font-weight: 600;
       word-break: break-all;
     }
 
+    .space-glyph {
+      color: var(--text-subtle);
+      font-weight: 400;
+    }
+
     /* -------------------------------------------------------------
        Three-Step Perplexity Breakdown
+       Flattened architectural layout: clear dividers, no card-nesting
        ------------------------------------------------------------- */
     .breakdown-box {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-card);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+      gap: 1.125rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.5rem;
     }
 
     .step-item {
@@ -448,23 +529,23 @@
     }
 
     .step-content {
-      background: #ffffff;
-      border: 1px solid var(--border-card);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
       padding: 0.75rem 1rem;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 0.875rem;
-      color: var(--text-main);
+      color: var(--text-ink);
       overflow-x: auto;
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
 
     .step-highlight {
-      background: linear-gradient(135deg, var(--primary-light), var(--accent-purple-light));
-      border: 1.5px solid var(--primary-border);
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
       border-radius: var(--radius-md);
-      padding: 1.25rem;
+      padding: 1.35rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -473,8 +554,8 @@
     .step-highlight-value {
       font-size: 2.25rem;
       font-weight: 800;
-      color: var(--primary-hover);
-      letter-spacing: -0.02em;
+      color: var(--primary);
+      letter-spacing: -0.025em;
       display: flex;
       align-items: baseline;
       gap: 0.75rem;
@@ -485,11 +566,12 @@
     .step-highlight-desc {
       font-size: 0.875rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     /* -------------------------------------------------------------
        Section 3: Top Predictions Next-Token Bars
+       GPU-composited scaleX with staggered entrance
        ------------------------------------------------------------- */
     .predictions-grid {
       display: flex;
@@ -502,10 +584,11 @@
       grid-template-columns: 2.25rem 7.5rem 1fr 4.5rem;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.5rem 0.75rem;
+      padding: 0.55rem 0.85rem;
       border-radius: var(--radius-md);
       background: #ffffff;
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-hairline);
       transition: background-color var(--duration-fast) var(--ease-out),
                   border-color var(--duration-fast) var(--ease-out);
     }
@@ -513,13 +596,13 @@
     @media (hover: hover) and (pointer: fine) {
       .prediction-row:hover {
         background: var(--bg-subtle);
+        border-color: var(--border-strong);
       }
     }
 
     .prediction-row.top-1 {
-      background: var(--primary-light);
+      background: var(--primary-subtle);
       border-color: var(--primary-border);
-      box-shadow: 0 0 0 1px var(--primary-border);
     }
 
     .pred-rank {
@@ -534,17 +617,18 @@
     .prediction-row.top-1 .pred-rank {
       color: var(--primary);
       background: #ffffff;
+      border: 1px solid var(--primary-border);
       border-radius: 50%;
       width: 1.5rem;
       height: 1.5rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-hairline);
     }
 
     .pred-token {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 0.875rem;
       font-weight: 600;
-      color: var(--text-main);
+      color: var(--text-ink);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -571,14 +655,14 @@
     }
 
     .prediction-row.top-1 .pred-bar-fill {
-      background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+      background: var(--primary);
     }
 
     .pred-pct {
       font-size: 0.8125rem;
       font-weight: 700;
       text-align: right;
-      color: var(--text-main);
+      color: var(--text-ink);
       font-variant-numeric: tabular-nums;
     }
 
@@ -590,7 +674,7 @@
       align-items: center;
       gap: 0.375rem;
       padding: 0.25rem 0.625rem;
-      background: var(--accent-amber-light);
+      background: var(--accent-amber-bg);
       border: 1px solid var(--accent-amber-border);
       border-radius: var(--radius-pill);
       color: var(--accent-amber);
@@ -611,19 +695,19 @@
       font-family: inherit;
       font-size: 0.875rem;
       padding: 0.45rem 0.65rem;
-      border: 1px solid var(--border-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-sm);
       background: #ffffff;
-      color: var(--text-main);
+      color: var(--text-ink);
       outline: none;
       width: 100%;
       transition: border-color var(--duration-fast) var(--ease-out),
                   box-shadow var(--duration-fast) var(--ease-out);
     }
 
-    .sim-row-input:focus {
+    .sim-row-input:focus-visible {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.15);
     }
 
     .btn-delete-row {
@@ -646,12 +730,18 @@
     @media (hover: hover) and (pointer: fine) {
       .btn-delete-row:hover {
         color: var(--accent-red);
-        background: var(--accent-red-light);
+        background: var(--accent-red-bg);
+        border-color: var(--accent-red-border);
       }
     }
 
     .btn-delete-row:active {
       transform: scale(0.97);
+    }
+
+    .btn-delete-row:focus-visible {
+      outline: 2px solid var(--accent-red);
+      outline-offset: 1px;
     }
 
     .sim-actions-row {
@@ -677,7 +767,7 @@
     /* Responsive adjustments */
     @media (max-width: 640px) {
       body {
-        padding: 1.25rem 0.75rem 3rem;
+        padding: 1.5rem 0.875rem 3.5rem;
       }
       .card {
         padding: 1.25rem;
@@ -698,11 +788,12 @@
     <!-- Header -->
     <header>
       <div class="header-badge">
-        <span>⚡</span> Live In-Browser Neural Lab
+        <span class="header-badge-dot" aria-hidden="true"></span>
+        Measuring Language Model Surprise
       </div>
       <h1>Perplexity Explorer</h1>
       <p class="header-subtitle">
-        Understand how Language Models assign probabilities to tokens, how surprise is measured, and how perplexity is computed step by step.
+        Autoregressive language models predict one token at a time. Perplexity measures their surprise: the geometric mean branching factor across the sequence. Explore real neural probabilities, trace the math step by step, or simulate your own.
       </p>
     </header>
 
@@ -713,9 +804,9 @@
       <div class="card-header">
         <div class="card-title-group">
           <h2 class="card-title" id="sec1-title">
-            <span class="card-number">1</span> Type a sentence
+            <span class="card-number">01</span> Sentence Analysis
           </h2>
-          <p class="card-desc">Enter any sentence to compute token probabilities and perplexity using a real in-browser DistilGPT-2 model.</p>
+          <p class="card-desc">Enter any sentence to compute token probabilities and perplexity using in-browser DistilGPT-2.</p>
         </div>
       </div>
 
@@ -735,7 +826,7 @@
         </div>
 
         <div class="samples-row">
-          <span class="samples-label">Try sample:</span>
+          <span class="samples-label">Sample prompts:</span>
           <button type="button" class="btn-sample" data-sample="I love Python">"I love Python"</button>
           <button type="button" class="btn-sample" data-sample="Python love I">"Python love I"</button>
           <button type="button" class="btn-sample" data-sample="The capital of France is Paris">"The capital of France is Paris"</button>
@@ -757,9 +848,9 @@
       <div class="card-header">
         <div class="card-title-group">
           <h2 class="card-title" id="sec2-title">
-            <span class="card-number">2</span> Probability of each token → Perplexity
+            <span class="card-number">02</span> Token Probabilities &amp; Derivation
           </h2>
-          <p class="card-desc">Each token's conditional probability given previous tokens, combined into geometric mean surprise.</p>
+          <p class="card-desc">Conditional probability P(token | context) and the step-by-step geometric mean calculation.</p>
         </div>
       </div>
 
@@ -770,7 +861,7 @@
               <th scope="col" style="width: 3.5rem;">#</th>
               <th scope="col">Token</th>
               <th scope="col">Probability (P)</th>
-              <th scope="col">1 / P</th>
+              <th scope="col">1 / P (Branching)</th>
             </tr>
           </thead>
           <tbody id="token-table-body">
@@ -790,7 +881,7 @@
         </div>
 
         <div class="step-item">
-          <div class="step-header">Step 2: Token count (N)</div>
+          <div class="step-header">Step 2: Sequence length (N)</div>
           <div class="step-content" id="step2-content">N = 0</div>
         </div>
 
@@ -813,9 +904,9 @@
       <div class="card-header">
         <div class="card-title-group">
           <h2 class="card-title" id="sec3-title">
-            <span class="card-number">3</span> What does the model predict next?
+            <span class="card-number">03</span> Next-Token Distribution
           </h2>
-          <p class="card-desc">Top 8 most likely next tokens predicted by DistilGPT-2 at the final position.</p>
+          <p class="card-desc">Top 8 candidates predicted by DistilGPT-2 at the sentence terminus.</p>
         </div>
       </div>
 
@@ -834,11 +925,11 @@
         <div class="card-title-group">
           <div style="display: flex; align-items: center; gap: 0.625rem; flex-wrap: wrap;">
             <h2 class="card-title" id="sec4-title">
-              <span class="card-number">4</span> Try it by hand
+              <span class="card-number">04</span> Try It by Hand
             </h2>
             <span class="sim-badge">Simulated, not from the model</span>
           </div>
-          <p class="card-desc">Test manual probabilities to build intuition for how individual surprising words impact perplexity.</p>
+          <p class="card-desc">Manually adjust token probabilities to observe how a single surprising word swings the geometric mean.</p>
         </div>
       </div>
 
@@ -856,12 +947,12 @@
               <th scope="col" style="width: 3rem;">#</th>
               <th scope="col" style="min-width: 140px;">Token</th>
               <th scope="col" style="min-width: 140px;">Probability (P)</th>
-              <th scope="col" style="min-width: 100px;">1 / P</th>
+              <th scope="col" style="min-width: 110px;">1 / P</th>
               <th scope="col" style="width: 4rem; text-align: center;">Action</th>
             </tr>
           </thead>
           <tbody id="sim-table-body">
-            <!-- Dynamic rows will be inserted here -->
+            <!-- Dynamic rows inserted here -->
           </tbody>
         </table>
       </div>
@@ -883,7 +974,7 @@
         </div>
 
         <div class="step-item">
-          <div class="step-header">Step 2: Token count (N)</div>
+          <div class="step-header">Step 2: Sequence length (N)</div>
           <div class="step-content" id="sim-step2-content">N = 0</div>
         </div>
 
@@ -963,7 +1054,7 @@
     // -------------------------------------------------------------
     function formatTokenDisplay(rawToken) {
       if (!rawToken) return "empty";
-      // Replace leading or embedded spaces with visible symbol ␣
+      // Replace leading or embedded spaces with visible glyph ␣
       const display = rawToken.replace(/ /g, "␣");
       return display;
     }
@@ -1070,7 +1161,6 @@
 
       try {
         // Encode text to token IDs
-        // In Transformers.js, tokenizer.encode returns an array or tensor of numbers
         const rawEncoded = await tokenizer.encode(text);
         const encodedIds = Array.isArray(rawEncoded) 
           ? rawEncoded 
@@ -1183,7 +1273,6 @@
       });
 
       // Step 1: Explicit multiplication of all 1/P values
-      // Example: 2.00 × 1.25 × 5.00 = 12.50
       const multiplicationTerms = invValues.map((v) => v.toFixed(2)).join(" × ");
       
       // Calculate overall product (in log-space to prevent overflow)
@@ -1335,7 +1424,7 @@
               min="0.0001" 
               max="1" 
               placeholder="0.0 to 1.0"
-              style="${!isValid ? 'border-color: var(--accent-red); background: var(--accent-red-light);' : ''}"
+              style="${!isValid ? 'border-color: var(--accent-red); background: var(--accent-red-bg);' : ''}"
             />
           </td>
           <td style="font-weight: 600; color: var(--text-muted);">

@@ -7,40 +7,41 @@
 web
 
 ## Stack
-Plain HTML, CSS, and vanilla JavaScript (single self-contained index.html with Transformers.js via ESM CDN).
+Single self-contained index.html (plain semantic HTML5, modern CSS with architectural depth and micro-grid texture, vanilla ES modules with Transformers.js v3). Zero runtime frameworks, external stylesheets, bundlers, or server dependencies.
 
 ## Users
-Students, machine learning practitioners, software developers, and researchers seeking to deeply understand how language models assign probabilities to text, how perplexity is mathematically derived, and how surprise impacts model evaluation.
+Machine learning engineers, researchers, students, and curious software practitioners seeking to build visceral, grounded intuition for language model uncertainty, conditional token likelihoods, and the mathematical mechanics of perplexity.
 
 ## Product Purpose
-Perplexity Explorer is an interactive, educational in-browser laboratory for language model perplexity and next-token prediction. It demystifies language model uncertainty by running real client-side neural network inference (DistilGPT-2 via Transformers.js), calculating per-token conditional probabilities with numerically stable softmax, visualizing the explicit three-step perplexity breakdown, showing top-8 next-token predictions, and offering a simulated sandbox for manual experimentation.
+Perplexity Explorer transforms abstract statistical formulas into a tactile, museum-grade scientific instrument. It allows visitors to examine genuine client-side neural language model inference (DistilGPT-2 via Transformers.js), inspect exact token-by-token branching factors, follow an explicit step-by-step arithmetic derivation, observe next-token probability distributions, and experiment with interactive manual simulations to see how individual unexpected words swing perplexity.
 
 ## Positioning
-Unlike static textbook formulas or black-box API endpoints, Perplexity Explorer executes genuine neural network inference directly in the browser with zero backend requirements or API keys, while simultaneously pairing real model outputs with an interactive manual simulator that makes the exponential/log-space mathematics immediately tangible.
+Unlike textbook equations or generic AI SaaS toys with cookie-cutter cards and purple gradients, Perplexity Explorer is designed with editorial gravity and scientific dignity. It executes genuine client-side neural weights in real time without fake probabilities, presenting raw token mechanics with architectural precision, high tabular readability, and clear separation between model-derived facts and manual sandbox simulations.
 
 ## Operating Context
-Interactive ML utility and educational tool operating in **Operate** surface mode. The interface prioritizes scanability, numerical precision, live responsiveness, and clear distinction between model-generated facts and manual simulations.
+Dual **Experience + Operate** interactive explainer. The interface combines the editorial polish and atmospheric poise of an architectural scientific exhibit with the dense scanability, instant reactivity, and strict numerical discipline required of an engineering analysis workbench.
 
 ## Capabilities and Constraints
-- In-browser neural inference using Xenova/distilgpt2 (q8 quantization) via Transformers.js.
-- BOS prefixing ([50256, ...tokens]) ensuring every token (including the first) receives a well-defined conditional probability.
-- Numerically stable softmax probability calculation over the 50,257-token vocabulary.
-- Log-space computation: Math.exp(mean(-Math.log(P))) to avoid overflow/underflow.
-- Explicit 3-step breakdown: (1) Multiplication of 1/P terms, (2) Token count N, (3) Large display of Perplexity = (product)^(1/N).
-- Next-token distribution with top-8 horizontal percentage bars, highlighting #1.
-- Manual sandbox ("Simulated, not from the model") with interactive presets, dynamic row editing, and live reactive updates.
-- Hard constraint: 100% self-contained single index.html file with zero runtime external app files, frameworks, or bundlers.
+- In-browser causal language model inference using `Xenova/distilgpt2` (`dtype: "q8"`) via Transformers.js v3.
+- BOS token prefixing (`[50256, ...tokens]`) ensuring every token (including the sentence-opener) receives an authentic conditional probability from position 0.
+- Numerically stable max-subtracted softmax calculation over DistilGPT-2's 50,257-token vocabulary.
+- Log-space computation (`Math.exp(mean(-Math.log(P)))`) guaranteeing zero numerical overflow or underflow across arbitrary sequence lengths.
+- Explicit 3-step breakdown: (1) Multiplication of all inverse probabilities $\prod 1/P$, (2) Sequence token count $N$, (3) Prominent readout of Perplexity = $(\prod 1/P)^{1/N}$ with clear physical interpretation.
+- Next-token prediction distribution rendering top-8 candidates as GPU-composited horizontal percentage bars, highlighting #1.
+- "Try it by hand" manual sandbox (`"Simulated, not from the model"`) with editable rows, dynamic insertion/deletion, preset controls, and live mathematical reactivity.
+- Hard constraint: 100% self-contained single `index.html` file runnable anywhere.
 
 ## Brand Commitments
 - Name: Perplexity Explorer
-- Visual Direction: Clean light UI with white cards, subtle border elevations, rounded corners (8px–12px), primary indigo/violet accents (#4f46e5 / #4338ca), emerald accents for high probability, amber/rose for low probability/surprise.
-- Tone: Scholarly yet welcoming, precise, and transparent.
+- Aesthetic Direction: High-craft, anti-slop architectural light theme. Warm alabaster/linen ground (`#f8f9fa` to `#f4f5f7`) with a subtle geometric hairline micro-grid texture. Crisp pure white cards (`#ffffff`) framed with hairline borders (`#e2e5e9`) and disciplined corner radii. Deep charcoal ink typography (`#111827`), muted graphite metadata (`#4b5563`), restrained cobalt primary accent (`#2563eb` / `#1d4ed8`), with quiet secondary violet accents.
+- Zero generic AI slop: no loud purple-pink gradient fills, no oversized muddy dropshadows, no floating blur orbs, and no generic stacked cards.
 
 ## Product Principles
-1. **Mathematical Honesty**: Always derive probabilities directly from logits; never fabricate or fake model output.
-2. **Explicit Derivations**: Break down formulas into digestible intermediate steps with readable notation.
-3. **Instant Responsiveness**: Lazy-load the heavy model only when requested; provide sample prompts and presets that evaluate instantaneously.
-4. **Accessible Craft**: High contrast text, full keyboard navigation, clear aria-live announcements, and reduced-motion respect.
+1. **Museum-Grade Scientific Rigor**: Present mathematical derivations and neural distributions as transparent, reproducible instruments.
+2. **Ground Truth Integrity**: Derive model probabilities exclusively from real logits; never fake or hallucinate neural predictions.
+3. **Restrained Editorial Typography**: Use high-contrast editorial hierarchy, tabular figures for all numeric columns, and visible monospace glyphs (`␣`) for whitespace tokens.
+4. **Instant Tactile Reactivity**: Fast response times, sub-300ms interactive transitions, subtle press physics, and smooth GPU-composited visual bars.
+5. **Universal Accessibility**: Strict WCAG 2.2 AA conformance across all contrast ratios, complete keyboard navigability, and first-class reduced-motion support.
 
 ## Accessibility & Inclusion
-WCAG 2.2 AA compliant typography, contrast ratios exceeding 4.5:1, semantic HTML5 structure, accessible form controls with explicit labels, aria-live regions for calculation statuses, and keyboard-focusable action targets.
+Full WCAG 2.2 AA compliance: contrast ratios exceeding 5:1 for body and 4.5:1 for metadata, semantic HTML landmarks (`<header>`, `<main>`, `<section>`), explicit form labels, ARIA live regions for calculation state, and comprehensive `@media (prefers-reduced-motion: reduce)` accommodation.
