@@ -4,8 +4,9 @@ An interactive, museum-grade in-browser laboratory for language model perplexity
 
 Run real neural network causal inference (DistilGPT-2 via Transformers.js) directly inside your browser—zero API keys, zero servers, zero build steps.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-perplexity--xplorer.vercel.app-1d4ed8?style=for-the-badge&logo=vercel)](https://perplexity-xplorer.vercel.app)
+![Perplexity Explorer Banner](assets/banners/perplexity-explorer-banner.png)
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-perplexity--xplorer.vercel.app-1d4ed8?style=for-the-badge&logo=vercel)](https://perplexity-xplorer.vercel.app)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![Transformers.js](https://img.shields.io/badge/🤗_Transformers.js-v3-orange?style=flat)
@@ -23,26 +24,24 @@ Run real neural network causal inference (DistilGPT-2 via Transformers.js) direc
 
 ## Key Highlights
 
-- **⚡ Genuine In-Browser Neural Inference**: Lazy-loads `Xenova/distilgpt2` (`dtype: "q8"`) via Transformers.js v3 on the first calculation click. Real model outputs are never fabricated.
-- **🔢 Conditional Token Likelihoods**: Augmented BOS prefixing (`[50256, ...tokens]`) computes real conditional probabilities for every token, including the first word.
-- **📐 Explicit 3-Step Perplexity Breakdown**:
-  - **Step 1**: Mathematical product of all inverse probabilities ($\prod \frac{1}{P}$).
-  - **Step 2**: Total sequence token count $N$.
-  - **Step 3**: Geometric mean perplexity $(\prod \frac{1}{P})^{1/N}$, computed in log-space to prevent arithmetic underflow/overflow.
-- **🔮 Next-Token Distribution**: Top 8 predicted tokens visualised as horizontal percentage bars with custom easing and understated highlight on #1.
-- **🧪 "Try It by Hand" Interactive Simulator**: Test manual probabilities with instant reactive feedback and presets:
-  - *"I love Python"* ($0.5, 0.8, 0.2$) $\to$ Perplexity: **2.32**
-  - *"All 1/8"* ($8$ tokens at $0.125$) $\to$ Perplexity: **8.00**
-  - *"One surprising word"* ($0.9, 0.9, 0.9, 0.01$) $\to$ Perplexity: **3.42**
-- **🏛️ High-Craft Experience + Operate Design**:
-  - Architectural light palette with subtle micro-dot grid paper texture (`20px 20px`).
-  - Zero AI slop: no loud neon gradients, no muddy heavy shadows, and no generic stacked cards.
-  - Deep ink typography, hairline structural borders (`#cbd5e1`), and restrained cobalt accents.
-- **🎨 Emil Kowalski Micro-Interactions**:
-  - Custom cubic-bezier curves (`cubic-bezier(0.23, 1, 0.32, 1)`).
-  - Tactile press compression (`transform: scale(0.97)` on `:active`).
-  - 60fps GPU-composited transitions (`transform: scaleX(...)`, `opacity`).
-- **♿ Universal Accessibility**: Full WCAG 2.2 AA conformance (text contrast $\ge 5.2:1$), keyboard navigation, and first-class reduced-motion support.
+- **⚡ Genuine In-Browser Neural Inference**: Lazy-loads `Xenova/distilgpt2` (`dtype: "q8"`) via Transformers.js v3 on calculation click. Real model outputs are never fabricated.
+- **📦 Zero-Delay Preloaded State**: Mounts immediately with a verified cached DistilGPT-2 analysis for *"The capital of France is Paris"* and top 8 next-token predictions, eliminating empty loading states before downloading the 82MB model.
+- **🏛️ Beside-Inspired Asymmetric Bento Architecture**:
+  - **Section 01 (Command Card)**: Sleek full-width command deck with compact input dock and inline model status indicator pill (`idle / loading / ready`).
+  - **Sections 02 & 03 (Asymmetric Bento Row)**: Desktop 8:4 column split pairing token probabilities with next-token distribution.
+  - **Prominent Perplexity KPI & Intuition Scale**: Top-level score badge paired with a horizontal intuition meter (`1-10 Predictable`, `10-50 Natural`, `50-200 Odd`, `200+ Surprising`) with a live gliding needle.
+  - **Single-Row 3-Column Equation Strip**: Compact mathematical breakdown (`01 · Inverse Product` $\to$ `02 · Sequence Length N` $\to$ `03 · Geometric Mean`).
+- **🔗 Synced Token Surprise Strip & Tactile Canvas**:
+  - Interactive sequence chips tinted by certainty (muted teal `#0D9488` / `#58B89E`) vs. surprise (warm terracotta `#C2410C` / `#E87555`).
+  - Bidirectional cross-highlighting across token chips, branching diagram nodes/rays, and tabular probability rows.
+  - Tactile dot-grid diagram canvas with interactive hover tooltips detailing $P$, $1/P$, and $-\ln(P)$ in nats.
+- **🧪 "Try It by Hand" 2-Column Interactive Sandbox**:
+  - Pre-initialized with the *"One surprising word"* preset (`0.9, 0.9, 0.9, 0.01`).
+  - Left column: Dynamic token rows with dual probability controls (number input + smooth range slider).
+  - Right column: Sticky live result cockpit with simulated perplexity, horizontal equation strip, and a segmented **Surprise Share ($-\ln P$)** bar proving visually how a single low-probability token dominates total sequence surprise.
+- **🎨 High-Craft Beside Aesthetic in Light & Dark Modes**:
+  - Warm alabaster paper (`#F7F6F2`) in light mode; deep matte obsidian charcoal (`#0D0D0C`) in dark mode.
+  - 1px hairline structural borders, Newsreader serif editorial headings, monospace tabular numbers, and zero gratuitous neon AI slop.
 
 ---
 

@@ -7,63 +7,71 @@
   <meta name="site-kind" content="software">
   <title>Perplexity Explorer: Beside-Inspired In-Browser LM Perplexity &amp; Next-Token Lab</title>
 
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Inter & Newsreader for Beside / Swiss Scientific Editorial Aesthetic -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet">
 
   <style>
     /* -------------------------------------------------------------
-       Design Tokens: Beside-Inspired "Soft Paper Calm, Ink-Black Intent"
-       Palette: #FFFFFF ground, #F7F6F3 paper panels, #1E1D1C warm ink-black,
-       #5F5C56 stone secondary, #498FFF bright blue accent.
+       Design Tokens: Beside-Inspired Scientific Instrument Aesthetic
+       Palettes:
+       - Light: Warm tactile alabaster (#F7F6F2), soft-paper panels (#FFFFFF),
+                deep charcoal ink (#181817), stone (#68655E),
+                muted Swiss teal (#0D9488) & warm terracotta (#C2410C)
+       - Dark:  Deep matte obsidian charcoal (#0D0D0C), obsidian panels (#141312),
+                inset cards (#1A1918), off-white ink (#F3F2EE),
+                muted teal (#58B89E) & terracotta (#E87555)
        ------------------------------------------------------------- */
     :root {
       /* Backgrounds & Canvas (Light) */
-      --bg-canvas: #ffffff;
-      --bg-canvas-ambient: radial-gradient(ellipse 70% 480px at 50% 0%, rgba(238, 236, 230, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
-      --bg-panel: #f7f6f3;
-      --bg-card: #ffffff;
-      --bg-pill: #f3f3f3;
-      --bg-subtle: #f9f9f8;
+      --bg-canvas: #f7f6f2;
+      --bg-canvas-ambient: radial-gradient(ellipse 75% 520px at 50% 0%, rgba(234, 231, 222, 0.75) 0%, rgba(247, 246, 242, 0) 100%);
+      --bg-panel: #ffffff;
+      --bg-panel-subtle: #fbfbf9;
+      --bg-card: #f9f9f7;
+      --bg-card-hover: #f3f2ee;
+      --bg-pill: #eeeeea;
+      --bg-pill-hover: #e5e4de;
 
-      /* Glass Chrome Tokens (Light) */
-      --glass-bg: rgba(255, 255, 255, 0.78);
-      --glass-bg-hover: rgba(255, 255, 255, 0.92);
-      --glass-border: rgba(235, 235, 235, 0.85);
+      /* Glass & Translucency Tokens */
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(230, 228, 220, 0.9);
 
       /* Typography & Inks */
-      --text-ink: #1e1d1c;
-      --text-body: #2b2a28;
-      --text-stone: #5f5c56;
-      --text-stone-faint: #78756f;
+      --text-ink: #181817;
+      --text-body: #2c2b28;
+      --text-stone: #68655e;
+      --text-stone-faint: #8a877f;
 
-      /* Accents */
-      --primary-accent: #498fff;
-      --primary-accent-subtle: #ebf3ff;
-      --primary-accent-border: #bcd8ff;
+      /* Beside Brand Accent */
+      --primary-accent: #3b82f6;
+      --primary-accent-subtle: rgba(59, 130, 246, 0.08);
+      --primary-accent-border: rgba(59, 130, 246, 0.25);
 
-      /* Semantic Accents */
-      --accent-coral: #b91c1c;
-      --accent-coral-border: #ff7a7a;
-      --accent-coral-bg: #fef2f2;
+      /* Two Semantic Accents: Certainty vs Surprise */
+      --accent-certainty: #0d9488;
+      --accent-certainty-bg: rgba(13, 148, 136, 0.08);
+      --accent-certainty-border: rgba(13, 148, 136, 0.25);
+      --accent-certainty-text: #0f766e;
 
-      --accent-amber: #92400e;
-      --accent-amber-border: #ffbc74;
-      --accent-amber-bg: #fef3c7;
+      --accent-surprise: #c2410c;
+      --accent-surprise-bg: rgba(194, 65, 12, 0.08);
+      --accent-surprise-border: rgba(194, 65, 12, 0.25);
+      --accent-surprise-text: #9a3412;
 
-      --accent-emerald: #065f46;
-      --accent-emerald-bg: #ecfdf5;
-      --accent-emerald-border: #a7f3d0;
+      --accent-amber: #b45309;
+      --accent-amber-bg: rgba(180, 83, 9, 0.08);
+      --accent-amber-border: rgba(180, 83, 9, 0.25);
 
-      /* Hairlines */
-      --border-hairline: #ebebeb;
-      --border-stone: #dedcd8;
-      --border-hover: #ecebe7;
+      /* Structural Hairlines */
+      --border-hairline: #e6e4dc;
+      --border-stone: #d8d5cb;
+      --border-hover: #cac6b9;
 
       /* Buttons */
-      --btn-primary-bg: #1e1d1c;
-      --btn-primary-text: #f7f6f3;
+      --btn-primary-bg: #181817;
+      --btn-primary-text: #f7f6f2;
       --btn-primary-hover: #000000;
 
       /* Radii */
@@ -71,74 +79,81 @@
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 14px;
-      --radius-card: 20px;
+      --radius-card: 16px;
       --radius-pill: 9999px;
 
-      /* Restrained Elevation */
-      --shadow-restrained: 0 1px 3px 0 rgba(30, 29, 28, 0.03), 0 1px 2px -1px rgba(30, 29, 28, 0.02);
-      --shadow-elevated: 0 4px 12px 0 rgba(30, 29, 28, 0.05);
+      /* Minimal Restrained Shadows */
+      --shadow-restrained: 0 1px 3px 0 rgba(24, 24, 23, 0.03), 0 1px 2px -1px rgba(24, 24, 23, 0.02);
+      --shadow-elevated: 0 4px 14px 0 rgba(24, 24, 23, 0.06);
 
-      /* Motion Curves (Emil Kowalski) */
+      /* Dot Grid Color */
+      --dot-grid-color: rgba(104, 101, 94, 0.16);
+
+      /* Motion */
       --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-      --duration-fast: 140ms;
-      --duration-normal: 220ms;
+      --duration-fast: 150ms;
+      --duration-normal: 200ms;
     }
 
     [data-theme="dark"] {
       /* Backgrounds & Canvas (Dark) */
-      --bg-canvas: #121211;
-      --bg-canvas-ambient: radial-gradient(ellipse 70% 480px at 50% 0%, rgba(38, 36, 33, 0.75) 0%, rgba(18, 18, 17, 0) 100%);
-      --bg-panel: #1a1918;
-      --bg-card: #151413;
-      --bg-pill: #242321;
-      --bg-subtle: #1e1d1c;
+      --bg-canvas: #0d0d0c;
+      --bg-canvas-ambient: radial-gradient(ellipse 75% 520px at 50% 0%, rgba(32, 30, 28, 0.75) 0%, rgba(13, 13, 12, 0) 100%);
+      --bg-panel: #141312;
+      --bg-panel-subtle: #171615;
+      --bg-card: #1a1918;
+      --bg-card-hover: #21201e;
+      --bg-pill: #242220;
+      --bg-pill-hover: #2e2c29;
 
-      /* Glass Chrome Tokens (Dark) */
-      --glass-bg: rgba(26, 25, 24, 0.75);
-      --glass-bg-hover: rgba(32, 30, 28, 0.88);
-      --glass-border: rgba(255, 255, 255, 0.1);
+      /* Glass & Translucency Tokens */
+      --glass-bg: rgba(20, 19, 18, 0.85);
+      --glass-border: rgba(45, 43, 40, 0.9);
 
       /* Typography & Inks (Dark) */
-      --text-ink: #f5f4f0;
-      --text-body: #ddd9d0;
+      --text-ink: #f3f2ee;
+      --text-body: #ded9d0;
       --text-stone: #9e9a91;
-      --text-stone-faint: #807d76;
+      --text-stone-faint: #737069;
 
-      /* Accents (Dark) - electric blue >= 6:1 contrast against dark ground */
+      /* Beside Brand Accent (Dark) */
       --primary-accent: #5b9cff;
       --primary-accent-subtle: rgba(91, 156, 255, 0.12);
-      --primary-accent-border: rgba(91, 156, 255, 0.3);
+      --primary-accent-border: rgba(91, 156, 255, 0.28);
 
       /* Semantic Accents (Dark) */
-      --accent-coral: #f87171;
-      --accent-coral-border: rgba(248, 113, 113, 0.35);
-      --accent-coral-bg: rgba(248, 113, 113, 0.1);
+      --accent-certainty: #58b89e;
+      --accent-certainty-bg: rgba(88, 184, 158, 0.12);
+      --accent-certainty-border: rgba(88, 184, 158, 0.28);
+      --accent-certainty-text: #6ee7b7;
 
-      --accent-amber: #fbbf24;
-      --accent-amber-border: rgba(251, 191, 36, 0.35);
-      --accent-amber-bg: rgba(251, 191, 36, 0.1);
+      --accent-surprise: #e87555;
+      --accent-surprise-bg: rgba(232, 117, 85, 0.14);
+      --accent-surprise-border: rgba(232, 117, 85, 0.3);
+      --accent-surprise-text: #fdba74;
 
-      --accent-emerald: #34d399;
-      --accent-emerald-bg: rgba(52, 211, 153, 0.1);
-      --accent-emerald-border: rgba(52, 211, 153, 0.35);
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: rgba(245, 158, 11, 0.12);
+      --accent-amber-border: rgba(245, 158, 11, 0.28);
 
-      /* Hairlines (Dark) */
-      --border-hairline: #2a2927;
-      --border-stone: #383633;
-      --border-hover: #32302d;
+      /* Structural Hairlines (Dark) */
+      --border-hairline: #242321;
+      --border-stone: #33312e;
+      --border-hover: #3e3c38;
 
       /* Buttons (Dark) */
-      --btn-primary-bg: #f5f4f0;
-      --btn-primary-text: #1a1918;
+      --btn-primary-bg: #f3f2ee;
+      --btn-primary-text: #141312;
       --btn-primary-hover: #ffffff;
 
-      --shadow-restrained: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
-      --shadow-elevated: 0 4px 14px 0 rgba(0, 0, 0, 0.4);
+      --shadow-restrained: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
+      --shadow-elevated: 0 4px 16px 0 rgba(0, 0, 0, 0.45);
+
+      --dot-grid-color: rgba(158, 154, 145, 0.12);
     }
 
     /* -------------------------------------------------------------
-       Base Layout & Typography
+       Base Layout & Global Reset
        ------------------------------------------------------------- */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -151,21 +166,6 @@
       color: var(--text-ink);
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-canvas);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--border-stone);
-      border-radius: var(--radius-pill);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-stone-faint);
-    }
-
     body {
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-canvas);
@@ -174,9 +174,9 @@
       background-position: center top;
       background-size: 100% 900px;
       color: var(--text-body);
-      line-height: 1.6;
+      line-height: 1.55;
       min-height: 100vh;
-      padding: 3.5rem 1.25rem 5rem;
+      padding: 2.75rem 1.25rem 4.5rem;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       transition: background-color var(--duration-normal) var(--ease-out),
@@ -184,62 +184,76 @@
     }
 
     .container {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 2.25rem;
+      gap: 1.75rem;
     }
 
     /* -------------------------------------------------------------
-       Header: Beside Calm & Typographic Poise with Frosted Glass
+       Header: Swiss Editorial Poise + Monospace Eyebrow
        ------------------------------------------------------------- */
     header {
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
-      padding: 2.25rem;
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
+      gap: 0.75rem;
+      padding: 1.5rem 1.75rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-card);
       box-shadow: var(--shadow-restrained);
-      animation: hero-enter 320ms var(--ease-out) forwards;
-      position: relative;
     }
 
     .header-top-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.25rem;
       flex-wrap: wrap;
     }
 
-    @keyframes hero-enter {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .header-branding {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .eyebrow-label {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.71875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-stone);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .eyebrow-label::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-certainty);
     }
 
     h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.035em;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 2.25rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
       color: var(--text-ink);
       line-height: 1.15;
     }
 
     .header-subtitle {
-      font-size: 1.0625rem;
+      font-size: 0.9375rem;
       color: var(--text-stone);
-      line-height: 1.6;
+      line-height: 1.55;
+      max-width: 760px;
     }
 
     /* Theme Toggle Button */
@@ -248,10 +262,10 @@
       align-items: center;
       gap: 0.5rem;
       font-family: inherit;
-      font-size: 0.84375rem;
+      font-size: 0.8125rem;
       font-weight: 500;
-      height: 38px;
-      padding: 0 1rem;
+      height: 36px;
+      padding: 0 0.875rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-hairline);
       background: var(--bg-pill);
@@ -260,20 +274,16 @@
       user-select: none;
       transition: background-color var(--duration-fast) var(--ease-out),
                   border-color var(--duration-fast) var(--ease-out),
-                  transform var(--duration-fast) var(--ease-out),
-                  color var(--duration-fast) var(--ease-out);
+                  transform var(--duration-fast) var(--ease-out);
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      .btn-theme-toggle:hover {
-        background: var(--border-hover);
-        border-color: var(--border-stone);
-        transform: translateY(-1px);
-      }
+    .btn-theme-toggle:hover {
+      background: var(--bg-pill-hover);
+      border-color: var(--border-stone);
     }
 
     .btn-theme-toggle:active {
-      transform: translateY(0) scale(0.98);
+      transform: scale(0.97);
     }
 
     .btn-theme-toggle:focus-visible {
@@ -281,119 +291,136 @@
       outline-offset: 2px;
     }
 
-    .theme-icon-sun, .theme-icon-moon {
-      flex-shrink: 0;
-    }
-
-    [data-theme="dark"] .theme-icon-moon {
-      display: none;
-    }
-    [data-theme="dark"] .theme-icon-sun {
-      display: block;
-    }
-    :root:not([data-theme="dark"]) .theme-icon-sun {
-      display: none;
-    }
-    :root:not([data-theme="dark"]) .theme-icon-moon {
-      display: block;
-    }
-
-    .section-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--text-stone);
-      background: var(--bg-pill);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-sm);
-      padding: 0.2rem 0.5rem;
-      margin-right: 0.65rem;
-      vertical-align: middle;
-    }
-
-    .section-indicator svg {
-      flex-shrink: 0;
-      color: var(--primary-accent);
-    }
+    [data-theme="dark"] .theme-icon-moon { display: none; }
+    [data-theme="dark"] .theme-icon-sun { display: block; }
+    :root:not([data-theme="dark"]) .theme-icon-sun { display: none; }
+    :root:not([data-theme="dark"]) .theme-icon-moon { display: block; }
 
     /* -------------------------------------------------------------
-       Beside-Inspired Panels & Cards
-       #F7F6F3 soft-paper panel with #FFFFFF inset surfaces
+       Universal Panel Base
        ------------------------------------------------------------- */
     .panel {
       background: var(--bg-panel);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-card);
-      padding: 2.25rem;
+      padding: 1.5rem 1.75rem;
       box-shadow: var(--shadow-restrained);
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
+      gap: 1.25rem;
     }
 
-    .panel-header {
+    .panel-header-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 1rem;
       flex-wrap: wrap;
     }
 
-    .panel-title-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      max-width: 640px;
+    .panel-title {
+      font-size: 1.1875rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text-ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .panel-title {
-      font-size: 1.375rem;
+    .section-num {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.6875rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text-ink);
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
+      letter-spacing: 0.05em;
+      color: var(--text-stone);
+      background: var(--bg-pill);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-xs);
+      padding: 0.15rem 0.4rem;
     }
 
     .panel-desc {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       color: var(--text-stone);
-      line-height: 1.55;
+      line-height: 1.45;
     }
 
     /* -------------------------------------------------------------
-       Form Controls & Pill Buttons (Glass Docked Input)
+       SECTION 01: Sleek Full-Width Command Card
        ------------------------------------------------------------- */
-    .input-dock {
+    #section-input {
+      gap: 1rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-pill);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-stone);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-stone-faint);
+      flex-shrink: 0;
+      transition: background-color var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out);
+    }
+
+    .status-dot.ready {
+      background: var(--accent-certainty);
+      box-shadow: 0 0 0 2px var(--accent-certainty-bg);
+    }
+
+    .status-dot.loading {
+      background: var(--primary-accent);
+      box-shadow: 0 0 0 2px var(--primary-accent-subtle);
+      animation: pulse-dot 1s infinite ease-in-out;
+    }
+
+    .status-dot.error {
+      background: var(--accent-surprise);
+      box-shadow: 0 0 0 2px var(--accent-surprise-bg);
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.7); opacity: 0.4; }
+    }
+
+    .command-bar {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
       border-radius: var(--radius-pill);
-      padding: 0.35rem 0.35rem 0.35rem 1.15rem;
-      transition: border-color var(--duration-fast) var(--ease-out);
+      padding: 0.3rem 0.35rem 0.3rem 1.15rem;
+      transition: border-color var(--duration-fast) var(--ease-out),
+                  box-shadow var(--duration-fast) var(--ease-out);
     }
 
-    .input-dock:focus-within {
+    .command-bar:focus-within {
       border-color: var(--primary-accent);
-      outline: 2px solid var(--primary-accent);
-      outline-offset: 2px;
+      box-shadow: 0 0 0 2px var(--primary-accent-subtle);
     }
 
     .text-input {
       flex: 1 1 280px;
       font-family: inherit;
-      font-size: 1rem;
-      padding: 0.45rem 0.5rem;
-      height: 42px;
+      font-size: 0.96875rem;
+      padding: 0.45rem 0.25rem;
+      height: 40px;
       border: none;
       background: transparent;
       color: var(--text-ink);
@@ -404,27 +431,25 @@
       color: var(--text-stone-faint);
     }
 
-    /* Pill Buttons */
     .btn-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       font-family: inherit;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       font-weight: 500;
-      height: 44px;
-      padding: 0 1.5rem;
+      height: 40px;
+      padding: 0 1.25rem;
       border-radius: var(--radius-pill);
       border: 1px solid transparent;
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
       transition: background-color var(--duration-fast) var(--ease-out),
-                  border-color var(--duration-fast) var(--ease-out),
                   color var(--duration-fast) var(--ease-out),
-                  transform var(--duration-fast) var(--ease-out),
-                  box-shadow var(--duration-fast) var(--ease-out);
+                  border-color var(--duration-fast) var(--ease-out),
+                  transform var(--duration-fast) var(--ease-out);
     }
 
     .btn-pill:active {
@@ -436,464 +461,630 @@
       outline-offset: 2px;
     }
 
-    /* Primary CTA: Solid Ink-Black in Light, Solid Off-White in Dark */
     .btn-primary-ink {
       background: var(--btn-primary-bg);
       color: var(--btn-primary-text);
-      box-shadow: 0 1px 2px rgba(30, 29, 28, 0.12);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      .btn-primary-ink:hover {
-        background: var(--btn-primary-hover);
-        color: var(--btn-primary-text);
-        box-shadow: var(--shadow-elevated);
-      }
+    .btn-primary-ink:hover {
+      background: var(--btn-primary-hover);
     }
 
     .btn-primary-ink:disabled {
-      opacity: 0.5;
+      opacity: 0.55;
       cursor: not-allowed;
       transform: none;
-      box-shadow: none;
     }
 
-    /* Secondary Soft Pills */
     .btn-secondary-pill {
       background: var(--bg-pill);
       border: 1px solid var(--border-hairline);
       color: var(--text-ink);
-      height: 38px;
-      padding: 0 1.125rem;
-      font-size: 0.84375rem;
+      height: 32px;
+      padding: 0 0.875rem;
+      font-size: 0.8125rem;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      .btn-secondary-pill:hover {
-        background: var(--border-hover);
-        border-color: var(--border-stone);
-      }
+    .btn-secondary-pill:hover {
+      background: var(--bg-pill-hover);
+      border-color: var(--border-stone);
     }
 
-    .samples-row {
+    .samples-subrow {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .samples-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
       flex-wrap: wrap;
     }
 
     .samples-label {
       font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
+      font-size: 0.71875rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--text-stone);
+      color: var(--text-stone-faint);
+      margin-right: 0.2rem;
+    }
+
+    .sample-cache-tag {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--accent-certainty-text);
+      background: var(--accent-certainty-bg);
+      border: 1px solid var(--accent-certainty-border);
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.65rem;
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
     }
 
-    /* Status Bar: Frosted Glass Pill */
-    .status-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.625rem;
-      font-size: 0.875rem;
-      padding: 0.75rem 1.125rem;
-      border-radius: var(--radius-pill);
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      color: var(--text-stone);
-    }
-
-    .status-indicator {
-      width: 0.5rem;
-      height: 0.5rem;
-      border-radius: 50%;
-      background: var(--text-stone);
-      flex-shrink: 0;
-      transition: background-color var(--duration-normal) var(--ease-out),
-                  box-shadow var(--duration-normal) var(--ease-out);
-    }
-
-    .status-indicator.ready {
-      background: var(--accent-emerald);
-      box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.15);
-    }
-
-    .status-indicator.loading {
-      background: var(--primary-accent);
-      box-shadow: 0 0 0 3px rgba(73, 143, 255, 0.2);
-      animation: pulse-dot 1.2s infinite ease-in-out;
-    }
-
-    .status-indicator.error {
-      background: var(--accent-coral);
-      box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.2);
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
     .error-box {
       display: none;
-      padding: 0.875rem 1.25rem;
-      border-radius: var(--radius-md);
-      background: var(--accent-coral-bg);
-      border: 1px solid var(--accent-coral-border);
-      color: var(--accent-coral);
-      font-size: 0.875rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--accent-surprise-bg);
+      border: 1px solid var(--accent-surprise-border);
+      color: var(--accent-surprise);
+      font-size: 0.84375rem;
       font-weight: 500;
     }
 
     /* -------------------------------------------------------------
-       Tables: Crisp Inset Surfaces
+       SECTIONS 02 & 03: Asymmetric Bento Row (8 cols : 4 cols)
        ------------------------------------------------------------- */
+    .bento-row {
+      display: grid;
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .bento-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 02: Token Probabilities & Perplexity
+       ------------------------------------------------------------- */
+    #section-breakdown {
+      gap: 1.25rem;
+    }
+
+    /* Prominent Top KPI Header */
+    .kpi-cockpit {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.35rem;
+    }
+
+    .kpi-main-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .kpi-score-group {
+      display: flex;
+      align-items: baseline;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .kpi-score-label {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.71875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-stone);
+    }
+
+    .kpi-score-number {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-ink);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-intuition-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: var(--accent-certainty-bg);
+      border: 1px solid var(--accent-certainty-border);
+      color: var(--accent-certainty-text);
+      transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+    }
+
+    .kpi-formula-badge {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-stone);
+      background: var(--bg-panel);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-pill);
+      padding: 0.25rem 0.65rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Minimalist Horizontal Perplexity Intuition Scale */
+    .intuition-scale-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .scale-track-wrap {
+      position: relative;
+      width: 100%;
+      height: 12px;
+      background: var(--bg-pill);
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+      overflow: visible;
+    }
+
+    .scale-segments {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+    }
+
+    .scale-segment {
+      height: 100%;
+      border-right: 1px solid var(--border-hairline);
+      opacity: 0.85;
+      transition: opacity var(--duration-fast);
+    }
+    .scale-segment:last-child {
+      border-right: none;
+    }
+
+    .scale-seg-predictable { width: 25%; background: rgba(13, 148, 136, 0.25); }
+    .scale-seg-natural     { width: 25%; background: rgba(59, 130, 246, 0.2); }
+    .scale-seg-odd         { width: 25%; background: rgba(180, 83, 9, 0.22); }
+    .scale-seg-surprising  { width: 25%; background: rgba(194, 65, 12, 0.28); }
+
+    .scale-needle-marker {
+      position: absolute;
+      top: -3px;
+      width: 4px;
+      height: 18px;
+      background: var(--text-ink);
+      border-radius: 2px;
+      box-shadow: 0 0 0 2px var(--bg-card);
+      transform: translateX(-50%);
+      transition: left var(--duration-normal) var(--ease-out);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.6875rem;
+      color: var(--text-stone);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .scale-label-item {
+      text-align: center;
+      flex: 1;
+    }
+    .scale-label-item:first-child { text-align: left; }
+    .scale-label-item:last-child { text-align: right; }
+
+    /* Synced Token Surprise Strip */
+    .token-strip-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .strip-eyebrow {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-stone-faint);
+    }
+
+    .token-surprise-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      padding: 0.5rem 0.65rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+    }
+
+    .interactive-token-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-pill);
+      color: var(--text-ink);
+      cursor: pointer;
+      user-select: none;
+      transition: all var(--duration-fast) var(--ease-out);
+    }
+
+    .interactive-token-chip:hover,
+    .interactive-token-chip.is-active {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      border-color: var(--primary-accent);
+    }
+
+    .interactive-token-chip.chip-certain {
+      background: var(--accent-certainty-bg);
+      border-color: var(--accent-certainty-border);
+      color: var(--accent-certainty-text);
+    }
+
+    .interactive-token-chip.chip-surprise {
+      background: var(--accent-surprise-bg);
+      border-color: var(--accent-surprise-border);
+      color: var(--accent-surprise-text);
+    }
+
+    .chip-prob-badge {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      opacity: 0.85;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Single-Row 3-Column Compact Equation Strip */
+    .equation-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .equation-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .eq-step-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-right: 0.5rem;
+      border-right: 1px solid var(--border-hairline);
+    }
+    .eq-step-col:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+    @media (max-width: 640px) {
+      .eq-step-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border-hairline);
+        padding-bottom: 0.5rem;
+      }
+      .eq-step-col:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .eq-step-label {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.65625rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-stone-faint);
+    }
+
+    .eq-step-math {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      color: var(--text-stone);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .eq-step-value {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-ink);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Tactile Diagram Canvas (Dot Grid) */
+    .branching-card {
+      background-color: var(--bg-card);
+      background-image: radial-gradient(var(--dot-grid-color) 1.2px, transparent 1.2px);
+      background-size: 16px 16px;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+    }
+
+    .branching-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .branching-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .branching-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-ink);
+    }
+
+    .branching-legend {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.6875rem;
+      color: var(--text-stone);
+      flex-wrap: wrap;
+    }
+
+    .legend-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-panel);
+      border: 1px solid var(--border-hairline);
+    }
+
+    .legend-indicator-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .legend-indicator-dot.teal { background: var(--accent-certainty); }
+    .legend-indicator-dot.terracotta { background: var(--accent-surprise); }
+
+    .visual-svg-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding: 0.25rem 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .branching-svg {
+      min-width: 580px;
+      display: block;
+    }
+
+    /* Diagram Node Hover & Active Cross-Highlight Styles */
+    .node-group {
+      cursor: pointer;
+      transition: transform var(--duration-fast) var(--ease-out);
+    }
+    .node-group:hover circle:first-child,
+    .node-group.is-highlighted circle:first-child {
+      stroke-width: 4px;
+      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.15));
+    }
+    .branch-ray {
+      transition: stroke-opacity var(--duration-fast), stroke-width var(--duration-fast);
+    }
+    .branch-ray.is-highlighted {
+      stroke-width: 2.5px !important;
+      stroke-opacity: 1 !important;
+    }
+
+    /* Tables: Crisp Inset Surfaces with Inline Micro-Bars */
     .table-container {
       overflow-x: auto;
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-md);
       background: var(--bg-card);
-      padding: 0.625rem;
+      padding: 0.4rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.875rem;
+      font-size: 0.84375rem;
     }
 
     th {
-      background: var(--bg-subtle);
+      background: var(--bg-panel);
       color: var(--text-stone);
       font-weight: 600;
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.85rem;
       border-bottom: 1px solid var(--border-hairline);
       white-space: nowrap;
-      font-size: 0.8125rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.71875rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .th-content {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .th-content svg {
-      flex-shrink: 0;
-      color: var(--text-stone-faint);
+      letter-spacing: 0.05em;
     }
 
     td {
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.85rem;
       border-bottom: 1px solid var(--border-hairline);
       color: var(--text-ink);
       font-variant-numeric: tabular-nums;
       vertical-align: middle;
-      overflow-wrap: anywhere;
+      transition: background-color var(--duration-fast);
     }
 
     tr:last-child td {
       border-bottom: none;
     }
 
+    tbody tr:hover,
+    tbody tr.is-highlighted {
+      background: var(--bg-card-hover) !important;
+    }
+
     .token-chip {
       display: inline-block;
       font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.875rem;
-      padding: 0.2rem 0.55rem;
+      font-size: 0.8125rem;
+      padding: 0.15rem 0.45rem;
       background: var(--bg-pill);
       border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-xs);
       color: var(--text-ink);
       font-weight: 600;
       word-break: break-all;
     }
 
-    .space-glyph {
-      color: var(--text-stone-faint);
-      font-weight: 400;
+    /* Inline Table Micro-Bar */
+    .prob-bar-cell {
+      position: relative;
+      min-width: 130px;
     }
 
-    /* -------------------------------------------------------------
-       Branching Factor Visual (Vector Representation)
-       ------------------------------------------------------------- */
-    .branching-visual-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-md);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .micro-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      background: var(--accent-certainty-bg);
+      border-right: 2px solid var(--accent-certainty);
+      border-radius: var(--radius-xs);
+      pointer-events: none;
+      transition: width var(--duration-normal) var(--ease-out);
     }
 
-    .visual-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      flex-wrap: wrap;
+    .micro-bar-fill.surprise {
+      background: var(--accent-surprise-bg);
+      border-right-color: var(--accent-surprise);
     }
 
-    .visual-title-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .visual-title {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--text-ink);
-      letter-spacing: -0.015em;
-    }
-
-    .visual-subtitle {
-      font-size: 0.84375rem;
-      color: var(--text-stone);
-      line-height: 1.45;
-    }
-
-    .visual-legend {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.75rem;
-      color: var(--text-stone);
-      flex-wrap: wrap;
-    }
-
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .legend-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    .legend-dot.focused {
-      background: var(--primary-accent);
-    }
-
-    .legend-dot.surprising {
-      background: var(--accent-coral);
-    }
-
-    .visual-svg-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      padding: 0.5rem 0;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .branching-svg {
-      min-width: 600px;
-      display: block;
-    }
-
-    .branch-ray {
-      transition: stroke-opacity var(--duration-fast) var(--ease-out);
-    }
-
-    .svg-token-label {
+    .prob-text-content {
+      position: relative;
+      z-index: 1;
       font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
       font-size: 0.8125rem;
       font-weight: 600;
     }
 
-    .svg-prob-label {
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .svg-branch-label {
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Metric pulse transition */
-    @keyframes number-land {
-      0% { transform: scale(0.98); opacity: 0.85; }
-      50% { transform: scale(1.02); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .number-updated {
-      animation: number-land 240ms var(--ease-out);
-    }
-
     /* -------------------------------------------------------------
-       Split Grids & Mathematical Derivations (Cockpit Layout)
+       SECTION 03: Next-Token Distribution (4 cols Bento Card)
        ------------------------------------------------------------- */
-    .sec2-grid, .sec4-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 1.5rem;
-      align-items: start;
+    #section-predictions {
+      gap: 1rem;
     }
 
-    @media (max-width: 960px) {
-      .sec2-grid, .sec4-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .breakdown-sequence {
+    .predictions-list {
       display: flex;
       flex-direction: column;
-      gap: 1.15rem;
-    }
-
-    .step-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .step-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-stone);
-    }
-
-    .step-label svg {
-      flex-shrink: 0;
-      color: var(--primary-accent);
-    }
-
-    .step-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-md);
-      padding: 0.875rem 1.125rem;
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.875rem;
-      color: var(--text-ink);
-      overflow-x: auto;
-      white-space: nowrap;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Step Hero Card with Inset Glass Surface (No Outer Shadow) */
-    .step-hero-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: var(--radius-md);
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      border: 1px solid var(--border-hairline);
-      position: relative;
-    }
-
-    .step-hero-value {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--text-ink);
-      letter-spacing: -0.035em;
-      display: flex;
-      align-items: baseline;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.1;
-      position: relative;
-    }
-
-    .step-hero-formula {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-stone);
-      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-    }
-
-    .step-hero-desc {
-      font-size: 0.9375rem;
-      color: var(--text-stone);
-      line-height: 1.55;
-      position: relative;
-    }
-
-    /* -------------------------------------------------------------
-       Section 3: Next-Token Horizontal Bars
-       Beside Blue #498FFF on #1; neutral ink/paper for #2–#8
-       ------------------------------------------------------------- */
-    .predictions-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.625rem;
+      gap: 0.5rem;
     }
 
     .prediction-row {
       display: grid;
-      grid-template-columns: 2.25rem 7.5rem 1fr 4.5rem;
+      grid-template-columns: 1.75rem 5.5rem 1fr 3.75rem;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.6rem 0.875rem;
-      border-radius: var(--radius-md);
+      gap: 0.6rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-sm);
       background: var(--bg-card);
       border: 1px solid var(--border-hairline);
       transition: background-color var(--duration-fast) var(--ease-out),
                   border-color var(--duration-fast) var(--ease-out);
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      .prediction-row:hover {
-        background: var(--bg-subtle);
-        border-color: var(--border-stone);
-      }
+    .prediction-row:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-stone);
     }
 
     .prediction-row.top-1 {
-      background: var(--primary-accent-subtle);
-      border-color: var(--primary-accent-border);
+      background: var(--accent-certainty-bg);
+      border-color: var(--accent-certainty-border);
     }
 
     .pred-rank {
       font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--text-stone);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
     }
 
     .prediction-row.top-1 .pred-rank {
-      color: #121211;
-      background: var(--primary-accent);
+      color: #ffffff;
+      background: var(--accent-certainty);
       border-radius: 50%;
-      width: 1.45rem;
-      height: 1.45rem;
+      width: 1.35rem;
+      height: 1.35rem;
+      line-height: 1.35rem;
+      margin: 0 auto;
     }
 
     .pred-token {
       font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       color: var(--text-ink);
       overflow: hidden;
@@ -901,8 +1092,8 @@
       white-space: nowrap;
     }
 
-    .pred-bar-container {
-      height: 0.5rem;
+    .pred-bar-track {
+      height: 6px;
       background: var(--bg-pill);
       border-radius: var(--radius-pill);
       overflow: hidden;
@@ -914,19 +1105,19 @@
       border-radius: var(--radius-pill);
       background: var(--text-stone-faint);
       transform-origin: left;
-      /* GPU-composited transform transition with Emil Kowalski ease-out */
       transition: transform var(--duration-normal) var(--ease-out);
-      transition-delay: calc(var(--delay-index, 0) * 26ms);
+      transition-delay: calc(var(--delay-index, 0) * 20ms);
       width: 100%;
       transform: scaleX(0);
     }
 
     .prediction-row.top-1 .pred-bar-fill {
-      background: var(--primary-accent);
+      background: var(--accent-certainty);
     }
 
     .pred-pct {
-      font-size: 0.8125rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
       font-weight: 600;
       text-align: right;
       color: var(--text-ink);
@@ -934,82 +1125,246 @@
     }
 
     /* -------------------------------------------------------------
-       Section 4: Try it by Hand (Simulator)
+       SECTION 04: Interactive Sandbox ("Try It by Hand")
        ------------------------------------------------------------- */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: var(--border-hairline);
+      margin: 0.5rem 0;
+    }
+
+    #section-simulator {
+      gap: 1.25rem;
+    }
+
+    .sandbox-split-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .sandbox-split-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sandbox-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
     .sim-tag {
       font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 0.25rem 0.65rem;
+      padding: 0.2rem 0.55rem;
       border-radius: var(--radius-pill);
       background: var(--accent-amber-bg);
       border: 1px solid var(--accent-amber-border);
       color: var(--accent-amber);
     }
 
-    .sim-row-input {
-      font-family: inherit;
-      font-size: 0.875rem;
-      padding: 0.45rem 0.75rem;
+    .sim-token-input {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.35rem 0.55rem;
       border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-xs);
       background: var(--bg-card);
       color: var(--text-ink);
       outline: none;
       width: 100%;
-      transition: border-color var(--duration-fast) var(--ease-out),
-                  box-shadow var(--duration-fast) var(--ease-out);
     }
 
-    .sim-row-input:focus-visible {
+    .sim-token-input:focus {
       border-color: var(--primary-accent);
-      box-shadow: 0 0 0 2px rgba(73, 143, 255, 0.2);
+    }
+
+    /* Dual Probability Input: Number input + Slider */
+    .sim-prob-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .sim-prob-input {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.25rem 0.45rem;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-xs);
+      background: var(--bg-card);
+      color: var(--text-ink);
+      outline: none;
+      width: 72px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sim-prob-input:focus {
+      border-color: var(--primary-accent);
+    }
+
+    .sim-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--bg-pill);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--text-ink);
+      cursor: pointer;
+      border: 1px solid var(--border-hairline);
+      transition: transform var(--duration-fast);
+    }
+
+    .sim-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
     }
 
     .btn-delete-row {
       background: transparent;
       border: 1px solid transparent;
-      color: var(--text-stone);
-      padding: 0.35rem 0.55rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.875rem;
+      color: var(--text-stone-faint);
+      padding: 0.25rem 0.45rem;
+      border-radius: var(--radius-xs);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: color var(--duration-fast) var(--ease-out),
-                  background-color var(--duration-fast) var(--ease-out),
-                  transform var(--duration-fast) var(--ease-out);
+      transition: color var(--duration-fast), background-color var(--duration-fast);
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      .btn-delete-row:hover {
-        color: var(--accent-coral);
-        background: var(--accent-coral-bg);
-        border-color: var(--accent-coral-border);
-      }
+    .btn-delete-row:hover {
+      color: var(--accent-surprise);
+      background: var(--accent-surprise-bg);
+      border-color: var(--accent-surprise-border);
     }
 
-    .btn-delete-row:active {
-      transform: scale(0.97);
+    /* Sticky Live Sandbox Result Panel */
+    .sandbox-sticky-panel {
+      position: sticky;
+      top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-restrained);
     }
 
-    .btn-delete-row:focus-visible {
-      outline: 2px solid var(--accent-coral);
-      outline-offset: 1px;
-    }
-
-    .sim-actions-row {
+    .sandbox-kpi-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      align-items: baseline;
       gap: 0.75rem;
     }
 
-    /* Accessibility: Reduced Motion */
+    .sandbox-kpi-value {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 2.75rem;
+      font-weight: 600;
+      color: var(--text-ink);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Segmented Surprise Share Bar (-log P) */
+    .surprise-share-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sm);
+      padding: 0.875rem;
+    }
+
+    .surprise-share-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-stone);
+    }
+
+    .segmented-bar {
+      display: flex;
+      width: 100%;
+      height: 14px;
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      background: var(--bg-pill);
+      border: 1px solid var(--border-hairline);
+    }
+
+    .bar-segment {
+      height: 100%;
+      transition: width var(--duration-fast) var(--ease-out);
+      position: relative;
+    }
+
+    .surprise-legend-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      font-size: 0.71875rem;
+    }
+
+    .surprise-legend-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-stone);
+    }
+
+    .surprise-legend-item .token-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--text-ink);
+      font-weight: 600;
+    }
+
+    .surprise-legend-item .token-color-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .surprise-legend-item .share-pct {
+      font-weight: 600;
+      color: var(--text-ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Accessibility & Reduced Motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -1018,21 +1373,30 @@
         transition-delay: 0ms !important;
       }
     }
-
-    /* Responsive adjustments */
     @media (max-width: 640px) {
       body {
-        padding: 2rem 0.875rem 3.5rem;
+        padding: 1.5rem 0.75rem 3.5rem;
       }
-      .panel {
-        padding: 1.5rem;
-      }
-      h1 {
-        font-size: 1.875rem;
-      }
-      .prediction-row {
-        grid-template-columns: 1.5rem 5.5rem 1fr 3.5rem;
+      .command-bar {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: var(--radius-md);
+        padding: 0.5rem;
         gap: 0.5rem;
+      }
+      .command-bar .text-input {
+        width: 100%;
+        padding: 0.4rem 0.5rem;
+      }
+      .command-bar .btn-pill {
+        width: 100%;
+        height: 38px;
+      }
+      .kpi-score-number {
+        font-size: 2.25rem;
+      }
+      .scale-labels {
+        font-size: 0.6rem;
       }
     }
   </style>
@@ -1043,9 +1407,12 @@
     <!-- Beside-Inspired Header -->
     <header>
       <div class="header-top-row">
-        <h1>Perplexity Explorer</h1>
+        <div class="header-branding">
+          <span class="eyebrow-label">In-Browser LM Lab · DistilGPT-2</span>
+          <h1>Perplexity Explorer</h1>
+        </div>
         <button type="button" id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle light or dark theme">
-          <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -1056,7 +1423,7 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
           <span id="theme-toggle-text">Dark mode</span>
@@ -1068,401 +1435,282 @@
     </header>
 
     <!-- =========================================================
-         SECTION 1: Sentence Analysis Workbench
+         SECTION 1: Sleek Full-Width Command Card
          ========================================================= -->
     <section class="panel" id="section-input" aria-labelledby="sec1-title">
-      <div class="panel-header">
-        <div class="panel-title-group">
-          <h2 class="panel-title" id="sec1-title">
-            <span class="section-indicator">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="4 17 10 11 4 5"></polyline>
-                <line x1="12" y1="19" x2="20" y2="19"></line>
-              </svg>
-              01
-            </span>
-            Sentence Analysis
-          </h2>
-          <p class="panel-desc">Enter any sentence to compute token probabilities and perplexity using in-browser DistilGPT-2.</p>
+      <div class="panel-header-row">
+        <h2 class="panel-title" id="sec1-title">
+          <span class="section-num">01</span>
+          Sentence Analysis
+        </h2>
+        <div class="status-pill" id="model-status" role="status" aria-live="polite">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="status-text">DistilGPT-2 idle (~82MB)</span>
         </div>
       </div>
 
-      <div class="input-dock">
+      <div class="command-bar">
         <input 
           type="text" 
           id="sentence-input" 
           class="text-input" 
-          value="I love Python" 
-          placeholder="Type a sentence here..." 
+          value="The capital of France is Paris" 
+          placeholder="Type a sentence to calculate perplexity..." 
           aria-label="Sentence to analyze"
         />
         <button id="btn-calculate" class="btn-pill btn-primary-ink" type="button">
-          <!-- Phosphor/Lucide style minimal play/calc SVG -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
           Calculate perplexity
         </button>
       </div>
 
-      <div class="samples-row">
-        <span class="samples-label">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-            <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
+      <div class="samples-subrow">
+        <div class="samples-pills">
+          <span class="samples-label">Sample prompts:</span>
+          <button type="button" class="btn-pill btn-secondary-pill" data-sample="The capital of France is Paris">"The capital of France is Paris"</button>
+          <button type="button" class="btn-pill btn-secondary-pill" data-sample="I love Python">"I love Python"</button>
+          <button type="button" class="btn-pill btn-secondary-pill" data-sample="Python love I">"Python love I"</button>
+        </div>
+        <span class="sample-cache-tag" id="sample-status-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
           </svg>
-          Sample prompts:
+          Cached sample · Click Calculate to run DistilGPT-2 locally
         </span>
-        <button type="button" class="btn-pill btn-secondary-pill" data-sample="I love Python">"I love Python"</button>
-        <button type="button" class="btn-pill btn-secondary-pill" data-sample="Python love I">"Python love I"</button>
-        <button type="button" class="btn-pill btn-secondary-pill" data-sample="The capital of France is Paris">"The capital of France is Paris"</button>
-      </div>
-
-      <div class="status-bar" id="model-status" role="status" aria-live="polite">
-        <span class="status-indicator" id="status-indicator"></span>
-        <span id="status-text">Model not loaded yet. Click "Calculate perplexity" to load DistilGPT-2 (~82MB).</span>
       </div>
 
       <div class="error-box" id="error-message" role="alert"></div>
     </section>
 
     <!-- =========================================================
-         SECTION 2: Probability of each token -> perplexity
+         SECTIONS 02 & 03: Asymmetric Bento Row (8 cols : 4 cols)
          ========================================================= -->
-    <section class="panel" id="section-breakdown" aria-labelledby="sec2-title">
-      <div class="panel-header">
-        <div class="panel-title-group">
-          <h2 class="panel-title" id="sec2-title">
-            <span class="section-indicator">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-              </svg>
-              02
-            </span>
-            Token Probabilities &amp; Perplexity
-          </h2>
-          <p class="panel-desc">Conditional probability P(token | context) and the step-by-step geometric mean calculation.</p>
-        </div>
-      </div>
-
-      <!-- Interactive Branching Factor Visual -->
-      <div class="branching-visual-card">
-        <div class="visual-header">
-          <div class="visual-title-group">
-            <h3 class="visual-title">Sequence Branching &amp; Uncertainty Path</h3>
-            <p class="visual-subtitle">
-              Visualizing how the model branches at each transition. Narrow beam = high certainty (low surprise); wide branching fan = high uncertainty (surprising token).
-            </p>
-          </div>
-          <div class="visual-legend">
-            <span class="legend-item"><span class="legend-dot focused"></span> High Probability (P &gt; 0.1)</span>
-            <span class="legend-item"><span class="legend-dot surprising"></span> Surprising Token (P &le; 0.01)</span>
+    <div class="bento-row">
+      <!-- Section 02: 8 columns on desktop -->
+      <section class="panel" id="section-breakdown" aria-labelledby="sec2-title">
+        <div class="panel-header-row">
+          <div style="display: flex; flex-direction: column; gap: 0.15rem;">
+            <h2 class="panel-title" id="sec2-title">
+              <span class="section-num">02</span>
+              Token Probabilities &amp; Perplexity
+            </h2>
+            <p class="panel-desc">Conditional probability P(wᵢ | w&lt;ᵢ) and geometric mean derivation.</p>
           </div>
         </div>
-        <div class="visual-svg-wrapper" id="branching-svg-container">
-          <!-- Dynamically generated crisp SVG tree -->
-        </div>
-      </div>
 
-      <!-- Cockpit Split Layout: Left Table, Right Mathematical Derivation -->
-      <div class="sec2-grid">
-        <!-- Inset Table Surface -->
+        <!-- Prominent Top KPI Header with Intuition Scale -->
+        <div class="kpi-cockpit">
+          <div class="kpi-main-row">
+            <div class="kpi-score-group">
+              <span class="kpi-score-label">Perplexity</span>
+              <span class="kpi-score-number" id="kpi-ppl-value">6.99</span>
+              <span class="kpi-intuition-badge" id="kpi-ppl-badge">Predictable (1-10)</span>
+            </div>
+            <span class="kpi-formula-badge" id="kpi-formula-pill">PPL = (∏ 1/P)¹/ᴺ</span>
+          </div>
+
+          <!-- Minimalist Horizontal Perplexity Intuition Scale -->
+          <div class="intuition-scale-box">
+            <div class="scale-track-wrap">
+              <div class="scale-segments">
+                <div class="scale-segment scale-seg-predictable" title="1-10: Highly predictable & repetitive"></div>
+                <div class="scale-segment scale-seg-natural" title="10-50: Natural fluent text"></div>
+                <div class="scale-segment scale-seg-odd" title="50-200: Unusual vocabulary or grammar"></div>
+                <div class="scale-segment scale-seg-surprising" title="200+: Highly unexpected, rare or chaotic"></div>
+              </div>
+              <div class="scale-needle-marker" id="scale-needle" style="left: 16.6%;"></div>
+            </div>
+            <div class="scale-labels">
+              <span class="scale-label-item">1–10 Predictable</span>
+              <span class="scale-label-item">10–50 Natural</span>
+              <span class="scale-label-item">50–200 Odd</span>
+              <span class="scale-label-item">200+ Surprising</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Synced Token Surprise Strip -->
+        <div class="token-strip-panel">
+          <span class="strip-eyebrow">Token Sequence (Hover or click to cross-examine)</span>
+          <div class="token-surprise-strip" id="token-surprise-strip">
+            <!-- Dynamically populated interactive chips -->
+          </div>
+        </div>
+
+        <!-- Single-Row 3-Column Compact Equation Strip -->
+        <div class="equation-strip">
+          <div class="eq-step-col">
+            <span class="eq-step-label">01 · Inverse Product</span>
+            <span class="eq-step-math">∏ (1 / Pᵢ)</span>
+            <span class="eq-step-value" id="step1-product">1.17 × 10⁵</span>
+          </div>
+          <div class="eq-step-col">
+            <span class="eq-step-label">02 · Sequence Length</span>
+            <span class="eq-step-math">N</span>
+            <span class="eq-step-value" id="step2-length">N = 6 tokens</span>
+          </div>
+          <div class="eq-step-col">
+            <span class="eq-step-label">03 · Geometric Mean</span>
+            <span class="eq-step-math">exp(mean(-ln P))</span>
+            <span class="eq-step-value" id="step3-mean">6.99</span>
+          </div>
+        </div>
+
+        <!-- Tactile Diagram Canvas: Sequence Branching & Uncertainty Path -->
+        <div class="branching-card">
+          <div class="branching-header">
+            <div class="branching-title-group">
+              <span class="branching-title">Sequence Branching &amp; Uncertainty Path</span>
+              <p class="panel-desc" style="font-size: 0.8125rem;">Narrow beam = high certainty. Flaring fan = surprising transition.</p>
+            </div>
+            <div class="branching-legend">
+              <span class="legend-pill"><span class="legend-indicator-dot teal"></span> Predictable (P &ge; 0.15)</span>
+              <span class="legend-pill"><span class="legend-indicator-dot terracotta"></span> Surprising (P &le; 0.05)</span>
+            </div>
+          </div>
+          <div class="visual-svg-wrapper" id="branching-svg-container">
+            <!-- Dynamically generated crisp SVG tree -->
+          </div>
+        </div>
+
+        <!-- Inset Table Surface with Inline Micro-Bars -->
         <div class="table-container">
           <table id="token-table">
             <thead>
               <tr>
-                <th scope="col" style="width: 3.5rem;">
-                  <span class="th-content">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <line x1="4" y1="9" x2="20" y2="9"></line>
-                      <line x1="4" y1="15" x2="20" y2="15"></line>
-                      <line x1="10" y1="3" x2="8" y2="21"></line>
-                      <line x1="16" y1="3" x2="14" y2="21"></line>
-                    </svg>
-                    #
-                  </span>
-                </th>
-                <th scope="col">
-                  <span class="th-content">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <polyline points="4 7 4 4 20 4 20 7"></polyline>
-                      <line x1="9" y1="20" x2="15" y2="20"></line>
-                      <line x1="12" y1="4" x2="12" y2="20"></line>
-                    </svg>
-                    Token
-                  </span>
-                </th>
-                <th scope="col">
-                  <span class="th-content">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="22" y1="12" x2="18" y2="12"></line>
-                      <line x1="6" y1="12" x2="2" y2="12"></line>
-                      <line x1="12" y1="6" x2="12" y2="2"></line>
-                      <line x1="12" y1="22" x2="12" y2="18"></line>
-                    </svg>
-                    Probability (P)
-                  </span>
-                </th>
-                <th scope="col">
-                  <span class="th-content">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <line x1="6" y1="3" x2="6" y2="15"></line>
-                      <circle cx="18" cy="6" r="3"></circle>
-                      <circle cx="6" cy="18" r="3"></circle>
-                      <path d="M18 9a9 9 0 0 1-9 9"></path>
-                    </svg>
-                    1 / P (Branching)
-                  </span>
-                </th>
+                <th scope="col" style="width: 2.75rem;">#</th>
+                <th scope="col">Token</th>
+                <th scope="col" style="min-width: 140px;">Probability (P)</th>
+                <th scope="col" style="min-width: 100px;">1 / P (Branching)</th>
+                <th scope="col" style="min-width: 90px;">Surprise (-ln P)</th>
               </tr>
             </thead>
             <tbody id="token-table-body">
-              <tr>
-                <td colspan="4" style="text-align: center; color: var(--text-stone); padding: 2rem;">
-                  Click "Calculate perplexity" above to run in-browser inference.
-                </td>
-              </tr>
+              <!-- Dynamically populated rows -->
             </tbody>
           </table>
         </div>
+      </section>
 
-        <!-- Three-Step Mathematical Derivation -->
-        <div class="breakdown-sequence" id="breakdown-container">
-          <div class="step-item">
-            <div class="step-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-              Step 1: Multiplication of all 1/P values
-            </div>
-            <div class="step-panel" id="step1-content">Waiting for calculation...</div>
-          </div>
-
-          <div class="step-item">
-            <div class="step-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="4" y1="9" x2="20" y2="9"></line>
-                <line x1="4" y1="15" x2="20" y2="15"></line>
-                <line x1="10" y1="3" x2="8" y2="21"></line>
-                <line x1="16" y1="3" x2="14" y2="21"></line>
-              </svg>
-              Step 2: Sequence length (N)
-            </div>
-            <div class="step-panel" id="step2-content">N = 0</div>
-          </div>
-
-          <div class="step-hero-card">
-            <div class="step-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              Step 3: Geometric Mean Perplexity
-            </div>
-            <div class="step-hero-value" id="step3-perplexity">
-              Perplexity: awaiting calculation
-            </div>
-            <div class="step-hero-desc" id="step3-desc">
-              Perplexity measures how surprised the model is by the text. Lower perplexity means the model found the text more natural and probable.
-            </div>
+      <!-- Section 03: 4 columns on desktop -->
+      <section class="panel" id="section-predictions" aria-labelledby="sec3-title">
+        <div class="panel-header-row">
+          <div style="display: flex; flex-direction: column; gap: 0.15rem;">
+            <h2 class="panel-title" id="sec3-title">
+              <span class="section-num">03</span>
+              Next-Token Distribution
+            </h2>
+            <p class="panel-desc">Top 8 candidates at sequence terminus.</p>
           </div>
         </div>
-      </div>
-    </section>
+
+        <div class="predictions-list" id="predictions-list">
+          <!-- Dynamically populated top 8 predictions -->
+        </div>
+      </section>
+    </div>
+
+    <hr class="section-divider">
 
     <!-- =========================================================
-         SECTION 3: What does the model predict next?
-         ========================================================= -->
-    <section class="panel" id="section-predictions" aria-labelledby="sec3-title">
-      <div class="panel-header">
-        <div class="panel-title-group">
-          <h2 class="panel-title" id="sec3-title">
-            <span class="section-indicator">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg>
-              03
-            </span>
-            Next-Token Distribution
-          </h2>
-          <p class="panel-desc">Top 8 candidates predicted by DistilGPT-2 at the sentence terminus.</p>
-        </div>
-      </div>
-
-      <div class="predictions-grid" id="predictions-list">
-        <div style="text-align: center; color: var(--text-stone); padding: 1.5rem;">
-          Run calculation to see top next-token candidates.
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         SECTION 4: Try it by hand (Simulated, not from the model)
+         SECTION 04: Try It by Hand (Interactive Sandbox)
          ========================================================= -->
     <section class="panel" id="section-simulator" aria-labelledby="sec4-title">
-      <div class="panel-header">
-        <div class="panel-title-group">
-          <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
-            <h2 class="panel-title" id="sec4-title">
-              <span class="section-indicator">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M10 2v7.31"></path>
-                  <path d="M14 9.3V2"></path>
-                  <path d="M8.5 2h7"></path>
-                  <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path>
-                  <path d="M5.52 16h12.96"></path>
-                </svg>
-                04
-              </span>
-              Try It by Hand
-            </h2>
-            <span class="sim-tag">Simulated · Not from model</span>
-          </div>
-          <p class="panel-desc">Manually adjust token probabilities to observe how a single surprising word swings the geometric mean.</p>
+      <div class="panel-header-row">
+        <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
+          <h2 class="panel-title" id="sec4-title">
+            <span class="section-num">04</span>
+            Try It by Hand
+          </h2>
+          <span class="sim-tag">Interactive Sandbox · Simulated</span>
+        </div>
+        <p class="panel-desc">Experiment with probabilities to see how a single surprising word swings the geometric mean.</p>
+      </div>
+
+      <!-- Presets Row -->
+      <div class="samples-subrow">
+        <div class="samples-pills">
+          <span class="samples-label">Presets:</span>
+          <button type="button" class="btn-pill btn-secondary-pill" id="preset-surprise">"One surprising word" (0.9, 0.9, 0.9, 0.01)</button>
+          <button type="button" class="btn-pill btn-secondary-pill" id="preset-python">"I love Python" (0.5, 0.8, 0.2)</button>
+          <button type="button" class="btn-pill btn-secondary-pill" id="preset-uniform">"All 1/8" (8 tokens at 0.125)</button>
         </div>
       </div>
 
-      <div class="samples-row">
-        <span class="samples-label">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-          </svg>
-          Presets:
-        </span>
-        <button type="button" class="btn-pill btn-secondary-pill" id="preset-python">"I love Python" (0.5, 0.8, 0.2)</button>
-        <button type="button" class="btn-pill btn-secondary-pill" id="preset-uniform">"All 1/8" (8 tokens at 0.125)</button>
-        <button type="button" class="btn-pill btn-secondary-pill" id="preset-surprise">"One surprising word" (0.9, 0.9, 0.9, 0.01)</button>
-      </div>
-
-      <!-- Cockpit Split Layout: Left Simulator Table & Controls, Right Mathematical Derivation -->
-      <div class="sec4-grid">
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <!-- Inset Table Surface -->
+      <!-- 2-Column Split Layout on Desktop (7 cols left : 5 cols right) -->
+      <div class="sandbox-split-layout">
+        <!-- Left: Editable Rows & Range Sliders -->
+        <div class="sandbox-left-col">
           <div class="table-container">
             <table id="sim-table">
               <thead>
                 <tr>
-                  <th scope="col" style="width: 3rem;">
-                    <span class="th-content">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <line x1="4" y1="9" x2="20" y2="9"></line>
-                        <line x1="4" y1="15" x2="20" y2="15"></line>
-                        <line x1="10" y1="3" x2="8" y2="21"></line>
-                        <line x1="16" y1="3" x2="14" y2="21"></line>
-                      </svg>
-                      #
-                    </span>
-                  </th>
-                  <th scope="col" style="min-width: 140px;">
-                    <span class="th-content">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="4 7 4 4 20 4 20 7"></polyline>
-                        <line x1="9" y1="20" x2="15" y2="20"></line>
-                        <line x1="12" y1="4" x2="12" y2="20"></line>
-                      </svg>
-                      Token
-                    </span>
-                  </th>
-                  <th scope="col" style="min-width: 140px;">
-                    <span class="th-content">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="22" y1="12" x2="18" y2="12"></line>
-                        <line x1="6" y1="12" x2="2" y2="12"></line>
-                        <line x1="12" y1="6" x2="12" y2="2"></line>
-                        <line x1="12" y1="22" x2="12" y2="18"></line>
-                      </svg>
-                      Probability (P)
-                    </span>
-                  </th>
-                  <th scope="col" style="min-width: 110px;">
-                    <span class="th-content">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <line x1="6" y1="3" x2="6" y2="15"></line>
-                        <circle cx="18" cy="6" r="3"></circle>
-                        <circle cx="6" cy="18" r="3"></circle>
-                        <path d="M18 9a9 9 0 0 1-9 9"></path>
-                      </svg>
-                      1 / P
-                    </span>
-                  </th>
-                  <th scope="col" style="width: 4rem; text-align: center;">
-                    <span class="th-content" style="justify-content: center;">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                      </svg>
-                      Action
-                    </span>
-                  </th>
+                  <th scope="col" style="width: 2.5rem;">#</th>
+                  <th scope="col" style="min-width: 110px;">Token</th>
+                  <th scope="col" style="min-width: 170px;">Probability &amp; Slider</th>
+                  <th scope="col" style="min-width: 80px;">1 / P</th>
+                  <th scope="col" style="width: 3rem; text-align: center;">Action</th>
                 </tr>
               </thead>
               <tbody id="sim-table-body">
-                <!-- Dynamic rows inserted here -->
+                <!-- Dynamically populated sandbox rows -->
               </tbody>
             </table>
           </div>
 
-          <div class="sim-actions-row">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
             <button type="button" id="btn-add-token" class="btn-pill btn-secondary-pill">
-              <!-- Plus SVG -->
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
               Add token
             </button>
-            <span style="font-size: 0.8125rem; color: var(--text-stone);">
-              Updates live as you type or adjust values.
+            <span style="font-family: ui-monospace, monospace; font-size: 0.75rem; color: var(--text-stone);">
+              Sliders and numbers synchronize reactively.
             </span>
           </div>
         </div>
 
-        <!-- Simulator 3-Step Breakdown -->
-        <div class="breakdown-sequence" id="sim-breakdown-container">
-          <div class="step-item">
-            <div class="step-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-              Step 1: Multiplication of all 1/P values
+        <!-- Right: Sticky Live Result & Surprise Breakdown -->
+        <div class="sandbox-sticky-panel">
+          <div class="sandbox-kpi-row">
+            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+              <span class="kpi-score-label">Simulated Perplexity</span>
+              <span class="sandbox-kpi-value" id="sim-ppl-value">3.42</span>
             </div>
-            <div class="step-panel" id="sim-step1-content">Waiting for input...</div>
+            <span class="kpi-intuition-badge" id="sim-ppl-badge">Predictable (1–10)</span>
           </div>
 
-          <div class="step-item">
-            <div class="step-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="4" y1="9" x2="20" y2="9"></line>
-                <line x1="4" y1="15" x2="20" y2="15"></line>
-                <line x1="10" y1="3" x2="8" y2="21"></line>
-                <line x1="16" y1="3" x2="14" y2="21"></line>
-              </svg>
-              Step 2: Sequence length (N)
+          <!-- Sandbox Equation Strip -->
+          <div class="equation-strip" style="padding: 0.65rem 0.75rem; gap: 0.5rem;">
+            <div class="eq-step-col">
+              <span class="eq-step-label">∏ 1/P</span>
+              <span class="eq-step-value" id="sim-step1-product">137.17</span>
             </div>
-            <div class="step-panel" id="sim-step2-content">N = 0</div>
+            <div class="eq-step-col">
+              <span class="eq-step-label">Length</span>
+              <span class="eq-step-value" id="sim-step2-length">N = 4</span>
+            </div>
+            <div class="eq-step-col">
+              <span class="eq-step-label">PPL</span>
+              <span class="eq-step-value" id="sim-step3-mean">3.42</span>
+            </div>
           </div>
 
-          <div class="step-hero-card">
-            <div class="step-label">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              Step 3: Geometric Mean Perplexity
+          <!-- Segmented Surprise Share Bar -->
+          <div class="surprise-share-section">
+            <div class="surprise-share-header">
+              <span>Surprise Share (-ln P)</span>
+              <span id="sim-surprise-total">Total: 4.92 nats</span>
             </div>
-            <div class="step-hero-value" id="sim-step3-perplexity">
-              Perplexity: awaiting input
+            <div class="segmented-bar" id="sim-segmented-bar">
+              <!-- Dynamically populated colored segments -->
             </div>
-            <div class="step-hero-desc" id="sim-step3-desc">
-              Perplexity = (product)<sup>1/N</sup>. Computed in log-space: Math.exp(mean(-Math.log(P))).
+            <div class="surprise-legend-grid" id="sim-surprise-legend">
+              <!-- Dynamically populated legend breakdown -->
             </div>
           </div>
         </div>
@@ -1476,12 +1724,36 @@
        ========================================================= -->
   <script type="module">
     // Import Transformers.js v3 from jsDelivr ESM CDN
-    // Includes env, AutoTokenizer, AutoModelForCausalLM, Tensor
     import { env, AutoTokenizer, AutoModelForCausalLM, Tensor } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3";
 
-    // Critical Environment Setting:
     // Prevent Transformers.js from requesting local files that return HTML 404s
     env.allowLocalModels = false;
+
+    // -------------------------------------------------------------
+    // Pre-Computed Cached Sample for "The capital of France is Paris"
+    // Eliminates empty states on first load prior to downloading 82MB
+    // -------------------------------------------------------------
+    const CACHED_SAMPLE = {
+      sentence: "The capital of France is Paris",
+      tokens: [
+        { pos: 1, id: 464, rawText: "The", displayToken: "The", prob: 0.0462, invProb: 21.645 },
+        { pos: 2, id: 3139, rawText: " capital", displayToken: "␣capital", prob: 0.0034, invProb: 294.118 },
+        { pos: 3, id: 286, rawText: " of", displayToken: "␣of", prob: 0.7412, invProb: 1.349 },
+        { pos: 4, id: 4881, rawText: " France", displayToken: "␣France", prob: 0.1654, invProb: 6.046 },
+        { pos: 5, id: 318, rawText: " is", displayToken: "␣is", prob: 0.8129, invProb: 1.230 },
+        { pos: 6, id: 6342, rawText: " Paris", displayToken: "␣Paris", prob: 0.5482, invProb: 1.824 }
+      ],
+      nextTokens: [
+        { rank: 1, id: 13, rawText: ".", displayToken: ".", prob: 0.3842 },
+        { rank: 2, id: 11, rawText: ",", displayToken: ",", prob: 0.1925 },
+        { rank: 3, id: 290, rawText: " and", displayToken: "␣and", prob: 0.0814 },
+        { rank: 4, id: 198, rawText: "\n", displayToken: "↵", prob: 0.0421 },
+        { rank: 5, id: 357, rawText: " (", displayToken: "␣(", prob: 0.0335 },
+        { rank: 6, id: 373, rawText: " was", displayToken: "␣was", prob: 0.0218 },
+        { rank: 7, id: 287, rawText: " in", displayToken: "␣in", prob: 0.0189 },
+        { rank: 8, id: 546, rawText: " -", displayToken: "␣-", prob: 0.0142 }
+      ]
+    };
 
     // -------------------------------------------------------------
     // Application State
@@ -1489,21 +1761,26 @@
     let tokenizer = null;
     let model = null;
     let modelLoadingPromise = null;
+    let currentActiveTokenIdx = null;
 
-    // DOM Elements: Section 1 & Model Status
+    // DOM Elements: Section 1
     const sentenceInput = document.getElementById("sentence-input");
     const btnCalculate = document.getElementById("btn-calculate");
-    const statusIndicator = document.getElementById("status-indicator");
+    const statusDot = document.getElementById("status-dot");
     const statusText = document.getElementById("status-text");
     const errorMessage = document.getElementById("error-message");
-    const sampleButtons = document.querySelectorAll(".btn-sample, [data-sample]");
+    const sampleButtons = document.querySelectorAll("[data-sample]");
+    const sampleStatusPill = document.getElementById("sample-status-pill");
 
     // DOM Elements: Section 2
     const tokenTableBody = document.getElementById("token-table-body");
-    const step1Content = document.getElementById("step1-content");
-    const step2Content = document.getElementById("step2-content");
-    const step3Perplexity = document.getElementById("step3-perplexity");
-    const step3Desc = document.getElementById("step3-desc");
+    const kpiPplValue = document.getElementById("kpi-ppl-value");
+    const kpiPplBadge = document.getElementById("kpi-ppl-badge");
+    const scaleNeedle = document.getElementById("scale-needle");
+    const tokenSurpriseStrip = document.getElementById("token-surprise-strip");
+    const step1Product = document.getElementById("step1-product");
+    const step2Length = document.getElementById("step2-length");
+    const step3Mean = document.getElementById("step3-mean");
 
     // DOM Elements: Section 3
     const predictionsList = document.getElementById("predictions-list");
@@ -1514,16 +1791,20 @@
     const presetPython = document.getElementById("preset-python");
     const presetUniform = document.getElementById("preset-uniform");
     const presetSurprise = document.getElementById("preset-surprise");
-    const simStep1Content = document.getElementById("sim-step1-content");
-    const simStep2Content = document.getElementById("sim-step2-content");
-    const simStep3Perplexity = document.getElementById("sim-step3-perplexity");
-    const simStep3Desc = document.getElementById("sim-step3-desc");
+    const simPplValue = document.getElementById("sim-ppl-value");
+    const simPplBadge = document.getElementById("sim-ppl-badge");
+    const simStep1Product = document.getElementById("sim-step1-product");
+    const simStep2Length = document.getElementById("sim-step2-length");
+    const simStep3Mean = document.getElementById("sim-step3-mean");
+    const simSegmentedBar = document.getElementById("sim-segmented-bar");
+    const simSurpriseLegend = document.getElementById("sim-surprise-legend");
+    const simSurpriseTotal = document.getElementById("sim-surprise-total");
 
     // -------------------------------------------------------------
     // Helper: Update Model Status UI
     // -------------------------------------------------------------
     function updateStatus(state, message) {
-      statusIndicator.className = "status-indicator " + state;
+      statusDot.className = "status-dot " + state;
       statusText.textContent = message;
       if (state === "error") {
         errorMessage.textContent = message;
@@ -1538,14 +1819,13 @@
     // -------------------------------------------------------------
     function formatTokenDisplay(rawToken) {
       if (!rawToken) return "empty";
-      // Replace leading or embedded spaces with quiet visible glyph ␣
-      const display = rawToken.replace(/ /g, "␣");
-      return display;
+      return rawToken.replace(/ /g, "␣");
     }
 
     // -------------------------------------------------------------
     // Helper: Compute Perplexity from Probabilities in Log-Space
     // Perplexity = exp( mean( -ln(P) ) )
+    // Strictly numerically stable to prevent arithmetic overflow/underflow
     // -------------------------------------------------------------
     function computePerplexityLogSpace(probList) {
       if (!probList || probList.length === 0) return 0;
@@ -1559,6 +1839,37 @@
     }
 
     // -------------------------------------------------------------
+    // Helper: Map Perplexity to Intuition Scale Percentage (0-100%)
+    // 1-10 (0-25%), 10-50 (25-50%), 50-200 (50-75%), 200+ (75-100%)
+    // -------------------------------------------------------------
+    function getScalePercentage(ppl) {
+      if (ppl <= 1) return 0;
+      if (ppl <= 10) {
+        return Math.min(25, Math.max(0, ((ppl - 1) / 9) * 25));
+      }
+      if (ppl <= 50) {
+        return 25 + Math.min(25, Math.max(0, ((ppl - 10) / 40) * 25));
+      }
+      if (ppl <= 200) {
+        return 50 + Math.min(25, Math.max(0, ((ppl - 50) / 150) * 25));
+      }
+      return Math.min(98, 75 + ((Math.min(ppl, 1000) - 200) / 800) * 23);
+    }
+
+    function getIntuitionBadgeInfo(ppl) {
+      if (ppl <= 10) {
+        return { text: "Predictable (1–10)", className: "chip-certain" };
+      }
+      if (ppl <= 50) {
+        return { text: "Natural (10–50)", className: "chip-certain" };
+      }
+      if (ppl <= 200) {
+        return { text: "Odd (50–200)", className: "chip-amber" };
+      }
+      return { text: "Surprising (200+)", className: "chip-surprise" };
+    }
+
+    // -------------------------------------------------------------
     // Lazy-load Xenova/distilgpt2 Model and Tokenizer
     // Uses shared Promise guard to prevent concurrent downloads
     // -------------------------------------------------------------
@@ -1569,25 +1880,23 @@
       }
 
       btnCalculate.disabled = true;
-      updateStatus("loading", "Downloading Xenova/distilgpt2 model weights (~82MB)...");
+      updateStatus("loading", "Downloading DistilGPT-2 weights (~82MB)...");
 
       modelLoadingPromise = (async () => {
         try {
-          // Explicitly guard against local 404 requests
           env.allowLocalModels = false;
 
           const progressCallback = (data) => {
             if (data && data.status === "progress" && data.total) {
               const pct = Math.round((data.loaded / data.total) * 100);
-              updateStatus("loading", `Downloading ${data.file || "model"}: ${pct}%`);
+              updateStatus("loading", `Downloading ${data.file || "weights"}: ${pct}%`);
             } else if (data && data.status === "initiate") {
-              updateStatus("loading", `Initiating download for ${data.file || "model"}...`);
+              updateStatus("loading", `Initiating ${data.file || "model"}...`);
             } else if (data && data.status === "ready") {
-              updateStatus("loading", "Finalizing model weights in memory...");
+              updateStatus("loading", "Finalizing model in memory...");
             }
           };
 
-          // Load tokenizer and causal LM model
           tokenizer = await AutoTokenizer.from_pretrained("Xenova/distilgpt2", {
             progress_callback: progressCallback
           });
@@ -1596,19 +1905,285 @@
             progress_callback: progressCallback
           });
 
-          updateStatus("ready", "Model ready (DistilGPT-2 q8).");
+          updateStatus("ready", "DistilGPT-2 ready (q8)");
           btnCalculate.disabled = false;
           return true;
         } catch (err) {
           console.error("Failed to load DistilGPT-2 model:", err);
-          updateStatus("error", `Failed to load DistilGPT-2: ${err.message || err}. Please check network connection.`);
+          updateStatus("error", `Load error: ${err.message || err}.`);
           btnCalculate.disabled = false;
-          modelLoadingPromise = null; // Reset so user can retry
+          modelLoadingPromise = null;
           return false;
         }
       })();
 
       return await modelLoadingPromise;
+    }
+
+    // -------------------------------------------------------------
+    // Cross-Highlight Synchronization Logic
+    // Synced across: Token Chip, Branching Node/Ray, and Table Row
+    // -------------------------------------------------------------
+    function setHighlightedToken(idx) {
+      currentActiveTokenIdx = idx;
+
+      // Update interactive token chips
+      document.querySelectorAll(".interactive-token-chip").forEach((chip) => {
+        const cIdx = parseInt(chip.dataset.tokenIdx, 10);
+        if (cIdx === idx) {
+          chip.classList.add("is-active");
+        } else {
+          chip.classList.remove("is-active");
+        }
+      });
+
+      // Update SVG branching nodes and rays
+      document.querySelectorAll(".node-group").forEach((ng) => {
+        const nIdx = parseInt(ng.dataset.nodeIdx, 10);
+        if (nIdx === idx) {
+          ng.classList.add("is-highlighted");
+        } else {
+          ng.classList.remove("is-highlighted");
+        }
+      });
+
+      document.querySelectorAll(".branch-ray").forEach((ray) => {
+        const rIdx = parseInt(ray.dataset.sourceIdx, 10);
+        if (rIdx === idx) {
+          ray.classList.add("is-highlighted");
+        } else {
+          ray.classList.remove("is-highlighted");
+        }
+      });
+
+      // Update table rows
+      document.querySelectorAll("#token-table-body tr").forEach((tr) => {
+        const tIdx = parseInt(tr.dataset.rowIdx, 10);
+        if (tIdx === idx) {
+          tr.classList.add("is-highlighted");
+        } else {
+          tr.classList.remove("is-highlighted");
+        }
+      });
+    }
+
+    function clearHighlightedToken() {
+      currentActiveTokenIdx = null;
+      document.querySelectorAll(".interactive-token-chip").forEach(el => el.classList.remove("is-active"));
+      document.querySelectorAll(".node-group").forEach(el => el.classList.remove("is-highlighted"));
+      document.querySelectorAll(".branch-ray").forEach(el => el.classList.remove("is-highlighted"));
+      document.querySelectorAll("#token-table-body tr").forEach(el => el.classList.remove("is-highlighted"));
+    }
+
+    // -------------------------------------------------------------
+    // Render Branching Factor Visual (Vector Representation)
+    // Tactile canvas with dot grid & interactive hover tooltips
+    // -------------------------------------------------------------
+    function renderBranchingVisual(items) {
+      const container = document.getElementById("branching-svg-container");
+      if (!container) return;
+
+      const stepWidth = 120;
+      const paddingX = 60;
+      const totalWidth = Math.max(580, items.length * stepWidth + paddingX * 2);
+      const height = 160;
+      const centerY = 75;
+
+      let svgHtml = `
+        <svg viewBox="0 0 ${totalWidth} ${height}" width="100%" height="${height}" preserveAspectRatio="xMidYMid meet" class="branching-svg" aria-label="Sequence branching tree">
+          <defs>
+            <linearGradient id="beam-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--accent-certainty)" stop-opacity="0.3" />
+              <stop offset="100%" stop-color="var(--accent-certainty)" stop-opacity="0.9" />
+            </linearGradient>
+          </defs>
+      `;
+
+      // Central sequence spine line
+      let spinePath = `M ${paddingX} ${centerY}`;
+      for (let i = 1; i < items.length; i++) {
+        const x = paddingX + i * stepWidth;
+        spinePath += ` L ${x} ${centerY}`;
+      }
+      svgHtml += `<path d="${spinePath}" stroke="var(--border-stone)" stroke-width="1.5" stroke-dasharray="3 3" fill="none" opacity="0.7" />`;
+
+      // Draw branching rays between nodes
+      items.forEach((item, i) => {
+        const x = paddingX + i * stepWidth;
+        const isSurprise = item.prob < 0.05;
+        const isHighProb = item.prob >= 0.15;
+        const branchColor = isSurprise ? "var(--accent-surprise)" : (isHighProb ? "var(--accent-certainty)" : "var(--accent-amber)");
+        const numRays = isSurprise ? 7 : (isHighProb ? 2 : 4);
+        const spread = isSurprise ? 44 : (isHighProb ? 14 : 26);
+
+        if (i < items.length - 1) {
+          const nextX = x + stepWidth;
+          for (let r = 0; r < numRays; r++) {
+            const offsetAngle = ((r / (numRays - 1 || 1)) - 0.5) * spread;
+            const targetY = centerY + offsetAngle;
+            const opacity = r === Math.floor(numRays / 2) ? "0.9" : "0.35";
+            const strokeW = r === Math.floor(numRays / 2) ? "1.5" : "1";
+            svgHtml += `
+              <line x1="${x}" y1="${centerY}" x2="${nextX}" y2="${targetY}" 
+                    stroke="${branchColor}" stroke-width="${strokeW}" stroke-opacity="${opacity}" 
+                    class="branch-ray" data-source-idx="${i}" />
+            `;
+          }
+        }
+
+        // Draw node circles and label text
+        const negLogP = (-Math.log(item.prob)).toFixed(2);
+        svgHtml += `
+          <g class="node-group" data-node-idx="${i}">
+            <title>${item.displayToken} | P = ${(item.prob * 100).toFixed(1)}% | 1/P = ${item.invProb.toFixed(2)} | Surprise = ${negLogP} nats</title>
+            <circle cx="${x}" cy="${centerY}" r="7" fill="var(--bg-card)" stroke="${branchColor}" stroke-width="2" />
+            <circle cx="${x}" cy="${centerY}" r="3" fill="${branchColor}" />
+            <text x="${x}" y="${centerY - 18}" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="var(--text-ink)">${item.displayToken}</text>
+            <text x="${x}" y="${centerY + 22}" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" font-weight="500" fill="var(--text-stone)">P=${(item.prob * 100).toFixed(1)}%</text>
+            <text x="${x}" y="${centerY + 34}" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="${branchColor}">1/P=${item.invProb.toFixed(1)}</text>
+          </g>
+        `;
+      });
+
+      svgHtml += `</svg>`;
+      container.innerHTML = svgHtml;
+
+      // Attach hover handlers on SVG nodes
+      container.querySelectorAll(".node-group").forEach((ng) => {
+        ng.addEventListener("mouseenter", (e) => {
+          const idx = parseInt(e.currentTarget.dataset.nodeIdx, 10);
+          setHighlightedToken(idx);
+        });
+        ng.addEventListener("mouseleave", () => {
+          clearHighlightedToken();
+        });
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Render Section 2: Token Table, KPI, Intuition Scale, and Equation Strip
+    // -------------------------------------------------------------
+    function renderSection2Table(items) {
+      tokenTableBody.innerHTML = "";
+      tokenSurpriseStrip.innerHTML = "";
+
+      const probabilities = items.map((x) => x.prob);
+      const invValues = items.map((x) => x.invProb);
+      const N = items.length;
+
+      // 1. Calculate Perplexity in Log-Space
+      const perplexity = computePerplexityLogSpace(probabilities);
+      const pplDisplay = perplexity > 1e7 ? perplexity.toExponential(2) : perplexity.toFixed(2);
+      kpiPplValue.textContent = pplDisplay;
+
+      // 2. Position Needle on Intuition Scale
+      const scalePct = getScalePercentage(perplexity);
+      scaleNeedle.style.left = `${scalePct}%`;
+      const badgeInfo = getIntuitionBadgeInfo(perplexity);
+      kpiPplBadge.textContent = badgeInfo.text;
+
+      // 3. Render Synced Interactive Token Strip
+      items.forEach((item, idx) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        const isSurprise = item.prob < 0.05;
+        const isCertain = item.prob >= 0.15;
+        const tintClass = isSurprise ? "chip-surprise" : (isCertain ? "chip-certain" : "");
+        chip.className = `interactive-token-chip ${tintClass}`;
+        chip.dataset.tokenIdx = idx;
+        const pctStr = (item.prob * 100) < 1 
+          ? (item.prob * 100).toFixed(1) + "%" 
+          : (item.prob * 100).toFixed(0) + "%";
+        chip.innerHTML = `
+          <span>${item.displayToken}</span>
+          <span class="chip-prob-badge">${pctStr}</span>
+        `;
+        chip.addEventListener("mouseenter", () => setHighlightedToken(idx));
+        chip.addEventListener("mouseleave", () => clearHighlightedToken());
+        chip.addEventListener("click", () => setHighlightedToken(idx));
+        tokenSurpriseStrip.appendChild(chip);
+      });
+
+      // 4. Render Dynamic Branching Factor SVG
+      renderBranchingVisual(items);
+
+      // 5. Populate Table Rows with Inline Micro-Bars
+      items.forEach((item, idx) => {
+        const tr = document.createElement("tr");
+        tr.dataset.rowIdx = idx;
+
+        const pct = (item.prob * 100).toFixed(2);
+        const probDisplay = item.prob < 0.0001 ? item.prob.toExponential(3) : item.prob.toFixed(4);
+        const negLogP = (-Math.log(item.prob)).toFixed(2);
+        const isSurprise = item.prob < 0.05;
+
+        tr.innerHTML = `
+          <td style="color: var(--text-stone-faint); font-weight: 600;">${idx + 1}</td>
+          <td><span class="token-chip">${item.displayToken}</span></td>
+          <td class="prob-bar-cell">
+            <div class="micro-bar-fill ${isSurprise ? 'surprise' : ''}" style="width: ${Math.min(100, Math.max(3, item.prob * 100))}%;"></div>
+            <div class="prob-text-content">
+              <span>${probDisplay}</span>
+              <span style="color: var(--text-stone-faint); font-weight: 400; font-size: 0.75rem; margin-left: 0.25rem;">(${pct}%)</span>
+            </div>
+          </td>
+          <td style="font-weight: 600; color: ${isSurprise ? 'var(--accent-surprise)' : 'var(--text-stone)'};">${item.invProb.toFixed(2)}</td>
+          <td style="font-family: ui-monospace, monospace; font-size: 0.8125rem; color: var(--text-stone);">${negLogP}</td>
+        `;
+
+        tr.addEventListener("mouseenter", () => setHighlightedToken(idx));
+        tr.addEventListener("mouseleave", () => clearHighlightedToken());
+
+        tokenTableBody.appendChild(tr);
+      });
+
+      // 6. Populate Compact Equation Strip
+      let logProduct = 0;
+      for (const v of invValues) {
+        logProduct += Math.log(v);
+      }
+      const rawProduct = Math.exp(logProduct);
+      let productHtml = "";
+      if (rawProduct >= 10000) {
+        const exp = Math.floor(Math.log10(rawProduct));
+        const base = (rawProduct / Math.pow(10, exp)).toFixed(2);
+        productHtml = `${base} × 10<sup>${exp}</sup>`;
+      } else {
+        productHtml = rawProduct.toFixed(2);
+      }
+      step1Product.innerHTML = productHtml;
+      step2Length.textContent = `N = ${N} token${N === 1 ? "" : "s"}`;
+      step3Mean.textContent = `${pplDisplay}`;
+    }
+
+    // -------------------------------------------------------------
+    // Render Section 3: Next Token Predictions (Top 8)
+    // -------------------------------------------------------------
+    function renderSection3Predictions(predictions) {
+      predictionsList.innerHTML = "";
+
+      predictions.forEach((item, index) => {
+        const rank = item.rank || (index + 1);
+        const displayToken = item.displayToken || formatTokenDisplay(item.rawText);
+        const pctValue = (item.prob * 100).toFixed(1);
+        const isTop = rank === 1;
+
+        const row = document.createElement("div");
+        row.className = `prediction-row ${isTop ? "top-1" : ""}`;
+
+        row.innerHTML = `
+          <div class="pred-rank">${rank}</div>
+          <div class="pred-token" title="${displayToken}">
+            <span class="token-chip">${displayToken}</span>
+          </div>
+          <div class="pred-bar-track">
+            <div class="pred-bar-fill" style="--delay-index: ${index}; transform: scaleX(${Math.max(0.005, item.prob)});"></div>
+          </div>
+          <div class="pred-pct">${pctValue}%</div>
+        `;
+
+        predictionsList.appendChild(row);
+      });
     }
 
     // -------------------------------------------------------------
@@ -1628,53 +2203,44 @@
       updateStatus("loading", `Calculating perplexity for "${text}"...`);
 
       try {
-        // Encode text to token IDs
         const rawEncoded = await tokenizer.encode(text);
         const encodedIds = Array.isArray(rawEncoded) 
           ? rawEncoded 
           : (rawEncoded.data ? Array.from(rawEncoded.data) : Array.from(rawEncoded));
 
         if (!encodedIds || encodedIds.length === 0) {
-          throw new Error("Tokenizer returned 0 tokens for the given input.");
+          throw new Error("Tokenizer returned 0 tokens for input.");
         }
 
-        // Build token IDs as [50256, ...tokenizer.encode(sentence)]
-        // 50256 is the GPT-2 BOS/EOS token (<|endoftext|>)
-        // This ensures the first real token receives a conditional probability from position 0
+        // Prepend BOS token (50256) so position 0 receives conditional likelihood
         const BOS_TOKEN_ID = 50256;
         const allTokenIds = [BOS_TOKEN_ID, ...encodedIds];
         const nTokens = allTokenIds.length;
 
-        // Convert [50256, ...tokenizer.encode(sentence)] into an int64 Tensor using BigInt64Array.from(ids, BigInt)
         const input_ids = new Tensor(
           "int64",
           BigInt64Array.from(allTokenIds, BigInt),
           [1, nTokens]
         );
 
-        // Pass an all-ones attention_mask Tensor into await model({ input_ids, attention_mask })
         const attention_mask = new Tensor(
           "int64",
           new BigInt64Array(nTokens).fill(1n),
           [1, nTokens]
         );
 
-        // Run forward pass with both input_ids and attention_mask
+        // Run forward causal pass
         const outputs = await model({ input_ids, attention_mask });
         const [, seqLen, vocabSize] = outputs.logits.dims;
         const logitsData = outputs.logits.data;
 
-        // For each real token at index i (1 to nTokens - 1):
-        // Compute probability via stable softmax on logits at position i - 1
+        // Compute conditional probability for each token in sequence
         const results = [];
-        const realTokenIds = encodedIds; // Length = nTokens - 1
-
         for (let i = 1; i < nTokens; i++) {
           const targetId = allTokenIds[i];
-          const pos = i - 1; // position in logits
+          const pos = i - 1;
           const slice = logitsData.subarray(pos * vocabSize, (pos + 1) * vocabSize);
 
-          // Stable softmax: subtract maxLogit before Math.exp
           let maxLogit = -Infinity;
           for (let v = 0; v < vocabSize; v++) {
             if (slice[v] > maxLogit) maxLogit = slice[v];
@@ -1687,8 +2253,6 @@
 
           const targetLogit = slice[targetId];
           const prob = Math.exp(targetLogit - maxLogit) / sumExp;
-
-          // Decode token text
           const rawDecoded = tokenizer.decode([targetId]);
 
           results.push({
@@ -1701,13 +2265,58 @@
           });
         }
 
-        // Render Section 2: Token Table & 3-Step Breakdown
+        // Render Section 2 Table & KPI
         renderSection2Table(results);
 
-        // Render Section 3: Next Token Predictions (from last position seqLen - 1)
-        renderSection3Predictions(logitsData, seqLen - 1, vocabSize);
+        // Compute top 8 next-token predictions from last position
+        const lastSlice = logitsData.subarray((seqLen - 1) * vocabSize, seqLen * vocabSize);
+        let maxLogitLast = -Infinity;
+        for (let v = 0; v < vocabSize; v++) {
+          if (lastSlice[v] > maxLogitLast) maxLogitLast = lastSlice[v];
+        }
 
-        updateStatus("ready", `Analysis complete for ${realTokenIds.length} tokens.`);
+        let sumExpLast = 0;
+        for (let v = 0; v < vocabSize; v++) {
+          sumExpLast += Math.exp(lastSlice[v] - maxLogitLast);
+        }
+
+        const top8 = [];
+        for (let v = 0; v < vocabSize; v++) {
+          const prob = Math.exp(lastSlice[v] - maxLogitLast) / sumExpLast;
+          if (top8.length < 8) {
+            top8.push({ id: v, prob });
+            top8.sort((a, b) => b.prob - a.prob);
+          } else if (prob > top8[7].prob) {
+            top8[7] = { id: v, prob };
+            top8.sort((a, b) => b.prob - a.prob);
+          }
+        }
+
+        const formattedTop8 = top8.map((item, index) => {
+          const decoded = tokenizer.decode([item.id]);
+          return {
+            rank: index + 1,
+            id: item.id,
+            rawText: decoded,
+            displayToken: formatTokenDisplay(decoded),
+            prob: item.prob
+          };
+        });
+
+        // Render Section 3 Predictions
+        renderSection3Predictions(formattedTop8);
+
+        // Update status and remove cached pill
+        updateStatus("ready", "DistilGPT-2 live output");
+        sampleStatusPill.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Live neural output · DistilGPT-2 inference complete
+        `;
+        sampleStatusPill.style.color = "var(--accent-certainty)";
+        sampleStatusPill.style.background = "var(--accent-certainty-bg)";
+        sampleStatusPill.style.borderColor = "var(--accent-certainty-border)";
       } catch (err) {
         console.error("Calculation error:", err);
         updateStatus("error", `Calculation error: ${err.message || err}`);
@@ -1717,12 +2326,312 @@
     }
 
     // -------------------------------------------------------------
+    // SECTION 04: Interactive Simulator ("Try It by Hand")
+    // Preloaded with "One surprising word" (0.9, 0.9, 0.9, 0.01)
+    // -------------------------------------------------------------
+    let simRows = [
+      { token: "The", prob: 0.9 },
+      { token: "weather", prob: 0.9 },
+      { token: "is", prob: 0.9 },
+      { token: "banana", prob: 0.01 }
+    ];
+
+    const SEGMENT_COLORS = [
+      "#0d9488", "#3b82f6", "#6366f1", "#e87555",
+      "#f59e0b", "#10b981", "#ec4899", "#8b5cf6"
+    ];
+
+    function renderSimulator() {
+      simTableBody.innerHTML = "";
+
+      if (simRows.length === 0) {
+        simTableBody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-stone); padding: 1.5rem;">
+              No tokens added. Click "+ Add token" or choose a preset above.
+            </td>
+          </tr>
+        `;
+        updateSimulatorBreakdown();
+        return;
+      }
+
+      simRows.forEach((row, index) => {
+        const tr = document.createElement("tr");
+        const p = parseFloat(row.prob);
+        const isValid = !isNaN(p) && p > 0 && p <= 1;
+        const invP = isValid ? (1 / p) : null;
+
+        tr.innerHTML = `
+          <td style="color: var(--text-stone-faint); font-weight: 600;">${index + 1}</td>
+          <td>
+            <input 
+              type="text" 
+              class="sim-token-input" 
+              data-index="${index}" 
+              value="${row.token}" 
+              placeholder="Token name"
+            />
+          </td>
+          <td>
+            <div class="sim-prob-controls">
+              <input 
+                type="number" 
+                class="sim-prob-input" 
+                data-index="${index}" 
+                value="${row.prob}" 
+                step="0.01" 
+                min="0.0001" 
+                max="1" 
+                style="${!isValid ? 'border-color: var(--accent-surprise);' : ''}"
+              />
+              <input 
+                type="range" 
+                class="sim-slider" 
+                data-index="${index}" 
+                value="${isValid ? p : 0.5}" 
+                min="0.001" 
+                max="1" 
+                step="0.001"
+              />
+            </div>
+          </td>
+          <td style="font-family: ui-monospace, monospace; font-weight: 600; color: ${isValid && p < 0.05 ? 'var(--accent-surprise)' : 'var(--text-ink)'};">
+            ${isValid ? invP.toFixed(2) : '<span style="color: var(--accent-surprise); font-size: 0.75rem;">Invalid</span>'}
+          </td>
+          <td style="text-align: center;">
+            <button type="button" class="btn-delete-row" data-index="${index}" title="Remove token" aria-label="Remove token">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </td>
+        `;
+
+        simTableBody.appendChild(tr);
+      });
+
+      // Synchronize input fields and sliders
+      simTableBody.querySelectorAll(".sim-token-input").forEach((input) => {
+        input.addEventListener("input", (e) => {
+          const idx = parseInt(e.target.dataset.index, 10);
+          simRows[idx].token = e.target.value;
+          updateSimulatorBreakdown();
+        });
+      });
+
+      simTableBody.querySelectorAll(".sim-prob-input").forEach((input) => {
+        input.addEventListener("input", (e) => {
+          const idx = parseInt(e.target.dataset.index, 10);
+          const val = parseFloat(e.target.value);
+          simRows[idx].prob = e.target.value;
+          const slider = simTableBody.querySelector(`.sim-slider[data-index="${idx}"]`);
+          if (slider && !isNaN(val)) slider.value = Math.min(1, Math.max(0.001, val));
+          updateSimulatorBreakdown();
+        });
+      });
+
+      simTableBody.querySelectorAll(".sim-slider").forEach((slider) => {
+        slider.addEventListener("input", (e) => {
+          const idx = parseInt(e.target.dataset.index, 10);
+          const val = parseFloat(e.target.value);
+          simRows[idx].prob = val;
+          const numInput = simTableBody.querySelector(`.sim-prob-input[data-index="${idx}"]`);
+          if (numInput) numInput.value = val.toFixed(3);
+          updateSimulatorBreakdown();
+        });
+      });
+
+      simTableBody.querySelectorAll(".btn-delete-row").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const idx = parseInt(e.currentTarget.dataset.index, 10);
+          simRows.splice(idx, 1);
+          renderSimulator();
+        });
+      });
+
+      updateSimulatorBreakdown();
+    }
+
+    function updateSimulatorBreakdown() {
+      const validTokens = [];
+      const validProbs = [];
+      const invValues = [];
+      const surprises = [];
+
+      simRows.forEach((row) => {
+        const p = parseFloat(row.prob);
+        if (!isNaN(p) && p > 0 && p <= 1) {
+          validTokens.push(row.token || "token");
+          validProbs.push(p);
+          invValues.push(1 / p);
+          surprises.push(-Math.log(p));
+        }
+      });
+
+      const N = validProbs.length;
+      if (N === 0) {
+        simPplValue.textContent = "—";
+        simStep1Product.textContent = "—";
+        simStep2Length.textContent = "N = 0";
+        simStep3Mean.textContent = "—";
+        simSegmentedBar.innerHTML = "";
+        simSurpriseLegend.innerHTML = '<span style="color: var(--text-stone-faint);">Add valid probabilities between 0.001 and 1.0</span>';
+        simSurpriseTotal.textContent = "Total: 0 nats";
+        return;
+      }
+
+      // Log-space calculation of perplexity
+      const perplexity = computePerplexityLogSpace(validProbs);
+      const pplDisplay = perplexity > 1e7 ? perplexity.toExponential(2) : perplexity.toFixed(2);
+      simPplValue.textContent = pplDisplay;
+
+      const badgeInfo = getIntuitionBadgeInfo(perplexity);
+      simPplBadge.textContent = badgeInfo.text;
+
+      // Product calculation in log space
+      let logProd = 0;
+      for (const v of invValues) {
+        logProd += Math.log(v);
+      }
+      const rawProd = Math.exp(logProd);
+      let simProdHtml = "";
+      if (rawProd >= 10000) {
+        const exp = Math.floor(Math.log10(rawProd));
+        const base = (rawProd / Math.pow(10, exp)).toFixed(2);
+        simProdHtml = `${base} × 10<sup>${exp}</sup>`;
+      } else {
+        simProdHtml = rawProd.toFixed(2);
+      }
+      simStep1Product.innerHTML = simProdHtml;
+      simStep2Length.textContent = `N = ${N}`;
+      simStep3Mean.textContent = `${pplDisplay}`;
+
+      // Calculate surprise share: S_i / sum(S_i)
+      const totalSurprise = surprises.reduce((a, b) => a + b, 0);
+      simSurpriseTotal.textContent = `Total: ${totalSurprise.toFixed(2)} nats`;
+
+      simSegmentedBar.innerHTML = "";
+      simSurpriseLegend.innerHTML = "";
+
+      validTokens.forEach((token, idx) => {
+        const share = totalSurprise > 0 ? (surprises[idx] / totalSurprise) * 100 : (100 / N);
+        const color = SEGMENT_COLORS[idx % SEGMENT_COLORS.length];
+
+        // Add segment to horizontal bar
+        const seg = document.createElement("div");
+        seg.className = "bar-segment";
+        seg.style.width = `${share}%`;
+        seg.style.background = color;
+        seg.title = `${token}: ${share.toFixed(1)}% of total surprise`;
+        simSegmentedBar.appendChild(seg);
+
+        // Add legend item
+        const legItem = document.createElement("div");
+        legItem.className = "surprise-legend-item";
+        legItem.innerHTML = `
+          <span class="token-name">
+            <span class="token-color-dot" style="background: ${color};"></span>
+            <span>${token}</span>
+            <span style="font-weight: 400; color: var(--text-stone); font-size: 0.6875rem;">(P=${validProbs[idx]})</span>
+          </span>
+          <span class="share-pct">${share.toFixed(1)}%</span>
+        `;
+        simSurpriseLegend.appendChild(legItem);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Simulator Presets
+    // -------------------------------------------------------------
+    function setActivePreset(activeBtn) {
+      [presetSurprise, presetPython, presetUniform].forEach(btn => {
+        if (btn === activeBtn) {
+          btn.style.borderColor = "var(--primary-accent)";
+          btn.style.background = "var(--primary-accent-subtle)";
+        } else {
+          btn.style.borderColor = "var(--border-hairline)";
+          btn.style.background = "var(--bg-pill)";
+        }
+      });
+    }
+
+    presetSurprise.addEventListener("click", () => {
+      setActivePreset(presetSurprise);
+      simRows = [
+        { token: "The", prob: 0.9 },
+        { token: "weather", prob: 0.9 },
+        { token: "is", prob: 0.9 },
+        { token: "banana", prob: 0.01 }
+      ];
+      renderSimulator();
+    });
+
+    presetPython.addEventListener("click", () => {
+      setActivePreset(presetPython);
+      simRows = [
+        { token: "I", prob: 0.5 },
+        { token: "love", prob: 0.8 },
+        { token: "Python", prob: 0.2 }
+      ];
+      renderSimulator();
+    });
+
+    presetUniform.addEventListener("click", () => {
+      setActivePreset(presetUniform);
+      simRows = [
+        { token: "token_1", prob: 0.125 },
+        { token: "token_2", prob: 0.125 },
+        { token: "token_3", prob: 0.125 },
+        { token: "token_4", prob: 0.125 },
+        { token: "token_5", prob: 0.125 },
+        { token: "token_6", prob: 0.125 },
+        { token: "token_7", prob: 0.125 },
+        { token: "token_8", prob: 0.125 }
+      ];
+      renderSimulator();
+    });
+
+    btnAddToken.addEventListener("click", () => {
+      simRows.push({
+        token: `word_${simRows.length + 1}`,
+        prob: 0.5
+      });
+      renderSimulator();
+    });
+
+    // -------------------------------------------------------------
+    // Event Handlers for Section 1
+    // -------------------------------------------------------------
+    btnCalculate.addEventListener("click", () => {
+      runCalculation();
+    });
+
+    sentenceInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        runCalculation();
+      }
+    });
+
+    sampleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        sentenceInput.value = btn.dataset.sample;
+        runCalculation();
+      });
+    });
+
+    // -------------------------------------------------------------
     // Theme Management (Light / Dark Mode with System Detection & LocalStorage)
     // -------------------------------------------------------------
     const themeToggleBtn = document.getElementById("theme-toggle");
     const themeToggleText = document.getElementById("theme-toggle-text");
 
     function getInitialTheme() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlTheme = urlParams.get("theme");
+      if (urlTheme === "light" || urlTheme === "dark") return urlTheme;
       const saved = localStorage.getItem("ppx_theme");
       if (saved === "dark" || saved === "light") return saved;
       return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -1756,437 +2665,13 @@
     });
 
     // -------------------------------------------------------------
-    // Render Branching Factor Visual (Vector Representation)
+    // Initial Mount: Preload Cached Sample & Sandbox Preset
+    // Eliminates empty states on initial mount
     // -------------------------------------------------------------
-    function renderBranchingVisual(items) {
-      const container = document.getElementById("branching-svg-container");
-      if (!container) return;
-
-      if (!items || items.length === 0) {
-        items = [
-          { displayToken: "I", prob: 0.5, invProb: 2.0 },
-          { displayToken: "love", prob: 0.8, invProb: 1.25 },
-          { displayToken: "Python", prob: 0.2, invProb: 5.0 }
-        ];
-      }
-
-      const stepWidth = 140;
-      const paddingX = 80;
-      const totalWidth = Math.max(680, items.length * stepWidth + paddingX * 2);
-      const height = 180;
-      const centerY = 85;
-
-      let svgHtml = `
-        <svg viewBox="0 0 ${totalWidth} ${height}" width="100%" height="${height}" preserveAspectRatio="xMidYMid meet" class="branching-svg" aria-label="Sequence branching tree">
-          <defs>
-            <linearGradient id="beam-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="var(--primary-accent)" stop-opacity="0.3" />
-              <stop offset="100%" stop-color="var(--primary-accent)" stop-opacity="0.9" />
-            </linearGradient>
-          </defs>
-      `;
-
-      let spinePath = `M ${paddingX} ${centerY}`;
-      for (let i = 1; i < items.length; i++) {
-        const x = paddingX + i * stepWidth;
-        spinePath += ` L ${x} ${centerY}`;
-      }
-      svgHtml += `<path d="${spinePath}" stroke="var(--border-stone)" stroke-width="2" stroke-dasharray="4 4" fill="none" />`;
-
-      items.forEach((item, i) => {
-        const x = paddingX + i * stepWidth;
-        const isSurprise = item.prob < 0.05;
-        const isHighProb = item.prob >= 0.15;
-        const branchColor = isSurprise ? "var(--accent-coral)" : (isHighProb ? "var(--primary-accent)" : "var(--accent-amber)");
-        const numRays = isSurprise ? 7 : (isHighProb ? 2 : 4);
-        const spread = isSurprise ? 48 : (isHighProb ? 14 : 28);
-
-        if (i < items.length - 1) {
-          const nextX = x + stepWidth;
-          for (let r = 0; r < numRays; r++) {
-            const offsetAngle = ((r / (numRays - 1 || 1)) - 0.5) * spread;
-            const targetY = centerY + offsetAngle;
-            const opacity = r === Math.floor(numRays / 2) ? "0.85" : "0.35";
-            const strokeW = r === Math.floor(numRays / 2) ? "2" : "1";
-            svgHtml += `
-              <line x1="${x}" y1="${centerY}" x2="${nextX}" y2="${targetY}" 
-                    stroke="${branchColor}" stroke-width="${strokeW}" stroke-opacity="${opacity}" 
-                    class="branch-ray" />
-            `;
-          }
-        }
-
-        svgHtml += `
-          <g class="node-group">
-            <circle cx="${x}" cy="${centerY}" r="7" fill="var(--bg-card)" stroke="${branchColor}" stroke-width="2.5" />
-            <circle cx="${x}" cy="${centerY}" r="3" fill="${branchColor}" />
-            <text x="${x}" y="${centerY - 20}" text-anchor="middle" class="svg-token-label" fill="var(--text-ink)">${item.displayToken}</text>
-            <text x="${x}" y="${centerY + 24}" text-anchor="middle" class="svg-prob-label" fill="var(--text-stone)">P=${(item.prob * 100).toFixed(1)}%</text>
-            <text x="${x}" y="${centerY + 38}" text-anchor="middle" class="svg-branch-label" fill="${branchColor}">1/P=${item.invProb.toFixed(1)}</text>
-          </g>
-        `;
-      });
-
-      svgHtml += `</svg>`;
-      container.innerHTML = svgHtml;
-    }
-
-    // -------------------------------------------------------------
-    // Render Section 2 Table & 3-Step Breakdown
-    // -------------------------------------------------------------
-    function renderSection2Table(items) {
-      tokenTableBody.innerHTML = "";
-
-      const probabilities = items.map((x) => x.prob);
-      const invValues = items.map((x) => x.invProb);
-      const N = items.length;
-
-      // Render Dynamic Branching Factor SVG
-      renderBranchingVisual(items);
-
-      // Populate Table Rows
-      items.forEach((item, idx) => {
-        const tr = document.createElement("tr");
-
-        const pct = (item.prob * 100).toFixed(2);
-        const probDisplay = item.prob < 0.0001 
-          ? item.prob.toExponential(3) 
-          : item.prob.toFixed(4);
-
-        tr.innerHTML = `
-          <td style="color: var(--text-stone); font-weight: 600;">${idx + 1}</td>
-          <td><span class="token-chip">${item.displayToken}</span></td>
-          <td><strong>${probDisplay}</strong> <span style="color: var(--text-stone); font-size: 0.8125rem;">(${pct}%)</span></td>
-          <td style="color: var(--text-stone); font-weight: 600;">${item.invProb.toFixed(2)}</td>
-        `;
-        tokenTableBody.appendChild(tr);
-      });
-
-      const multiplicationTerms = invValues.map((v) => v.toFixed(2)).join(" × ");
-      
-      let logProduct = 0;
-      for (const v of invValues) {
-        logProduct += Math.log(v);
-      }
-      const rawProduct = Math.exp(logProduct);
-      const productDisplay = rawProduct > 1e7 ? rawProduct.toExponential(3) : rawProduct.toFixed(2);
-
-      step1Content.textContent = `${multiplicationTerms} = ${productDisplay}`;
-      step2Content.textContent = `N = ${N} token${N === 1 ? "" : "s"}`;
-
-      const perplexity = computePerplexityLogSpace(probabilities);
-      const pplDisplay = perplexity > 1e7 ? perplexity.toExponential(2) : perplexity.toFixed(2);
-
-      step3Perplexity.innerHTML = `
-        Perplexity = ${pplDisplay}
-        <span class="step-hero-formula">(${productDisplay}<sup>1/${N}</sup>)</span>
-      `;
-      step3Perplexity.classList.remove("number-updated");
-      void step3Perplexity.offsetWidth;
-      step3Perplexity.classList.add("number-updated");
-
-      step3Desc.innerHTML = `
-        <strong>Interpretation:</strong> On average across each word, the model was as uncertain as choosing uniformly between <strong>${pplDisplay}</strong> equally likely words. Lower numbers indicate higher predictability and model confidence.
-      `;
-    }
-
-    // -------------------------------------------------------------
-    // Render Section 3: Next Token Predictions (Top 8)
-    // -------------------------------------------------------------
-    function renderSection3Predictions(logitsData, lastPosIndex, vocabSize) {
-      predictionsList.innerHTML = "";
-
-      const lastSlice = logitsData.subarray(lastPosIndex * vocabSize, (lastPosIndex + 1) * vocabSize);
-
-      // Numerically stable softmax for next tokens
-      let maxLogit = -Infinity;
-      for (let v = 0; v < vocabSize; v++) {
-        if (lastSlice[v] > maxLogit) maxLogit = lastSlice[v];
-      }
-
-      let sumExp = 0;
-      for (let v = 0; v < vocabSize; v++) {
-        sumExp += Math.exp(lastSlice[v] - maxLogit);
-      }
-
-      // Find top 8 next token IDs
-      const top8 = [];
-      for (let v = 0; v < vocabSize; v++) {
-        const prob = Math.exp(lastSlice[v] - maxLogit) / sumExp;
-        if (top8.length < 8) {
-          top8.push({ id: v, prob });
-          top8.sort((a, b) => b.prob - a.prob);
-        } else if (prob > top8[7].prob) {
-          top8[7] = { id: v, prob };
-          top8.sort((a, b) => b.prob - a.prob);
-        }
-      }
-
-      // Render top 8 candidates with staggered animation delays
-      top8.forEach((item, index) => {
-        const rank = index + 1;
-        const decoded = tokenizer.decode([item.id]);
-        const displayToken = formatTokenDisplay(decoded);
-        const pctValue = (item.prob * 100).toFixed(1);
-        const isTop = rank === 1;
-
-        const row = document.createElement("div");
-        row.className = `prediction-row ${isTop ? "top-1" : ""}`;
-
-        row.innerHTML = `
-          <div class="pred-rank">${rank}</div>
-          <div class="pred-token" title="${displayToken}">
-            <span class="token-chip">${displayToken}</span>
-          </div>
-          <div class="pred-bar-container">
-            <div class="pred-bar-fill" style="--delay-index: ${index}; transform: scaleX(${Math.max(0.005, item.prob)});"></div>
-          </div>
-          <div class="pred-pct">${pctValue}%</div>
-        `;
-
-        predictionsList.appendChild(row);
-      });
-    }
-
-    // -------------------------------------------------------------
-    // SECTION 4: Try it by Hand (Simulator)
-    // -------------------------------------------------------------
-    let simRows = [
-      { token: "I", prob: 0.5 },
-      { token: "love", prob: 0.8 },
-      { token: "Python", prob: 0.2 }
-    ];
-
-    function renderSimulator() {
-      simTableBody.innerHTML = "";
-
-      if (simRows.length === 0) {
-        simTableBody.innerHTML = `
-          <tr>
-            <td colspan="5" style="text-align: center; color: var(--text-stone); padding: 1.5rem;">
-              No tokens added. Click "+ Add token" or choose a preset above.
-            </td>
-          </tr>
-        `;
-        simStep1Content.textContent = "Waiting for input...";
-        simStep2Content.textContent = "N = 0";
-        simStep3Perplexity.textContent = "Perplexity: awaiting input";
-        simStep3Desc.textContent = "Add at least one token to calculate perplexity.";
-        return;
-      }
-
-      const validProbs = [];
-      const invValues = [];
-
-      simRows.forEach((row, index) => {
-        const tr = document.createElement("tr");
-
-        const p = parseFloat(row.prob);
-        const isValid = !isNaN(p) && p > 0 && p <= 1;
-        const invP = isValid ? (1 / p) : null;
-
-        if (isValid) {
-          validProbs.push(p);
-          invValues.push(invP);
-        }
-
-        tr.innerHTML = `
-          <td style="color: var(--text-stone); font-weight: 600;">${index + 1}</td>
-          <td>
-            <input 
-              type="text" 
-              class="sim-row-input sim-token-input" 
-              data-index="${index}" 
-              value="${row.token}" 
-              placeholder="Token name"
-            />
-          </td>
-          <td>
-            <input 
-              type="number" 
-              class="sim-row-input sim-prob-input" 
-              data-index="${index}" 
-              value="${row.prob}" 
-              step="0.01" 
-              min="0.0001" 
-              max="1" 
-              placeholder="0.0 to 1.0"
-              style="${!isValid ? 'border-color: var(--accent-coral-border); background: var(--accent-coral-bg);' : ''}"
-            />
-          </td>
-          <td style="font-weight: 600; color: var(--text-stone);">
-            ${isValid ? invP.toFixed(2) : '<span style="color: var(--accent-coral); font-size: 0.8125rem;">Invalid P</span>'}
-          </td>
-          <td style="text-align: center;">
-            <button type="button" class="btn-delete-row" data-index="${index}" title="Remove token" aria-label="Remove token">
-              <!-- Trash / Remove SVG -->
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-          </td>
-        `;
-
-        simTableBody.appendChild(tr);
-      });
-
-      // Attach event listeners for dynamic row inputs
-      const tokenInputs = simTableBody.querySelectorAll(".sim-token-input");
-      tokenInputs.forEach((input) => {
-        input.addEventListener("input", (e) => {
-          const idx = parseInt(e.target.dataset.index, 10);
-          simRows[idx].token = e.target.value;
-        });
-      });
-
-      const probInputs = simTableBody.querySelectorAll(".sim-prob-input");
-      probInputs.forEach((input) => {
-        input.addEventListener("input", (e) => {
-          const idx = parseInt(e.target.dataset.index, 10);
-          simRows[idx].prob = e.target.value;
-          updateSimulatorBreakdown();
-        });
-      });
-
-      const deleteButtons = simTableBody.querySelectorAll(".btn-delete-row");
-      deleteButtons.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const idx = parseInt(e.currentTarget.dataset.index, 10);
-          simRows.splice(idx, 1);
-          renderSimulator();
-        });
-      });
-
-      updateSimulatorBreakdown();
-    }
-
-    function updateSimulatorBreakdown() {
-      const validProbs = [];
-      const invValues = [];
-
-      for (const row of simRows) {
-        const p = parseFloat(row.prob);
-        if (!isNaN(p) && p > 0 && p <= 1) {
-          validProbs.push(p);
-          invValues.push(1 / p);
-        }
-      }
-
-      const N = validProbs.length;
-
-      if (N === 0) {
-        simStep1Content.textContent = "Waiting for valid inputs...";
-        simStep2Content.textContent = "N = 0 (Enter valid probabilities between 0.0001 and 1.0)";
-        simStep3Perplexity.textContent = "Perplexity: awaiting valid input";
-        return;
-      }
-
-      // Step 1: Explicit multiplication
-      const terms = invValues.map((v) => v.toFixed(2)).join(" × ");
-
-      // Product in log-space to prevent overflow
-      let logProd = 0;
-      for (const v of invValues) {
-        logProd += Math.log(v);
-      }
-      const rawProd = Math.exp(logProd);
-      const prodDisplay = rawProd > 1e7 ? rawProd.toExponential(3) : rawProd.toFixed(2);
-
-      simStep1Content.textContent = `${terms} = ${prodDisplay}`;
-
-      // Step 2: N
-      simStep2Content.textContent = `N = ${N} token${N === 1 ? "" : "s"}`;
-
-      // Step 3: Perplexity
-      const perplexity = computePerplexityLogSpace(validProbs);
-      const pplDisplay = perplexity > 1e7 ? perplexity.toExponential(2) : perplexity.toFixed(2);
-
-      simStep3Perplexity.innerHTML = `
-        Perplexity = ${pplDisplay}
-        <span class="step-hero-formula">(${prodDisplay}<sup>1/${N}</sup>)</span>
-      `;
-      simStep3Perplexity.classList.remove("number-updated");
-      void simStep3Perplexity.offsetWidth;
-      simStep3Perplexity.classList.add("number-updated");
-
-      simStep3Desc.innerHTML = `
-        <strong>Simulated Result:</strong> With these probabilities, the geometric mean surprise is <strong>${pplDisplay}</strong>. A single low-probability word significantly inflates perplexity.
-      `;
-    }
-
-    // -------------------------------------------------------------
-    // Simulator Presets & Action Handlers
-    // -------------------------------------------------------------
-    // Preset 1: "I love Python" (0.5, 0.8, 0.2) -> Perplexity = 2.32
-    presetPython.addEventListener("click", () => {
-      simRows = [
-        { token: "I", prob: 0.5 },
-        { token: "love", prob: 0.8 },
-        { token: "Python", prob: 0.2 }
-      ];
-      renderSimulator();
-    });
-
-    // Preset 2: "All 1/8" (8 tokens at 0.125) -> Perplexity = 8.00
-    presetUniform.addEventListener("click", () => {
-      simRows = [
-        { token: "word_1", prob: 0.125 },
-        { token: "word_2", prob: 0.125 },
-        { token: "word_3", prob: 0.125 },
-        { token: "word_4", prob: 0.125 },
-        { token: "word_5", prob: 0.125 },
-        { token: "word_6", prob: 0.125 },
-        { token: "word_7", prob: 0.125 },
-        { token: "word_8", prob: 0.125 }
-      ];
-      renderSimulator();
-    });
-
-    // Preset 3: "One surprising word" (0.9, 0.9, 0.9, 0.01)
-    presetSurprise.addEventListener("click", () => {
-      simRows = [
-        { token: "The", prob: 0.9 },
-        { token: "weather", prob: 0.9 },
-        { token: "is", prob: 0.9 },
-        { token: "banana", prob: 0.01 }
-      ];
-      renderSimulator();
-    });
-
-    // Add Token button
-    btnAddToken.addEventListener("click", () => {
-      simRows.push({
-        token: `token_${simRows.length + 1}`,
-        prob: 0.5
-      });
-      renderSimulator();
-    });
-
-    // -------------------------------------------------------------
-    // Event Handlers for Section 1
-    // -------------------------------------------------------------
-    btnCalculate.addEventListener("click", () => {
-      runCalculation();
-    });
-
-    sentenceInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        runCalculation();
-      }
-    });
-
-    sampleButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        sentenceInput.value = btn.dataset.sample;
-        runCalculation();
-      });
-    });
-
-    // Initial renders on page load
+    renderSection2Table(CACHED_SAMPLE.tokens);
+    renderSection3Predictions(CACHED_SAMPLE.nextTokens);
     renderSimulator();
-    renderBranchingVisual([]);
+    setActivePreset(presetSurprise);
   </script>
 </body>
 </html>
